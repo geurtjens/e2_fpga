@@ -1,0 +1,22 @@
+$date
+	Fri Mar 27 16:14:21 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ns
+$end
+
+$scope module tb_choose_next_variable $end
+
+$scope task check_result $end
+$upscope $end
+
+$scope task init_domains $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

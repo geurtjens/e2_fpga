@@ -1,0 +1,10 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198569" />
+    <testcase name="test_no_singletons" classname="test_AllDifferent_Driver" file="/home/parallels/e2_fpga/tests/test_AllDifferent_Driver.py" lineno="77" time="0.00017404556274414062" sim_time_ns="1.0" ratio_time="5745.621917808219" />
+    <testcase name="test_singleton_removes_tile" classname="test_AllDifferent_Driver" file="/home/parallels/e2_fpga/tests/test_AllDifferent_Driver.py" lineno="86" time="6.771087646484375e-05" sim_time_ns="1.0" ratio_time="14768.676056338029" />
+    <testcase name="test_deadend_when_all_tiles_taken" classname="test_AllDifferent_Driver" file="/home/parallels/e2_fpga/tests/test_AllDifferent_Driver.py" lineno="103" time="4.696846008300781e-05" sim_time_ns="1.0" ratio_time="21290.883248730963" />
+    <testcase name="test_consistent_with_components" classname="test_AllDifferent_Driver" file="/home/parallels/e2_fpga/tests/test_AllDifferent_Driver.py" lineno="116" time="4.124641418457031e-05" sim_time_ns="1.0" ratio_time="24244.531791907513" />
+    <testcase name="test_random" classname="test_AllDifferent_Driver" file="/home/parallels/e2_fpga/tests/test_AllDifferent_Driver.py" lineno="127" time="0.002074718475341797" sim_time_ns="100.0" ratio_time="48199.31050333257" />
+  </testsuite>
+</testsuites>

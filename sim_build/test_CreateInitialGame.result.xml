@@ -1,0 +1,15 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198572" />
+    <testcase name="test_top_left_corner" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="33" time="0.000148773193359375" sim_time_ns="1.0" ratio_time="6721.641025641025" />
+    <testcase name="test_top_right_corner" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="57" time="5.3882598876953125e-05" sim_time_ns="1.0" ratio_time="18558.867256637168" />
+    <testcase name="test_bottom_left_corner" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="81" time="3.528594970703125e-05" sim_time_ns="1.0" ratio_time="28339.891891891893" />
+    <testcase name="test_bottom_right_corner" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="99" time="2.6464462280273438e-05" sim_time_ns="1.0" ratio_time="37786.52252252252" />
+    <testcase name="test_left_edge" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="115" time="3.719329833984375e-05" sim_time_ns="1.0" ratio_time="26886.5641025641" />
+    <testcase name="test_top_edge" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="136" time="3.1948089599609375e-05" sim_time_ns="1.0" ratio_time="31300.776119402984" />
+    <testcase name="test_bottom_edge" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="155" time="3.266334533691406e-05" sim_time_ns="1.0" ratio_time="30615.357664233576" />
+    <testcase name="test_right_edge" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="176" time="3.361701965332031e-05" sim_time_ns="1.0" ratio_time="29746.836879432623" />
+    <testcase name="test_inner_variables" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="197" time="4.1484832763671875e-05" sim_time_ns="1.0" ratio_time="24105.19540229885" />
+    <testcase name="test_variables_included_mask" classname="test_CreateInitialGame" file="/home/parallels/e2_fpga/tests/test_CreateInitialGame.py" lineno="223" time="2.5272369384765625e-05" sim_time_ns="1.0" ratio_time="39568.90566037736" />
+  </testsuite>
+</testsuites>

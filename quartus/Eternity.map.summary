@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Fri Apr  3 08:37:30 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+Revision Name : Eternity
+Top-level Entity Name : working_set_view_8x8
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 17975
+Total pins : 3
+Total virtual pins : 0
+Total block memory bits : 1,164,800
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0

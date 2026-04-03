@@ -1,0 +1,67 @@
+// ─────────────────────────────────────────────────────────────
+// CascadeColours
+//
+// Propagates colour constraints between adjacent variables by
+// ANDing shared edges together.
+//
+// Iterates all cells where x < N-1 and y < N-1, cascading:
+//   horizontal: right[id] & left[id+1]
+//   vertical:   bottom[id] & top[id+N]
+//
+// Results are indexed by pair index p = y*(N-1) + x
+// Caller uses this to update both sides of each shared edge.
+//
+// Parameters
+//   N  — board side length (board is N x N)
+//   TC — total colour bits per edge
+//
+// Outputs
+//   out_h   — cascaded horizontal edge per pair
+//   out_v   — cascaded vertical edge per pair
+//   deadend — 1 if any cascaded edge becomes all zeros
+//   updated — 1 if any cascaded edge changed
+// ─────────────────────────────────────────────────────────────
+module CascadeColourAll #(
+    parameter int N  = 4,
+    parameter int TC = 6
+)(
+    input  logic [N*N-1:0][TC-1:0]         in_top,
+    input  logic [N*N-1:0][TC-1:0]         in_right,
+    input  logic [N*N-1:0][TC-1:0]         in_bottom,
+    input  logic [N*N-1:0][TC-1:0]         in_left,
+    output logic [(N-1)*(N-1)-1:0][TC-1:0] out_h,
+    output logic [(N-1)*(N-1)-1:0][TC-1:0] out_v,
+    output logic                            deadend,
+    output logic                            updated
+);
+
+    localparam int PAIRS = (N-1) * (N-1);
+
+    logic [PAIRS-1:0] pair_deadend;
+    logic [PAIRS-1:0] pair_updated;
+
+    genvar x, y;
+    generate
+        for (y = 0; y < N-1; y++) begin : gen_y
+            for (x = 0; x < N-1; x++) begin : gen_x
+                localparam int id = y*N + x;
+                localparam int p  = y*(N-1) + x;
+
+                CascadeColourPair #(.TC(TC)) pair (
+                    .right   (in_right[id]),
+                    .left    (in_left[id+1]),
+                    .down    (in_bottom[id]),
+                    .up      (in_top[id+N]),
+                    .out_h   (out_h[p]),
+                    .out_v   (out_v[p]),
+                    .deadend (pair_deadend[p]),
+                    .updated (pair_updated[p])
+                );
+            end
+        end
+    endgenerate
+
+    assign deadend = |pair_deadend;
+    assign updated = |pair_updated;
+
+endmodule

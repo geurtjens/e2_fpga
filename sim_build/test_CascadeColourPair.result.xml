@@ -1,0 +1,13 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198571" />
+    <testcase name="test_basic_and" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="12" time="0.00011420249938964844" sim_time_ns="1.0" ratio_time="8756.375782881001" />
+    <testcase name="test_deadend_h" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="18" time="3.719329833984375e-05" sim_time_ns="1.0" ratio_time="26886.5641025641" />
+    <testcase name="test_deadend_v" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="23" time="4.00543212890625e-05" sim_time_ns="1.0" ratio_time="24966.095238095237" />
+    <testcase name="test_deadend_both" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="28" time="1.6689300537109375e-05" sim_time_ns="1.0" ratio_time="59918.62857142857" />
+    <testcase name="test_no_deadend" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="33" time="1.5497207641601562e-05" sim_time_ns="1.0" ratio_time="64527.75384615385" />
+    <testcase name="test_updated_h" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="38" time="1.9788742065429688e-05" sim_time_ns="1.0" ratio_time="50533.78313253012" />
+    <testcase name="test_updated_v" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="43" time="1.4543533325195312e-05" sim_time_ns="1.0" ratio_time="68759.08196721312" />
+    <testcase name="test_not_updated" classname="test_CascadeColourPair" file="/home/parallels/e2_fpga/tests/test_CascadeColourPair.py" lineno="48" time="1.2636184692382812e-05" sim_time_ns="1.0" ratio_time="79137.81132075471" />
+  </testsuite>
+</testsuites>

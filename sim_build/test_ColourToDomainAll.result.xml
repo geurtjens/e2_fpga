@@ -1,0 +1,9 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198571" />
+    <testcase name="test_all_pass" classname="test_ColourToDomainAll" file="/home/parallels/e2_fpga/tests/test_ColourToDomainAll.py" lineno="176" time="0.00039768218994140625" sim_time_ns="1.0" ratio_time="2514.5707434052756" />
+    <testcase name="test_no_pieces_pass" classname="test_ColourToDomainAll" file="/home/parallels/e2_fpga/tests/test_ColourToDomainAll.py" lineno="189" time="0.0001742839813232422" sim_time_ns="1.0" ratio_time="5737.761969904241" />
+    <testcase name="test_empty_domains" classname="test_ColourToDomainAll" file="/home/parallels/e2_fpga/tests/test_ColourToDomainAll.py" lineno="201" time="0.00013709068298339844" sim_time_ns="1.0" ratio_time="7294.441739130435" />
+    <testcase name="test_random" classname="test_ColourToDomainAll" file="/home/parallels/e2_fpga/tests/test_ColourToDomainAll.py" lineno="214" time="0.009119510650634766" sim_time_ns="50.0" ratio_time="5482.750326797385" />
+  </testsuite>
+</testsuites>

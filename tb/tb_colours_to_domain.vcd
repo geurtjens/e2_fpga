@@ -1,0 +1,25 @@
+$date
+	Fri Mar 27 18:47:27 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ns
+$end
+
+$scope module tb_colours_to_domain $end
+
+$scope task init_all_full $end
+$upscope $end
+
+$scope task check_domain $end
+$upscope $end
+
+$scope task check_flags $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

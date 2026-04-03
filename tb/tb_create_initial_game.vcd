@@ -1,0 +1,25 @@
+$date
+	Fri Mar 27 18:46:36 2026
+$end
+$version
+	Questa Altera Starter FPGA Edition Version 2025.2
+$end
+$timescale
+	1ns
+$end
+
+$scope module tb_create_initial_game $end
+
+$scope task check_colours $end
+$upscope $end
+
+$scope task check_domain $end
+$upscope $end
+
+$scope module dut $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+$end

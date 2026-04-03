@@ -1,0 +1,11 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775239188" />
+    <testcase name="test_zero_not_singleton" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="19" time="0.00011444091796875" sim_time_ns="1.0" ratio_time="8738.133333333333" />
+    <testcase name="test_single_bit_is_singleton" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="26" time="0.0001437664031982422" sim_time_ns="16.0" ratio_time="111291.64842454395" />
+    <testcase name="test_two_bits_not_singleton" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="34" time="0.00011348724365234375" sim_time_ns="15.000000000000004" ratio_time="132173.4453781513" />
+    <testcase name="test_all_bits_not_singleton" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="42" time="2.0265579223632812e-05" sim_time_ns="1.0" ratio_time="49344.75294117647" />
+    <testcase name="test_all_powers_of_two" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="49" time="0.00010800361633300781" sim_time_ns="16.0" ratio_time="148143.1876379691" />
+    <testcase name="test_random" classname="test_SingletonDetectionOne" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionOne.py" lineno="56" time="0.0005199909210205078" sim_time_ns="100.0" ratio_time="192311.04997707473" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,12 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198571" />
+    <testcase name="test_and_output" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="10" time="9.584426879882812e-05" sim_time_ns="1.0" ratio_time="10433.592039800995" />
+    <testcase name="test_deadend_when_no_overlap" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="15" time="3.504753112792969e-05" sim_time_ns="1.0" ratio_time="28532.680272108842" />
+    <testcase name="test_no_deadend_when_overlap" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="21" time="1.6450881958007812e-05" sim_time_ns="1.0" ratio_time="60787.014492753624" />
+    <testcase name="test_updated_when_neighbour_restricts" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="26" time="2.002716064453125e-05" sim_time_ns="1.0" ratio_time="49932.19047619047" />
+    <testcase name="test_not_updated_when_no_change" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="31" time="1.9550323486328125e-05" sim_time_ns="1.0" ratio_time="51150.04878048781" />
+    <testcase name="test_all_zeros_input" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="36" time="1.621246337890625e-05" sim_time_ns="1.0" ratio_time="61680.94117647059" />
+    <testcase name="test_all_ones_input" classname="test_CascadeColourSingle" file="/home/parallels/e2_fpga/tests/test_CascadeColourSingle.py" lineno="43" time="1.5735626220703125e-05" sim_time_ns="1.0" ratio_time="63550.06060606061" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,1393 @@
+Analysis & Synthesis report for Eternity
+Fri Apr  3 08:37:30 2026
+Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis RAM Summary
+  9. State Machine - |working_set_view_8x8|WorkingSet:u_ws|state
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Registers Packed Into Inferred Megafunctions
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Source assignments for altsyncram:bram_r0_rtl_0|altsyncram_icn1:auto_generated
+ 15. Source assignments for altsyncram:bram_r1_rtl_0|altsyncram_icn1:auto_generated
+ 16. Source assignments for altsyncram:bram_r2_rtl_0|altsyncram_icn1:auto_generated
+ 17. Source assignments for altsyncram:bram_r3_rtl_0|altsyncram_icn1:auto_generated
+ 18. Source assignments for altsyncram:bram_col_rtl_0|altsyncram_acn1:auto_generated
+ 19. Parameter Settings for User Entity Instance: WorkingSet:u_ws
+ 20. Parameter Settings for Inferred Entity Instance: altsyncram:bram_r0_rtl_0
+ 21. Parameter Settings for Inferred Entity Instance: altsyncram:bram_r1_rtl_0
+ 22. Parameter Settings for Inferred Entity Instance: altsyncram:bram_r2_rtl_0
+ 23. Parameter Settings for Inferred Entity Instance: altsyncram:bram_r3_rtl_0
+ 24. Parameter Settings for Inferred Entity Instance: altsyncram:bram_col_rtl_0
+ 25. Parameter Settings for Inferred Entity Instance: lpm_divide:Mod0
+ 26. altsyncram Parameter Settings by Entity Instance
+ 27. Post-Synthesis Netlist Statistics for Top Partition
+ 28. Elapsed Time Per Partition
+ 29. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++-----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                      ;
++---------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Fri Apr  3 08:37:30 2026           ;
+; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
+; Revision Name                   ; Eternity                                        ;
+; Top-level Entity Name           ; working_set_view_8x8                            ;
+; Family                          ; Cyclone V                                       ;
+; Logic utilization (in ALMs)     ; N/A                                             ;
+; Total registers                 ; 17975                                           ;
+; Total pins                      ; 3                                               ;
+; Total virtual pins              ; 0                                               ;
+; Total block memory bits         ; 1,164,800                                       ;
+; Total DSP Blocks                ; 0                                               ;
+; Total HSSI RX PCSs              ; 0                                               ;
+; Total HSSI PMA RX Deserializers ; 0                                               ;
+; Total HSSI TX PCSs              ; 0                                               ;
+; Total HSSI PMA TX Serializers   ; 0                                               ;
+; Total PLLs                      ; 0                                               ;
+; Total DLLs                      ; 0                                               ;
++---------------------------------+-------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                               ;
++---------------------------------------------------------------------------------+----------------------+--------------------+
+; Option                                                                          ; Setting              ; Default Value      ;
++---------------------------------------------------------------------------------+----------------------+--------------------+
+; Device                                                                          ; 5CSXFC6D6F31C6       ;                    ;
+; Top-level entity name                                                           ; working_set_view_8x8 ; Eternity           ;
+; Family name                                                                     ; Cyclone V            ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                  ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                   ; On                 ;
+; Enable compact report table                                                     ; Off                  ; Off                ;
+; Restructure Multiplexers                                                        ; Auto                 ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                  ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                  ; Off                ;
+; Preserve fewer node names                                                       ; On                   ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable               ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001         ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993            ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto                 ; Auto               ;
+; Safe State Machine                                                              ; Off                  ; Off                ;
+; Extract Verilog State Machines                                                  ; On                   ; On                 ;
+; Extract VHDL State Machines                                                     ; On                   ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                  ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000                 ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                  ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                   ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                   ; On                 ;
+; Parallel Synthesis                                                              ; On                   ; On                 ;
+; DSP Block Balancing                                                             ; Auto                 ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                   ; On                 ;
+; Power-Up Don't Care                                                             ; On                   ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                  ; Off                ;
+; Remove Duplicate Registers                                                      ; On                   ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                  ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                  ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                  ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                  ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                  ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                   ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                  ; Off                ;
+; Optimization Technique                                                          ; Balanced             ; Balanced           ;
+; Carry Chain Length                                                              ; 70                   ; 70                 ;
+; Auto Carry Chains                                                               ; On                   ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                   ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                  ; Off                ;
+; Auto ROM Replacement                                                            ; On                   ; On                 ;
+; Auto RAM Replacement                                                            ; On                   ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                   ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto                 ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto                 ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                   ; On                 ;
+; Strict RAM Replacement                                                          ; Off                  ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                   ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                  ; Off                ;
+; Auto Resource Sharing                                                           ; Off                  ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                  ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                  ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                  ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                   ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                  ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                   ; On                 ;
+; Report Parameter Settings                                                       ; On                   ; On                 ;
+; Report Source Assignments                                                       ; On                   ; On                 ;
+; Report Connectivity Checks                                                      ; On                   ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                  ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                    ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation   ; Normal compilation ;
+; HDL message level                                                               ; Level2               ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                  ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000                 ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000                 ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                  ; 100                ;
+; Clock MUX Protection                                                            ; On                   ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                  ; Off                ;
+; Block Design Naming                                                             ; Auto                 ; Auto               ;
+; SDC constraint protection                                                       ; Off                  ; Off                ;
+; Synthesis Effort                                                                ; Auto                 ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                   ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                  ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium               ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto                 ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                   ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                   ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                  ; Off                ;
++---------------------------------------------------------------------------------+----------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 64          ;
+; Maximum allowed            ; 16          ;
+;                            ;             ;
+; Average used               ; 2.79        ;
+; Maximum used               ; 16          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;  39.0%      ;
+;     Processor 3            ;  10.6%      ;
+;     Processor 4            ;  10.6%      ;
+;     Processor 5            ;  10.6%      ;
+;     Processor 6            ;  10.6%      ;
+;     Processor 7            ;   9.8%      ;
+;     Processor 8            ;   9.8%      ;
+;     Processor 9            ;   9.8%      ;
+;     Processor 10           ;   9.8%      ;
+;     Processor 11           ;   9.8%      ;
+;     Processor 12           ;   9.8%      ;
+;     Processor 13           ;   9.8%      ;
+;     Processor 14           ;   9.7%      ;
+;     Processor 15           ;   9.7%      ;
+;     Processor 16           ;   9.7%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                               ;
++----------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                                           ; Library ;
++----------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------------------------------------------------+---------+
+; working_set_view_8x8.sv          ; yes             ; User SystemVerilog HDL File  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv    ;         ;
+; WorkingSet.sv                    ; yes             ; User SystemVerilog HDL File  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/WorkingSet.sv              ;         ;
+; altsyncram.tdf                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf                                                  ;         ;
+; stratix_ram_block.inc            ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/stratix_ram_block.inc                                           ;         ;
+; lpm_mux.inc                      ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_mux.inc                                                     ;         ;
+; lpm_decode.inc                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_decode.inc                                                  ;         ;
+; aglobal251.inc                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/aglobal251.inc                                                  ;         ;
+; a_rdenreg.inc                    ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/a_rdenreg.inc                                                   ;         ;
+; altrom.inc                       ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altrom.inc                                                      ;         ;
+; altram.inc                       ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altram.inc                                                      ;         ;
+; altdpram.inc                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altdpram.inc                                                    ;         ;
+; db/altsyncram_icn1.tdf           ; yes             ; Auto-Generated Megafunction  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/altsyncram_icn1.tdf     ;         ;
+; db/altsyncram_acn1.tdf           ; yes             ; Auto-Generated Megafunction  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/altsyncram_acn1.tdf     ;         ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_divide.tdf                                                  ;         ;
+; abs_divider.inc                  ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/abs_divider.inc                                                 ;         ;
+; sign_div_unsign.inc              ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/sign_div_unsign.inc                                             ;         ;
+; db/lpm_divide_b2m.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/lpm_divide_b2m.tdf      ;         ;
+; db/sign_div_unsign_ekh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/sign_div_unsign_ekh.tdf ;         ;
+; db/alt_u_div_2te.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/alt_u_div_2te.tdf       ;         ;
++----------------------------------+-----------------+------------------------------+------------------------------------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 13637     ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 9801      ;
+;     -- 7 input functions                    ; 0         ;
+;     -- 6 input functions                    ; 8943      ;
+;     -- 5 input functions                    ; 552       ;
+;     -- 4 input functions                    ; 247       ;
+;     -- <=3 input functions                  ; 59        ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 17975     ;
+;                                             ;           ;
+; I/O pins                                    ; 3         ;
+; Total MLAB memory bits                      ; 0         ;
+; Total block memory bits                     ; 1164800   ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 18255     ;
+; Total fan-out                               ; 119590    ;
+; Average fan-out                             ; 4.26      ;
++---------------------------------------------+-----------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                           ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                   ; Entity Name          ; Library Name ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; |working_set_view_8x8                  ; 9801 (3661)         ; 17975 (17)                ; 1164800           ; 0          ; 3    ; 0            ; |working_set_view_8x8                                                                                                 ; working_set_view_8x8 ; work         ;
+;    |WorkingSet:u_ws|                   ; 6110 (6110)         ; 17958 (17958)             ; 0                 ; 0          ; 0    ; 0            ; |working_set_view_8x8|WorkingSet:u_ws                                                                                 ; WorkingSet           ; work         ;
+;    |altsyncram:bram_col_rtl_0|         ; 0 (0)               ; 0 (0)                     ; 99840             ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_col_rtl_0                                                                       ; altsyncram           ; work         ;
+;       |altsyncram_acn1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 99840             ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_col_rtl_0|altsyncram_acn1:auto_generated                                        ; altsyncram_acn1      ; work         ;
+;    |altsyncram:bram_r0_rtl_0|          ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r0_rtl_0                                                                        ; altsyncram           ; work         ;
+;       |altsyncram_icn1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r0_rtl_0|altsyncram_icn1:auto_generated                                         ; altsyncram_icn1      ; work         ;
+;    |altsyncram:bram_r1_rtl_0|          ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r1_rtl_0                                                                        ; altsyncram           ; work         ;
+;       |altsyncram_icn1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r1_rtl_0|altsyncram_icn1:auto_generated                                         ; altsyncram_icn1      ; work         ;
+;    |altsyncram:bram_r2_rtl_0|          ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r2_rtl_0                                                                        ; altsyncram           ; work         ;
+;       |altsyncram_icn1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r2_rtl_0|altsyncram_icn1:auto_generated                                         ; altsyncram_icn1      ; work         ;
+;    |altsyncram:bram_r3_rtl_0|          ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r3_rtl_0                                                                        ; altsyncram           ; work         ;
+;       |altsyncram_icn1:auto_generated| ; 0 (0)               ; 0 (0)                     ; 266240            ; 0          ; 0    ; 0            ; |working_set_view_8x8|altsyncram:bram_r3_rtl_0|altsyncram_icn1:auto_generated                                         ; altsyncram_icn1      ; work         ;
+;    |lpm_divide:Mod0|                   ; 30 (0)              ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |working_set_view_8x8|lpm_divide:Mod0                                                                                 ; lpm_divide           ; work         ;
+;       |lpm_divide_b2m:auto_generated|  ; 30 (0)              ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |working_set_view_8x8|lpm_divide:Mod0|lpm_divide_b2m:auto_generated                                                   ; lpm_divide_b2m       ; work         ;
+;          |sign_div_unsign_ekh:divider| ; 30 (0)              ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |working_set_view_8x8|lpm_divide:Mod0|lpm_divide_b2m:auto_generated|sign_div_unsign_ekh:divider                       ; sign_div_unsign_ekh  ; work         ;
+;             |alt_u_div_2te:divider|    ; 30 (30)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |working_set_view_8x8|lpm_divide:Mod0|lpm_divide_b2m:auto_generated|sign_div_unsign_ekh:divider|alt_u_div_2te:divider ; alt_u_div_2te        ; work         ;
++----------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                          ;
++---------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
+; Name                                                                ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF  ;
++---------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
+; altsyncram:bram_col_rtl_0|altsyncram_acn1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 4160         ; 24           ; 4160         ; 24           ; 99840  ; None ;
+; altsyncram:bram_r0_rtl_0|altsyncram_icn1:auto_generated|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 4160         ; 64           ; 4160         ; 64           ; 266240 ; None ;
+; altsyncram:bram_r1_rtl_0|altsyncram_icn1:auto_generated|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 4160         ; 64           ; 4160         ; 64           ; 266240 ; None ;
+; altsyncram:bram_r2_rtl_0|altsyncram_icn1:auto_generated|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 4160         ; 64           ; 4160         ; 64           ; 266240 ; None ;
+; altsyncram:bram_r3_rtl_0|altsyncram_icn1:auto_generated|ALTSYNCRAM  ; AUTO ; Simple Dual Port ; 4160         ; 64           ; 4160         ; 64           ; 266240 ; None ;
++---------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------+
+; State Machine - |working_set_view_8x8|WorkingSet:u_ws|state              ;
++--------------+--------------+--------------+--------------+--------------+
+; Name         ; state.S_DONE ; state.S_SAVE ; state.S_LOAD ; state.S_IDLE ;
++--------------+--------------+--------------+--------------+--------------+
+; state.S_IDLE ; 0            ; 0            ; 0            ; 0            ;
+; state.S_LOAD ; 0            ; 0            ; 1            ; 1            ;
+; state.S_SAVE ; 0            ; 1            ; 0            ; 1            ;
+; state.S_DONE ; 1            ; 0            ; 0            ; 1            ;
++--------------+--------------+--------------+--------------+--------------+
+
+
++---------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                    ;
++-----------------------------------------+---------------------------------------------+
+; Register name                           ; Reason for Removal                          ;
++-----------------------------------------+---------------------------------------------+
+; commit                                  ; Lost fanout                                 ;
+; WorkingSet:u_ws|dom_wr_en               ; Merged with WorkingSet:u_ws|col_wr_en       ;
+; WorkingSet:u_ws|dom_wr_addr[0]          ; Merged with WorkingSet:u_ws|col_wr_addr[0]  ;
+; WorkingSet:u_ws|dom_wr_addr[1]          ; Merged with WorkingSet:u_ws|col_wr_addr[1]  ;
+; WorkingSet:u_ws|dom_wr_addr[2]          ; Merged with WorkingSet:u_ws|col_wr_addr[2]  ;
+; WorkingSet:u_ws|dom_wr_addr[3]          ; Merged with WorkingSet:u_ws|col_wr_addr[3]  ;
+; WorkingSet:u_ws|dom_wr_addr[4]          ; Merged with WorkingSet:u_ws|col_wr_addr[4]  ;
+; WorkingSet:u_ws|dom_wr_addr[5]          ; Merged with WorkingSet:u_ws|col_wr_addr[5]  ;
+; WorkingSet:u_ws|dom_wr_addr[6]          ; Merged with WorkingSet:u_ws|col_wr_addr[6]  ;
+; WorkingSet:u_ws|dom_wr_addr[7]          ; Merged with WorkingSet:u_ws|col_wr_addr[7]  ;
+; WorkingSet:u_ws|dom_wr_addr[8]          ; Merged with WorkingSet:u_ws|col_wr_addr[8]  ;
+; WorkingSet:u_ws|dom_wr_addr[9]          ; Merged with WorkingSet:u_ws|col_wr_addr[9]  ;
+; WorkingSet:u_ws|dom_wr_addr[10]         ; Merged with WorkingSet:u_ws|col_wr_addr[10] ;
+; WorkingSet:u_ws|dom_wr_addr[11]         ; Merged with WorkingSet:u_ws|col_wr_addr[11] ;
+; WorkingSet:u_ws|dom_wr_addr[12]         ; Merged with WorkingSet:u_ws|col_wr_addr[12] ;
+; WorkingSet:u_ws|dom_rd_addr[0]          ; Merged with WorkingSet:u_ws|col_rd_addr[0]  ;
+; WorkingSet:u_ws|dom_rd_addr[1]          ; Merged with WorkingSet:u_ws|col_rd_addr[1]  ;
+; WorkingSet:u_ws|dom_rd_addr[2]          ; Merged with WorkingSet:u_ws|col_rd_addr[2]  ;
+; WorkingSet:u_ws|dom_rd_addr[3]          ; Merged with WorkingSet:u_ws|col_rd_addr[3]  ;
+; WorkingSet:u_ws|dom_rd_addr[4]          ; Merged with WorkingSet:u_ws|col_rd_addr[4]  ;
+; WorkingSet:u_ws|dom_rd_addr[5]          ; Merged with WorkingSet:u_ws|col_rd_addr[5]  ;
+; WorkingSet:u_ws|dom_rd_addr[6]          ; Merged with WorkingSet:u_ws|col_rd_addr[6]  ;
+; WorkingSet:u_ws|dom_rd_addr[7]          ; Merged with WorkingSet:u_ws|col_rd_addr[7]  ;
+; WorkingSet:u_ws|dom_rd_addr[8]          ; Merged with WorkingSet:u_ws|col_rd_addr[8]  ;
+; WorkingSet:u_ws|dom_rd_addr[9]          ; Merged with WorkingSet:u_ws|col_rd_addr[9]  ;
+; WorkingSet:u_ws|dom_rd_addr[10]         ; Merged with WorkingSet:u_ws|col_rd_addr[10] ;
+; WorkingSet:u_ws|dom_rd_addr[11]         ; Merged with WorkingSet:u_ws|col_rd_addr[11] ;
+; WorkingSet:u_ws|dom_rd_addr[12]         ; Merged with WorkingSet:u_ws|col_rd_addr[12] ;
+; WorkingSet:u_ws|wrk_top[63][0]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_top[63][1]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_top[63][2]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_top[63][3]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_top[63][4]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_top[63][5]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][5]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][4]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][3]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][2]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][1]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_left[63][0]         ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][5]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][4]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][3]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][2]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][1]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_bottom[63][0]       ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][0]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][1]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][2]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][3]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][4]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][5]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][6]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][7]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][8]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][9]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][10]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][11]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][12]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][13]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][14]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][15]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][16]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][17]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][18]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][19]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][20]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][21]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][22]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][23]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][24]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][25]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][26]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][27]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][28]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][29]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][30]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][31]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][32]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][33]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][34]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][35]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][36]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][37]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][38]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][39]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][40]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][41]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][42]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][43]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][44]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][45]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][46]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][47]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][48]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][49]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][50]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][51]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][52]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][53]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][54]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][55]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][56]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][57]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][58]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][59]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][60]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][61]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][62]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r0[63][63]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][0]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][1]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][2]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][3]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][4]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][5]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][6]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][7]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][8]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][9]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][10]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][11]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][12]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][13]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][14]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][15]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][16]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][17]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][18]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][19]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][20]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][21]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][22]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][23]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][24]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][25]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][26]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][27]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][28]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][29]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][30]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][31]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][32]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][33]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][34]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][35]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][36]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][37]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][38]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][39]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][40]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][41]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][42]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][43]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][44]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][45]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][46]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][47]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][48]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][49]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][50]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][51]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][52]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][53]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][54]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][55]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][56]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][57]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][58]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][59]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][60]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][61]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][62]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r1[63][63]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][0]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][1]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][2]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][3]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][4]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][5]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][6]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][7]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][8]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][9]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][10]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][11]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][12]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][13]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][14]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][15]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][16]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][17]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][18]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][19]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][20]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][21]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][22]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][23]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][24]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][25]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][26]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][27]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][28]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][29]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][30]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][31]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][32]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][33]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][34]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][35]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][36]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][37]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][38]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][39]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][40]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][41]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][42]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][43]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][44]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][45]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][46]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][47]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][48]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][49]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][50]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][51]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][52]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][53]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][54]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][55]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][56]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][57]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][58]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][59]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][60]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][61]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][62]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r2[63][63]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][0]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][1]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][2]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][3]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][4]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][5]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][6]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][7]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][8]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][9]           ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][10]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][11]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][12]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][13]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][14]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][15]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][16]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][17]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][18]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][19]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][20]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][21]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][22]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][23]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][24]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][25]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][26]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][27]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][28]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][29]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][30]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][31]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][32]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][33]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][34]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][35]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][36]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][37]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][38]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][39]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][40]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][41]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][42]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][43]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][44]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][45]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][46]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][47]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][48]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][49]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][50]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][51]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][52]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][53]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][54]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][55]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][56]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][57]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][58]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][59]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][60]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][61]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][62]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_r3[63][63]          ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][5]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][4]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][3]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][2]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][1]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|wrk_right[63][0]        ; Stuck at GND due to stuck port clock_enable ;
+; WorkingSet:u_ws|state~5                 ; Lost fanout                                 ;
+; WorkingSet:u_ws|state~6                 ; Lost fanout                                 ;
+; Total Number of Removed Registers = 310 ;                                             ;
++-----------------------------------------+---------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 17975 ;
+; Number of registers using Synchronous Clear  ; 19    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 17952 ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++----------------------------------------------+
+; Registers Packed Into Inferred Megafunctions ;
++--------------------+----------------+--------+
+; Register Name      ; Megafunction   ; Type   ;
++--------------------+----------------+--------+
+; dom_rd_r0[0..63]   ; bram_r0_rtl_0  ; RAM    ;
+; dom_rd_r1[0..63]   ; bram_r1_rtl_0  ; RAM    ;
+; dom_rd_r2[0..63]   ; bram_r2_rtl_0  ; RAM    ;
+; dom_rd_r3[0..63]   ; bram_r3_rtl_0  ; RAM    ;
+; col_rd_data[0..23] ; bram_col_rtl_0 ; RAM    ;
++--------------------+----------------+--------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------+
+; 4:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |working_set_view_8x8|WorkingSet:u_ws|col_rd_addr[2] ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 0 LEs                ; 14 LEs                 ; Yes        ; |working_set_view_8x8|WorkingSet:u_ws|col_rd_addr[6] ;
+; 64:1               ; 280 bits  ; 11760 LEs     ; 11760 LEs            ; 0 LEs                  ; Yes        ; |working_set_view_8x8|WorkingSet:u_ws|dom_wr_r0[5]   ;
+; 6:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |working_set_view_8x8|WorkingSet:u_ws|cnt[5]         ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |working_set_view_8x8|WorkingSet:u_ws|state          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------+
+; Source assignments for altsyncram:bram_r0_rtl_0|altsyncram_icn1:auto_generated ;
++---------------------------------+--------------------+------+------------------+
+; Assignment                      ; Value              ; From ; To               ;
++---------------------------------+--------------------+------+------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                ;
++---------------------------------+--------------------+------+------------------+
+
+
++--------------------------------------------------------------------------------+
+; Source assignments for altsyncram:bram_r1_rtl_0|altsyncram_icn1:auto_generated ;
++---------------------------------+--------------------+------+------------------+
+; Assignment                      ; Value              ; From ; To               ;
++---------------------------------+--------------------+------+------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                ;
++---------------------------------+--------------------+------+------------------+
+
+
++--------------------------------------------------------------------------------+
+; Source assignments for altsyncram:bram_r2_rtl_0|altsyncram_icn1:auto_generated ;
++---------------------------------+--------------------+------+------------------+
+; Assignment                      ; Value              ; From ; To               ;
++---------------------------------+--------------------+------+------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                ;
++---------------------------------+--------------------+------+------------------+
+
+
++--------------------------------------------------------------------------------+
+; Source assignments for altsyncram:bram_r3_rtl_0|altsyncram_icn1:auto_generated ;
++---------------------------------+--------------------+------+------------------+
+; Assignment                      ; Value              ; From ; To               ;
++---------------------------------+--------------------+------+------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                ;
++---------------------------------+--------------------+------+------------------+
+
+
++---------------------------------------------------------------------------------+
+; Source assignments for altsyncram:bram_col_rtl_0|altsyncram_acn1:auto_generated ;
++---------------------------------+--------------------+------+-------------------+
+; Assignment                      ; Value              ; From ; To                ;
++---------------------------------+--------------------+------+-------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                 ;
++---------------------------------+--------------------+------+-------------------+
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: WorkingSet:u_ws ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; N              ; 8     ; Signed Integer                      ;
+; TC             ; 6     ; Signed Integer                      ;
+; VARIABLES      ; 64    ; Signed Integer                      ;
+; ID_BITS        ; 6     ; Signed Integer                      ;
+; DEPTH          ; 65    ; Signed Integer                      ;
+; ADDR_BITS      ; 13    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: altsyncram:bram_r0_rtl_0  ;
++------------------------------------+----------------------+----------------+
+; Parameter Name                     ; Value                ; Type           ;
++------------------------------------+----------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped        ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped        ;
+; WIDTH_A                            ; 64                   ; Untyped        ;
+; WIDTHAD_A                          ; 13                   ; Untyped        ;
+; NUMWORDS_A                         ; 4160                 ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WIDTH_B                            ; 64                   ; Untyped        ;
+; WIDTHAD_B                          ; 13                   ; Untyped        ;
+; NUMWORDS_B                         ; 4160                 ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped        ;
+; BYTE_SIZE                          ; 8                    ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; INIT_FILE                          ; UNUSED               ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone V            ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_icn1      ; Untyped        ;
++------------------------------------+----------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: altsyncram:bram_r1_rtl_0  ;
++------------------------------------+----------------------+----------------+
+; Parameter Name                     ; Value                ; Type           ;
++------------------------------------+----------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped        ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped        ;
+; WIDTH_A                            ; 64                   ; Untyped        ;
+; WIDTHAD_A                          ; 13                   ; Untyped        ;
+; NUMWORDS_A                         ; 4160                 ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WIDTH_B                            ; 64                   ; Untyped        ;
+; WIDTHAD_B                          ; 13                   ; Untyped        ;
+; NUMWORDS_B                         ; 4160                 ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped        ;
+; BYTE_SIZE                          ; 8                    ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; INIT_FILE                          ; UNUSED               ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone V            ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_icn1      ; Untyped        ;
++------------------------------------+----------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: altsyncram:bram_r2_rtl_0  ;
++------------------------------------+----------------------+----------------+
+; Parameter Name                     ; Value                ; Type           ;
++------------------------------------+----------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped        ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped        ;
+; WIDTH_A                            ; 64                   ; Untyped        ;
+; WIDTHAD_A                          ; 13                   ; Untyped        ;
+; NUMWORDS_A                         ; 4160                 ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WIDTH_B                            ; 64                   ; Untyped        ;
+; WIDTHAD_B                          ; 13                   ; Untyped        ;
+; NUMWORDS_B                         ; 4160                 ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped        ;
+; BYTE_SIZE                          ; 8                    ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; INIT_FILE                          ; UNUSED               ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone V            ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_icn1      ; Untyped        ;
++------------------------------------+----------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: altsyncram:bram_r3_rtl_0  ;
++------------------------------------+----------------------+----------------+
+; Parameter Name                     ; Value                ; Type           ;
++------------------------------------+----------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped        ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped        ;
+; WIDTH_A                            ; 64                   ; Untyped        ;
+; WIDTHAD_A                          ; 13                   ; Untyped        ;
+; NUMWORDS_A                         ; 4160                 ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WIDTH_B                            ; 64                   ; Untyped        ;
+; WIDTHAD_B                          ; 13                   ; Untyped        ;
+; NUMWORDS_B                         ; 4160                 ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped        ;
+; BYTE_SIZE                          ; 8                    ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; INIT_FILE                          ; UNUSED               ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone V            ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_icn1      ; Untyped        ;
++------------------------------------+----------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: altsyncram:bram_col_rtl_0 ;
++------------------------------------+----------------------+----------------+
+; Parameter Name                     ; Value                ; Type           ;
++------------------------------------+----------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped        ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped        ;
+; WIDTH_A                            ; 24                   ; Untyped        ;
+; WIDTHAD_A                          ; 13                   ; Untyped        ;
+; NUMWORDS_A                         ; 4160                 ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped        ;
+; WIDTH_B                            ; 24                   ; Untyped        ;
+; WIDTHAD_B                          ; 13                   ; Untyped        ;
+; NUMWORDS_B                         ; 4160                 ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped        ;
+; BYTE_SIZE                          ; 8                    ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped        ;
+; INIT_FILE                          ; UNUSED               ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped        ;
+; DEVICE_FAMILY                      ; Cyclone V            ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_acn1      ; Untyped        ;
++------------------------------------+----------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_divide:Mod0 ;
++------------------------+----------------+------------------------+
+; Parameter Name         ; Value          ; Type                   ;
++------------------------+----------------+------------------------+
+; LPM_WIDTHN             ; 8              ; Untyped                ;
+; LPM_WIDTHD             ; 7              ; Untyped                ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_PIPELINE           ; 0              ; Untyped                ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_b2m ; Untyped                ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
++------------------------+----------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------+
+; altsyncram Parameter Settings by Entity Instance                      ;
++-------------------------------------------+---------------------------+
+; Name                                      ; Value                     ;
++-------------------------------------------+---------------------------+
+; Number of entity instances                ; 5                         ;
+; Entity Instance                           ; altsyncram:bram_r0_rtl_0  ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                 ;
+;     -- WIDTH_A                            ; 64                        ;
+;     -- NUMWORDS_A                         ; 4160                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED              ;
+;     -- WIDTH_B                            ; 64                        ;
+;     -- NUMWORDS_B                         ; 4160                      ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                    ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED              ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                      ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                  ;
+; Entity Instance                           ; altsyncram:bram_r1_rtl_0  ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                 ;
+;     -- WIDTH_A                            ; 64                        ;
+;     -- NUMWORDS_A                         ; 4160                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED              ;
+;     -- WIDTH_B                            ; 64                        ;
+;     -- NUMWORDS_B                         ; 4160                      ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                    ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED              ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                      ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                  ;
+; Entity Instance                           ; altsyncram:bram_r2_rtl_0  ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                 ;
+;     -- WIDTH_A                            ; 64                        ;
+;     -- NUMWORDS_A                         ; 4160                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED              ;
+;     -- WIDTH_B                            ; 64                        ;
+;     -- NUMWORDS_B                         ; 4160                      ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                    ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED              ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                      ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                  ;
+; Entity Instance                           ; altsyncram:bram_r3_rtl_0  ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                 ;
+;     -- WIDTH_A                            ; 64                        ;
+;     -- NUMWORDS_A                         ; 4160                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED              ;
+;     -- WIDTH_B                            ; 64                        ;
+;     -- NUMWORDS_B                         ; 4160                      ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                    ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED              ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                      ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                  ;
+; Entity Instance                           ; altsyncram:bram_col_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                 ;
+;     -- WIDTH_A                            ; 24                        ;
+;     -- NUMWORDS_A                         ; 4160                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED              ;
+;     -- WIDTH_B                            ; 24                        ;
+;     -- NUMWORDS_B                         ; 4160                      ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                    ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED              ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                      ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                  ;
++-------------------------------------------+---------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 17975                       ;
+;     ENA               ; 17952                       ;
+;     SCLR              ; 19                          ;
+;     plain             ; 4                           ;
+; arriav_lcell_comb     ; 9801                        ;
+;     arith             ; 25                          ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 16                          ;
+;         2 data inputs ; 3                           ;
+;         3 data inputs ; 4                           ;
+;     normal            ; 9776                        ;
+;         2 data inputs ; 19                          ;
+;         3 data inputs ; 15                          ;
+;         4 data inputs ; 247                         ;
+;         5 data inputs ; 552                         ;
+;         6 data inputs ; 8943                        ;
+; boundary_port         ; 3                           ;
+; stratixv_ram_block    ; 280                         ;
+;                       ;                             ;
+; Max LUT depth         ; 6.00                        ;
+; Average LUT depth     ; 5.02                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:29     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+    Info: Processing started: Fri Apr  3 08:36:48 2026
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Eternity -c Eternity
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20032): Parallel compilation is enabled and will use up to 16 processors
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourall.sv
+    Info (12023): Found entity 1: CascadeColourAll File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourAll.sv Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file working_set_view_8x8.sv
+    Info (12023): Found entity 1: working_set_view_8x8 File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv Line: 20
+Info (12021): Found 1 design units, including 1 entities, in source file working_set_view.sv
+    Info (12023): Found entity 1: working_set_view File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view.sv Line: 17
+Info (12021): Found 1 design units, including 1 entities, in source file workingset.sv
+    Info (12023): Found entity 1: WorkingSet File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/WorkingSet.sv Line: 26
+Info (12021): Found 1 design units, including 1 entities, in source file copylevel.sv
+    Info (12023): Found entity 1: CopyLevel File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CopyLevel.sv Line: 29
+Info (12021): Found 1 design units, including 1 entities, in source file tb_copy_level.sv
+    Info (12023): Found entity 1: tb_copy_level File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_copy_level.sv Line: 18
+Info (12021): Found 1 design units, including 1 entities, in source file singletondetection.sv
+    Info (12023): Found entity 1: SingletonDetection File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/SingletonDetection.sv Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolours.sv
+    Info (12023): Found entity 1: CascadeColours File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColours.sv Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file tb_singleton_detection.sv
+    Info (12023): Found entity 1: tb_singleton_detection File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_singleton_detection.sv Line: 12
+Info (12021): Found 1 design units, including 1 entities, in source file tb_domain_to_colour.sv
+    Info (12023): Found entity 1: tb_domain_to_colour File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_domain_to_colour.sv Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file tb_create_initial_game.sv
+    Info (12023): Found entity 1: tb_create_initial_game File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_create_initial_game.sv Line: 23
+Info (12021): Found 1 design units, including 1 entities, in source file tb_colours_to_domain.sv
+    Info (12023): Found entity 1: tb_colours_to_domain File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_colours_to_domain.sv Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file tb_choose_next_variable.sv
+    Info (12023): Found entity 1: tb_choose_next_variable File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_choose_next_variable.sv Line: 13
+Info (12021): Found 1 design units, including 1 entities, in source file tb_cascade_colours.sv
+    Info (12023): Found entity 1: tb_cascade_colours File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_cascade_colours.sv Line: 18
+Info (12021): Found 1 design units, including 1 entities, in source file tb_assignment.sv
+    Info (12023): Found entity 1: tb_assignment File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_assignment.sv Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file load_puzzle_brendan4.sv
+    Info (12023): Found entity 1: LoadPuzzle File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/load_puzzle_brendan4.sv Line: 38
+Info (12021): Found 1 design units, including 1 entities, in source file domain_to_colour.sv
+    Info (12023): Found entity 1: DomainToColour File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/domain_to_colour.sv Line: 28
+Info (12021): Found 1 design units, including 1 entities, in source file depth_first_search.sv
+    Info (12023): Found entity 1: DepthFirstSearch File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/depth_first_search.sv Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file create_initial_game.sv
+    Info (12023): Found entity 1: CreateInitialGame File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/create_initial_game.sv Line: 35
+Info (12021): Found 1 design units, including 1 entities, in source file colours_to_domain.sv
+    Info (12023): Found entity 1: ColoursToDomain File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/colours_to_domain.sv Line: 27
+Info (12021): Found 1 design units, including 1 entities, in source file choose_next_variable.sv
+    Info (12023): Found entity 1: ChooseNextVariable File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/choose_next_variable.sv Line: 28
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourwithchecks.sv
+    Info (12023): Found entity 1: CascadeColourWithChecks File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourWithChecks.sv Line: 12
+Info (12021): Found 1 design units, including 1 entities, in source file assignment.sv
+    Info (12023): Found entity 1: Assignment File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/assignment.sv Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file eternity.v
+    Info (12023): Found entity 1: Eternity File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/Eternity.v Line: 6
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourchanges.sv
+    Info (12023): Found entity 1: CascadeColourChanges File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourChanges.sv Line: 7
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourssimple.sv
+    Info (12023): Found entity 1: CascadeColoursSimple File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColoursSimple.sv Line: 13
+Info (12021): Found 1 design units, including 1 entities, in source file all_different_top.sv
+    Info (12023): Found entity 1: all_different_top File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/all_different_top.sv Line: 11
+Info (12021): Found 1 design units, including 1 entities, in source file tb_all_different.sv
+    Info (12023): Found entity 1: tb_all_different File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/tb_all_different.sv Line: 5
+Info (12021): Found 3 design units, including 3 entities, in source file all_different.sv
+    Info (12023): Found entity 1: CalculateTilesTaken File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/all_different.sv Line: 11
+    Info (12023): Found entity 2: AllDifferent File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/all_different.sv Line: 43
+    Info (12023): Found entity 3: Driver File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/all_different.sv Line: 106
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourdeadend.sv
+    Info (12023): Found entity 1: CascadeColourDeadend File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourDeadend.sv Line: 11
+Info (12021): Found 1 design units, including 1 entities, in source file ram2port.v
+    Info (12023): Found entity 1: Ram2Port File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/Ram2Port.v Line: 40
+Info (12021): Found 1 design units, including 1 entities, in source file bramexamplefromip.sv
+    Info (12023): Found entity 1: single_port_ram_with_init File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/BRamExampleFromIP.sv Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecolourpair.sv
+    Info (12023): Found entity 1: CascadeColourPair File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourPair.sv Line: 20
+Info (12021): Found 1 design units, including 1 entities, in source file domaintocolourrotation.sv
+    Info (12023): Found entity 1: DomainToColourRotation File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/DomainToColourRotation.sv Line: 26
+Info (12021): Found 1 design units, including 1 entities, in source file domaintocolourall.sv
+    Info (12023): Found entity 1: DomainToColourAll File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/DomainToColourAll.sv Line: 31
+Info (12021): Found 1 design units, including 1 entities, in source file cascadecoloursingle.sv
+    Info (12023): Found entity 1: CascadeColourSingle File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/CascadeColourSingle.sv Line: 15
+Info (12127): Elaborating entity "working_set_view_8x8" for the top level hierarchy
+Info (12128): Elaborating entity "WorkingSet" for hierarchy "WorkingSet:u_ws" File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv Line: 158
+Info (19000): Inferred 5 megafunctions from design logic
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "bram_r0_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 64
+        Info (286033): Parameter WIDTHAD_A set to 13
+        Info (286033): Parameter NUMWORDS_A set to 4160
+        Info (286033): Parameter WIDTH_B set to 64
+        Info (286033): Parameter WIDTHAD_B set to 13
+        Info (286033): Parameter NUMWORDS_B set to 4160
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "bram_r1_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 64
+        Info (286033): Parameter WIDTHAD_A set to 13
+        Info (286033): Parameter NUMWORDS_A set to 4160
+        Info (286033): Parameter WIDTH_B set to 64
+        Info (286033): Parameter WIDTHAD_B set to 13
+        Info (286033): Parameter NUMWORDS_B set to 4160
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "bram_r2_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 64
+        Info (286033): Parameter WIDTHAD_A set to 13
+        Info (286033): Parameter NUMWORDS_A set to 4160
+        Info (286033): Parameter WIDTH_B set to 64
+        Info (286033): Parameter WIDTHAD_B set to 13
+        Info (286033): Parameter NUMWORDS_B set to 4160
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "bram_r3_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 64
+        Info (286033): Parameter WIDTHAD_A set to 13
+        Info (286033): Parameter NUMWORDS_A set to 4160
+        Info (286033): Parameter WIDTH_B set to 64
+        Info (286033): Parameter WIDTHAD_B set to 13
+        Info (286033): Parameter NUMWORDS_B set to 4160
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "bram_col_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 24
+        Info (286033): Parameter WIDTHAD_A set to 13
+        Info (286033): Parameter NUMWORDS_A set to 4160
+        Info (286033): Parameter WIDTH_B set to 24
+        Info (286033): Parameter WIDTHAD_B set to 13
+        Info (286033): Parameter NUMWORDS_B set to 4160
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+Info (278001): Inferred 1 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Mod0" File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv Line: 94
+Info (12130): Elaborated megafunction instantiation "altsyncram:bram_r0_rtl_0"
+Info (12133): Instantiated megafunction "altsyncram:bram_r0_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
+    Info (12134): Parameter "WIDTH_A" = "64"
+    Info (12134): Parameter "WIDTHAD_A" = "13"
+    Info (12134): Parameter "NUMWORDS_A" = "4160"
+    Info (12134): Parameter "WIDTH_B" = "64"
+    Info (12134): Parameter "WIDTHAD_B" = "13"
+    Info (12134): Parameter "NUMWORDS_B" = "4160"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_B" = "NONE"
+    Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK0"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+    Info (12134): Parameter "READ_DURING_WRITE_MODE_MIXED_PORTS" = "OLD_DATA"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_icn1.tdf
+    Info (12023): Found entity 1: altsyncram_icn1 File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/altsyncram_icn1.tdf Line: 28
+Info (12130): Elaborated megafunction instantiation "altsyncram:bram_col_rtl_0"
+Info (12133): Instantiated megafunction "altsyncram:bram_col_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
+    Info (12134): Parameter "WIDTH_A" = "24"
+    Info (12134): Parameter "WIDTHAD_A" = "13"
+    Info (12134): Parameter "NUMWORDS_A" = "4160"
+    Info (12134): Parameter "WIDTH_B" = "24"
+    Info (12134): Parameter "WIDTHAD_B" = "13"
+    Info (12134): Parameter "NUMWORDS_B" = "4160"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_B" = "NONE"
+    Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK0"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+    Info (12134): Parameter "READ_DURING_WRITE_MODE_MIXED_PORTS" = "OLD_DATA"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_acn1.tdf
+    Info (12023): Found entity 1: altsyncram_acn1 File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/altsyncram_acn1.tdf Line: 28
+Info (12130): Elaborated megafunction instantiation "lpm_divide:Mod0" File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv Line: 94
+Info (12133): Instantiated megafunction "lpm_divide:Mod0" with the following parameter: File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/working_set_view_8x8.sv Line: 94
+    Info (12134): Parameter "LPM_WIDTHN" = "8"
+    Info (12134): Parameter "LPM_WIDTHD" = "7"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_b2m.tdf
+    Info (12023): Found entity 1: lpm_divide_b2m File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/lpm_divide_b2m.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_ekh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_ekh File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/sign_div_unsign_ekh.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_2te.tdf
+    Info (12023): Found entity 1: alt_u_div_2te File: C:/Users/User/FPGA/DE10-Standard_v.1.0.1_SystemBuilder/CodeGenerated/DE10_Standard/Eternity/db/alt_u_div_2te.tdf Line: 23
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 27747 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 2 input pins
+    Info (21059): Implemented 1 output pins
+    Info (21061): Implemented 27464 logic cells
+    Info (21064): Implemented 280 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 5219 megabytes
+    Info: Processing ended: Fri Apr  3 08:37:30 2026
+    Info: Elapsed time: 00:00:42
+    Info: Total CPU time (on all processors): 00:01:32
+
+

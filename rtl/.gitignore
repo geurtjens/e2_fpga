@@ -1,0 +1,28 @@
+# Verilator simulation build
+sim_build/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Quartus generated files
+*.rpt
+*.smsg
+*.summary
+*.done
+*.jdi
+*.jditmp
+*.pin
+*.sof
+*.pof
+*.rbf
+*.map
+*.fit
+*.asm
+*.sta
+*.eda
+*.htm
+*.sld
+*.v
+db/
+incremental_db/
+output_files/

@@ -1,0 +1,12 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775198569" />
+    <testcase name="test_no_tiles_taken" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="72" time="0.00019216537475585938" sim_time_ns="1.0" ratio_time="5203.85111662531" />
+    <testcase name="test_all_tiles_taken" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="81" time="0.00010085105895996094" sim_time_ns="1.0" ratio_time="9915.612293144208" />
+    <testcase name="test_inactive_variable_unchanged" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="89" time="8.344650268554688e-05" sim_time_ns="1.0" ratio_time="11983.725714285714" />
+    <testcase name="test_partial_tiles_taken" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="99" time="4.1484832763671875e-05" sim_time_ns="1.0" ratio_time="24105.19540229885" />
+    <testcase name="test_changed_detected" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="107" time="4.076957702636719e-05" sim_time_ns="1.0" ratio_time="24528.09356725146" />
+    <testcase name="test_no_change_when_already_clear" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="115" time="3.7670135498046875e-05" sim_time_ns="1.0" ratio_time="26546.227848101265" />
+    <testcase name="test_random" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="124" time="0.0026013851165771484" sim_time_ns="100.0" ratio_time="38441.05948125745" />
+  </testsuite>
+</testsuites>
