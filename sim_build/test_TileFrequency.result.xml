@@ -1,13 +1,13 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775198573" />
-    <testcase name="test_no_forced_tiles" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="104" time="0.0002925395965576172" sim_time_ns="1.0" ratio_time="3418.3406682966584" />
-    <testcase name="test_tile_forced_to_one_variable" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="112" time="0.0001895427703857422" sim_time_ns="1.0" ratio_time="5275.854088050314" />
-    <testcase name="test_tile_has_no_variable_deadend" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="130" time="0.00014901161193847656" sim_time_ns="1.0" ratio_time="6710.8864" />
-    <testcase name="test_inactive_tile_ignored" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="141" time="0.00012493133544921875" sim_time_ns="1.0" ratio_time="8004.396946564885" />
-    <testcase name="test_inactive_variable_ignored" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="155" time="0.00011372566223144531" sim_time_ns="1.0" ratio_time="8793.090146750525" />
-    <testcase name="test_two_stage_propagation" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="170" time="0.0001442432403564453" sim_time_ns="1.0" ratio_time="6932.7338842975205" />
-    <testcase name="test_popcount_deadend" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="189" time="0.00014448165893554688" sim_time_ns="1.0" ratio_time="6921.293729372937" />
-    <testcase name="test_random" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="200" time="0.004135847091674805" sim_time_ns="50.0" ratio_time="12089.421802040699" />
+    <property name="random_seed" value="1775304178" />
+    <testcase name="test_no_forced_tiles" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="104" time="0.00029969215393066406" sim_time_ns="1.0" ratio_time="3336.757358790772" />
+    <testcase name="test_tile_forced_to_one_variable" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="112" time="0.00016379356384277344" sim_time_ns="1.0" ratio_time="6105.245997088792" />
+    <testcase name="test_tile_has_no_variable_deadend" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="130" time="0.00015115737915039062" sim_time_ns="1.0" ratio_time="6615.621451104101" />
+    <testcase name="test_inactive_tile_ignored" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="141" time="0.00012755393981933594" sim_time_ns="1.0" ratio_time="7839.820560747664" />
+    <testcase name="test_inactive_variable_ignored" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="155" time="0.00011968612670898438" sim_time_ns="1.0" ratio_time="8355.187250996016" />
+    <testcase name="test_two_stage_propagation" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="170" time="0.00013589859008789062" sim_time_ns="1.0" ratio_time="7358.428070175439" />
+    <testcase name="test_popcount_deadend" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="189" time="0.0001480579376220703" sim_time_ns="1.0" ratio_time="6754.112721417069" />
+    <testcase name="test_random" classname="test_TileFrequency" file="/home/parallels/e2_fpga/tests/test_TileFrequency.py" lineno="200" time="0.004258632659912109" sim_time_ns="50.0" ratio_time="11740.857686709214" />
   </testsuite>
 </testsuites>

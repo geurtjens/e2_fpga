@@ -41,7 +41,7 @@ VL_ATTR_COLD void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtop___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("/home/parallels/e2_fpga/rtl/SingletonDetectionSlower.sv", 39, "", "DIDNOTCONVERGE: Settle region did not converge after '--converge-limit' of 10000 tries");
+            VL_FATAL_MT("/home/parallels/e2_fpga/rtl/nand_gate.sv", 1, "", "DIDNOTCONVERGE: Settle region did not converge after '--converge-limit' of 10000 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
         vlSelfRef.__VstlPhaseResult = Vtop___024root___eval_phase__stl(vlSelf);
@@ -89,15 +89,17 @@ VL_ATTR_COLD bool Vtop___024root___trigger_anySet__stl(const VlUnpacked<QData/*6
     return (0U);
 }
 
-void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf);
-
 VL_ATTR_COLD void Vtop___024root___eval_stl(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_stl\n"); );
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     if ((1ULL & vlSelfRef.__VstlTriggered[0U])) {
-        Vtop___024root___ico_sequent__TOP__0(vlSelf);
+        vlSelfRef.nand_gate__DOT__a = vlSelfRef.a;
+        vlSelfRef.nand_gate__DOT__b = vlSelfRef.b;
+        vlSelfRef.nand_gate__DOT__out = (1U & (~ ((IData)(vlSelfRef.nand_gate__DOT__a) 
+                                                  & (IData)(vlSelfRef.nand_gate__DOT__b))));
+        vlSelfRef.out = vlSelfRef.nand_gate__DOT__out;
     }
 }
 
@@ -142,38 +144,12 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     const uint64_t __VscopeHash = VL_MURMUR64_HASH(vlSelf->vlNamep);
-    vlSelf->in_variablesIncludedMask = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 6721146300777831544ull);
-    vlSelf->in_unassignedTiles = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 11727856142191904266ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->in_r0, __VscopeHash, 3152413299102512687ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->in_r1, __VscopeHash, 2505491051225188005ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->in_r2, __VscopeHash, 9800670479706676902ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->in_r3, __VscopeHash, 16761749809032170284ull);
-    vlSelf->out_variablesIncludedMask = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 491940131543128409ull);
-    vlSelf->out_unassignedTiles = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 4534392728457755849ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->out_r0, __VscopeHash, 6817780511262913590ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->out_r1, __VscopeHash, 598285983696530343ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->out_r2, __VscopeHash, 8584547151423561338ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->out_r3, __VscopeHash, 14837612390536580129ull);
-    vlSelf->singleton_found = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9421055182138494367ull);
-    vlSelf->deadend = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 2568607204292324806ull);
-    vlSelf->SingletonDetectionSlower__DOT__in_variablesIncludedMask = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 8943869064089501752ull);
-    vlSelf->SingletonDetectionSlower__DOT__in_unassignedTiles = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 12513858208260683993ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__in_r0, __VscopeHash, 17564184264442658366ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__in_r1, __VscopeHash, 5031775976670900526ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__in_r2, __VscopeHash, 3196437461540275313ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__in_r3, __VscopeHash, 14393256705576397038ull);
-    vlSelf->SingletonDetectionSlower__DOT__out_variablesIncludedMask = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 4994665036624753089ull);
-    vlSelf->SingletonDetectionSlower__DOT__out_unassignedTiles = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 8909588397737749100ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__out_r0, __VscopeHash, 3131004634635592617ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__out_r1, __VscopeHash, 6429221625091537298ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__out_r2, __VscopeHash, 9715211063176214372ull);
-    VL_SCOPED_RAND_RESET_W(256, vlSelf->SingletonDetectionSlower__DOT__out_r3, __VscopeHash, 2436233585064465978ull);
-    vlSelf->SingletonDetectionSlower__DOT__singleton_found = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11835980569252610773ull);
-    vlSelf->SingletonDetectionSlower__DOT__deadend = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 13357362865345137699ull);
-    vlSelf->SingletonDetectionSlower__DOT__unnamedblk2__DOT__v = 0;
-    vlSelf->SingletonDetectionSlower__DOT__unnamedblk2__DOT__unnamedblk3__DOT__unnamedblk4__DOT__p = 0;
-    vlSelf->__Vfunc_SingletonDetectionSlower__DOT__popcount__0__vec = 0;
-    vlSelf->__Vfunc_SingletonDetectionSlower__DOT__popcount__0__count = 0;
+    vlSelf->a = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 510903276987443985ull);
+    vlSelf->b = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16900879642891266615ull);
+    vlSelf->out = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7519490245117619040ull);
+    vlSelf->nand_gate__DOT__a = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17393411678547469363ull);
+    vlSelf->nand_gate__DOT__b = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3648510697825001817ull);
+    vlSelf->nand_gate__DOT__out = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 11657533697169245060ull);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VstlTriggered[__Vi0] = 0;
     }

@@ -33,7 +33,33 @@
         {
             "label": "Run single test",
             "type": "shell",
-            "command": "source /home/parallels/venv/fpga/bin/activate && pytest tests/test_${input:toplevel}.py -v -s",
+            "command": "source /home/parallels/venv/fpga/bin/activate && pytest tests/test_${input:moduleName}.py -v",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Run single test verbose",
+            "type": "shell",
+            "command": "source /home/parallels/venv/fpga/bin/activate && pytest tests/test_${input:moduleName}.py -v -s",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Run single test (clean build)",
+            "type": "shell",
+            "command": "source /home/parallels/venv/fpga/bin/activate && rm -rf sim_build && pytest tests/test_${input:moduleName}.py -v -s",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -46,10 +72,13 @@
     ],
     "inputs": [
         {
-            "id": "toplevel",
-            "type": "promptString",
-            "description": "Module to test",
-            "default": "nand_gate"
+            "id": "moduleName",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "ls tests/test_*.py | sed 's|tests/test_||' | sed 's|\\.py||' | sort",
+                "cwd": "${workspaceFolder}"
+            }
         }
     ]
 }

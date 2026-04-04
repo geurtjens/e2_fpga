@@ -9,55 +9,53 @@
 // does not need to be recalculated here.
 // ─────────────────────────────────────────────────────────────
 module AllDifferent #(
-    parameter int N = 8
+    parameter int N = 4,
+    parameter int V = N * N  //! number of variables — derived, do not override
 )(
-    input  logic [N-1:0][N-1:0] r0_in,
-    input  logic [N-1:0][N-1:0] r1_in,
-    input  logic [N-1:0][N-1:0] r2_in,
-    input  logic [N-1:0][N-1:0] r3_in,
-    input  logic [N-1:0]        variablesIncludedMask,
-    input  logic [N-1:0]        tilesTaken,
-    output logic [N-1:0][N-1:0] r0_out,
-    output logic [N-1:0][N-1:0] r1_out,
-    output logic [N-1:0][N-1:0] r2_out,
-    output logic [N-1:0][N-1:0] r3_out,
-    output logic                changed,
-    output logic                deadend
+    input  logic [V-1:0][V-1:0] in_domain_r0,
+    input  logic [V-1:0][V-1:0] in_domain_r1,
+    input  logic [V-1:0][V-1:0] in_domain_r2,
+    input  logic [V-1:0][V-1:0] in_domain_r3,
+    input  logic [V-1:0]        in_unassignedVariables,
+    input  logic [V-1:0]        in_unassignedTiles,
+    output logic [V-1:0][V-1:0] out_domain_r0,
+    output logic [V-1:0][V-1:0] out_domain_r1,
+    output logic [V-1:0][V-1:0] out_domain_r2,
+    output logic [V-1:0][V-1:0] out_domain_r3,
+    output logic                out_changed,
+    output logic                out_deadend
 );
-    logic [N-1:0] mask;
-    assign mask = ~tilesTaken;
-
-    // ── Apply mask to active variables ─────────────────────────
-    always_comb begin
-        for (int i = 0; i < N; i++) begin
-            if (variablesIncludedMask[i]) begin
-                r0_out[i] = r0_in[i] & mask;
-                r1_out[i] = r1_in[i] & mask;
-                r2_out[i] = r2_in[i] & mask;
-                r3_out[i] = r3_in[i] & mask;
+    always_comb begin : apply_mask_to_active_variables
+        for (int i = 0; i < V; i++) begin
+            if (in_unassignedVariables[i]) begin
+                out_domain_r0[i] = in_domain_r0[i] & in_unassignedTiles;
+                out_domain_r1[i] = in_domain_r1[i] & in_unassignedTiles;
+                out_domain_r2[i] = in_domain_r2[i] & in_unassignedTiles;
+                out_domain_r3[i] = in_domain_r3[i] & in_unassignedTiles;
             end else begin
-                r0_out[i] = r0_in[i];
-                r1_out[i] = r1_in[i];
-                r2_out[i] = r2_in[i];
-                r3_out[i] = r3_in[i];
+                out_domain_r0[i] = in_domain_r0[i];
+                out_domain_r1[i] = in_domain_r1[i];
+                out_domain_r2[i] = in_domain_r2[i];
+                out_domain_r3[i] = in_domain_r3[i];
             end
         end
     end
 
-    // ── Detect changed and deadend ─────────────────────────────
-    always_comb begin
-        changed = 1'b0;
-        deadend = 1'b0;
-        for (int i = 0; i < N; i++) begin
-            if (variablesIncludedMask[i]) begin
-                if (r0_out[i] != r0_in[i] || r1_out[i] != r1_in[i] ||
-                    r2_out[i] != r2_in[i] || r3_out[i] != r3_in[i])
-                    changed = 1'b1;
-                if ((r0_out[i] | r1_out[i] | r2_out[i] | r3_out[i]) == '0)
-                    deadend = 1'b1;
+    always_comb begin : detect_changed_and_deadend
+        out_changed = 1'b0;
+        out_deadend = 1'b0;
+        for (int i = 0; i < V; i++) begin
+            if (in_unassignedVariables[i]) begin
+                if (out_domain_r0[i] != in_domain_r0[i] ||
+                    out_domain_r1[i] != in_domain_r1[i] ||
+                    out_domain_r2[i] != in_domain_r2[i] ||
+                    out_domain_r3[i] != in_domain_r3[i])
+                    out_changed = 1'b1;
+                if ((out_domain_r0[i] | out_domain_r1[i] |
+                     out_domain_r2[i] | out_domain_r3[i]) == '0)
+                    out_deadend = 1'b1;
             end
         end
     end
+
 endmodule
-
-

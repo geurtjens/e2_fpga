@@ -1,26 +1,26 @@
 // ─────────────────────────────────────────────────────────────
 // SingletonDetection
 //
-// Scans all active (unassigned) variables and detects any that
-// have exactly one piece remaining across all four rotation
-// arrays combined.  Those variables are forced assignments —
-// only one piece and rotation is possible so they are locked in.
-//
-// For each detected singleton:
-//   - The variable is removed from variablesIncludedMask
-//   - The tile is removed from unassignedTiles
-//   - The domain is locked to that one piece at that rotation
+//! Scans all active (unassigned) variables and detects any that
+//! have exactly one piece remaining across all four rotation
+//! arrays combined.  Those variables are forced assignments —
+//! only one piece and rotation is possible so they are locked in.
+//!
+//! For each detected singleton:
+//!   - The variable is removed from unassignedVariables
+//!   - The tile is removed from unassignedTiles
+//!   - The domain is locked to one tile at rotation
 //
 // Singleton detection uses the one-hot bit trick:
 //   x & (x-1) clears the lowest set bit. If the result is zero
 //   and x is non-zero, exactly one bit is set (one-hot).
 //   This is faster than popcount on FPGA as it avoids the
 //   adder tree and only requires a subtract and AND gate.
-//
-// Deadend condition:
-//   If after processing, popcount(variablesIncludedMask) does
-//   not equal popcount(unassignedTiles), two variables were
-//   forced to the same tile — deadend.
+//!
+//! out_deadend condition:
+//!   If after processing, popcount(unassignedVariables) does
+//!   not equal popcount(unassignedTiles), two variables were
+//!   forced to the same tile which is impossible and so out_deadend is set.
 //
 // Colours are NOT updated here — rely on DomainToColour to
 // derive fresh colours from the updated domains afterwards.
@@ -31,45 +31,49 @@
 //   ID_BITS   — $clog2(VARIABLES)
 //
 // Inputs
-//   in_variablesIncludedMask — 1=unassigned, 0=already singleton
+//   in_unassignedVariables — 1=unassigned, 0=already singleton
 //   in_unassignedTiles       — 1=tile not yet placed
 //   in_r0..r3               — current domain bitmasks
 //
 // Outputs
-//   out_variablesIncludedMask — updated mask with new singletons removed
+//   out_unassignedVariables — updated mask with new singletons removed
 //   out_unassignedTiles       — updated tile availability
 //   out_r0..r3               — domains with singletons locked
-//   singleton_found           — 1 if at least one singleton was detected
-//   deadend                   — 1 if variable/tile counts diverged
+//   out_singleton           — 1 if at least one singleton was detected
+//   out_deadend                   — 1 if variable/tile counts diverged
 // ─────────────────────────────────────────────────────────────
 module SingletonDetection #(
-    parameter int N         = 4,
-    parameter int VARIABLES = N * N,
-    parameter int ID_BITS   = $clog2(VARIABLES)
+    parameter int N         = 8, //! size of puzzle 3,4,5,6,7,8
+    parameter int VARIABLES = N * N, //! number of positions in the grid.
+    parameter int ID_BITS   = $clog2(VARIABLES) //! number of bits needed to represent a variable ID e.g. 4 for 16 variables
 )(
-    input  logic [VARIABLES-1:0]                in_variablesIncludedMask,
-    input  logic [VARIABLES-1:0]                in_unassignedTiles,
+    input  logic [VARIABLES-1:0]                in_unassignedVariables, //! original bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
+    input  logic [VARIABLES-1:0]                in_unassignedTiles, //! original VARIABLES-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
 
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r0,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r1,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r2,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r3,
+    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r0, //! original domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r1, //! original domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r2, //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r3, //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
 
-    output logic [VARIABLES-1:0]                out_variablesIncludedMask,
-    output logic [VARIABLES-1:0]                out_unassignedTiles,
+    output logic [VARIABLES-1:0]                out_unassignedVariables, //! updated bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
+    output logic [VARIABLES-1:0]                out_unassignedTiles, //! updated VARIABLES-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
 
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r0,
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r1,
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r2,
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r3,
+    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r0, //! updated domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r1, //! updated domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r2, //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable. 
+    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r3, //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
 
-    output logic                                singleton_found,
-    output logic                                deadend
+    output logic                                out_singleton, //! whether or not a singleton was detected, 1 = singleton was detected
+    output logic                                out_deadend //! whether or not a deadend was detected, 1 = deadend was detected
 );
 
-    // ── Synthesisable popcount ─────────────────────────────────
-    // Used only for the final deadend check.
-    // Quartus synthesises this as an adder tree of LUTs.
+    
+    //! Counts the number of set bits in a VARIABLES-wide vector.
+    //! Used only for the final deadend check — compares unassigned
+    //! variable count against unassigned tile count.
+    //! Quartus synthesises this as an adder tree of LUTs.
+    //! Not used for singleton detection — the faster one-hot
+    //! bit trick (x & (x-1)) is used there instead.
     function automatic int popcount;
         input logic [VARIABLES-1:0] vec;
         int count;
@@ -81,21 +85,28 @@ module SingletonDetection #(
         end
     endfunction
 
-    always_comb begin
+    //! Scans all unassigned variables looking for singletons which are variables where only one tile remains across all rotations.
+    //! For each singleton found:
+    //!   - Locks the domain to that one tile and rotation
+    //!   - Removes the variable from unassignedVariables
+    //!   - Removes the tile from unassignedTiles
+    //! After processing all variables, checks for deadend:
+    //!   - If popcount(unassignedVariables) != popcount(unassignedTiles) then two variables were forced to the same tile which is impossible and so a deadend.
+    always_comb begin : detect_singletons_and_deadend
         // ── Default — pass everything through unchanged ────────
-        out_variablesIncludedMask = in_variablesIncludedMask;
+        out_unassignedVariables = in_unassignedVariables;
         out_unassignedTiles       = in_unassignedTiles;
         out_r0 = in_r0;
         out_r1 = in_r1;
         out_r2 = in_r2;
         out_r3 = in_r3;
 
-        singleton_found = 1'b0;
+        out_singleton = 1'b0;
 
         // ── Scan all active variables ──────────────────────────
         for (int v = 0; v < VARIABLES; v++) begin
 
-            if (in_variablesIncludedMask[v]) begin
+            if (in_unassignedVariables[v]) begin
 
                 automatic logic [VARIABLES-1:0] combined;
                 automatic logic [ID_BITS-1:0]   tile_id;
@@ -114,7 +125,7 @@ module SingletonDetection #(
                 if (combined != '0 &&
                     (combined & (combined - 1)) == '0) begin
 
-                    singleton_found = 1'b1;
+                    out_singleton = 1'b1;
 
                     // Extract tileId — position of the single set bit
                     // Priority encode: find lowest set bit
@@ -137,7 +148,7 @@ module SingletonDetection #(
                     out_r3[v] = (rot == 2'd3) ? combined : '0;
 
                     // Remove variable from unassigned mask
-                    out_variablesIncludedMask[v] = 1'b0;
+                    out_unassignedVariables[v] = 1'b0;
 
                     // Remove tile from available tiles
                     out_unassignedTiles[tile_id] = 1'b0;
@@ -145,10 +156,10 @@ module SingletonDetection #(
             end
         end
 
-        // ── Deadend check ──────────────────────────────────────
+        // ── out_deadend check ──────────────────────────────────────
         // If unassigned variable count != unassigned tile count
         // then two variables were forced to the same tile
-        deadend = (popcount(out_variablesIncludedMask) !=
+        out_deadend = (popcount(out_unassignedVariables) !=
                    popcount(out_unassignedTiles));
     end
 

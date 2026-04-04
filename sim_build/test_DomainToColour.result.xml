@@ -1,0 +1,13 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775304177" />
+    <testcase name="test_empty_domains" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="211" time="0.0003731250762939453" sim_time_ns="1.0" ratio_time="2680.0664536741215" />
+    <testcase name="test_single_piece_bottom_left_corner" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="226" time="0.0001418590545654297" sim_time_ns="1.0" ratio_time="7049.250420168068" />
+    <testcase name="test_single_piece_top_left_corner" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="253" time="0.00012373924255371094" sim_time_ns="1.0" ratio_time="8081.510597302505" />
+    <testcase name="test_inner_ors_all_rotations" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="275" time="0.00013971328735351562" sim_time_ns="1.0" ratio_time="7157.515358361775" />
+    <testcase name="test_changed_detected" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="301" time="0.00011897087097167969" sim_time_ns="1.0" ratio_time="8405.41883767535" />
+    <testcase name="test_no_change_when_colours_match" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="321" time="0.00011873245239257812" sim_time_ns="1.0" ratio_time="8422.29718875502" />
+    <testcase name="test_deadend_active_variable_zero_colours" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="344" time="0.00011515617370605469" sim_time_ns="1.0" ratio_time="8683.859213250518" />
+    <testcase name="test_random" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="361" time="0.005997657775878906" sim_time_ns="30.0" ratio_time="5001.9526156781685" />
+  </testsuite>
+</testsuites>

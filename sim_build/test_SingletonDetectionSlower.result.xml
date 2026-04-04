@@ -1,13 +1,13 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775239983" />
-    <testcase name="test_no_singletons" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="86" time="0.0002639293670654297" sim_time_ns="1.0" ratio_time="3788.8925022583558" />
-    <testcase name="test_single_singleton_r0" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="95" time="9.72747802734375e-05" sim_time_ns="1.0" ratio_time="10280.156862745098" />
-    <testcase name="test_singleton_r2" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="110" time="7.677078247070312e-05" sim_time_ns="1.0" ratio_time="13025.788819875776" />
-    <testcase name="test_multiple_singletons" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="125" time="8.249282836914062e-05" sim_time_ns="1.0" ratio_time="12122.265895953757" />
-    <testcase name="test_deadend_same_tile" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="140" time="6.437301635742188e-05" sim_time_ns="1.0" ratio_time="15534.45925925926" />
-    <testcase name="test_inactive_variable_ignored" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="155" time="6.127357482910156e-05" sim_time_ns="1.0" ratio_time="16320.249027237354" />
-    <testcase name="test_all_singletons_unique" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="170" time="6.914138793945312e-05" sim_time_ns="1.0" ratio_time="14463.11724137931" />
-    <testcase name="test_random" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="184" time="0.0028641223907470703" sim_time_ns="50.0" ratio_time="17457.354532589696" />
+    <property name="random_seed" value="1775261501" />
+    <testcase name="test_no_singletons" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="86" time="0.0002503395080566406" sim_time_ns="1.0" ratio_time="3994.575238095238" />
+    <testcase name="test_single_singleton_r0" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="95" time="7.987022399902344e-05" sim_time_ns="1.0" ratio_time="12520.310447761194" />
+    <testcase name="test_singleton_r2" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="110" time="6.890296936035156e-05" sim_time_ns="1.0" ratio_time="14513.162629757786" />
+    <testcase name="test_multiple_singletons" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="125" time="6.29425048828125e-05" sim_time_ns="1.0" ratio_time="15887.515151515152" />
+    <testcase name="test_deadend_same_tile" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="140" time="6.151199340820312e-05" sim_time_ns="1.0" ratio_time="16256.992248062015" />
+    <testcase name="test_inactive_variable_ignored" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="155" time="5.984306335449219e-05" sim_time_ns="1.0" ratio_time="16710.37450199203" />
+    <testcase name="test_all_singletons_unique" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="170" time="6.628036499023438e-05" sim_time_ns="1.0" ratio_time="15087.424460431655" />
+    <testcase name="test_random" classname="test_SingletonDetectionSlower" file="/home/parallels/e2_fpga/tests/test_SingletonDetectionSlower.py" lineno="184" time="0.0028564929962158203" sim_time_ns="50.0" ratio_time="17503.981303730907" />
   </testsuite>
 </testsuites>

@@ -1,51 +1,43 @@
 // ─────────────────────────────────────────────────────────────
 // ChooseNextVariable
 //
-// Selects the next variable for the solver to branch on.
-//
-// Strategy:
-//   1. Find all singletons (assigned variables — NOT in mask)
-//   2. Expand to unassigned neighbours (up/down/left/right)
-//   3. Among neighbours pick the one with smallest domain
-//      (measured as popcount of r0+r1+r2+r3 combined)
-//   4. If tie, pick the lowest variable ID (priority encoder)
-//   5. Return binary encoded variable ID
+//! Selects the next variable for the solver to branch on
+//! using the Minimum Remaining Values (MRV) heuristic.
+//!
+//! Strategy:
+//!   1. Find all singletons (assigned variables — NOT in mask)
+//!   2. Expand to unassigned neighbours (up/down/left/right)
+//!   3. Among neighbours pick the one with smallest domain
+//!   4. If tie, pick the lowest variable ID
+//!   5. Return binary encoded variable ID
+//!
+//! Submodules:
+//!   ExpandSingletons    — finds candidate neighbours
+//!   ComputeDomainSizes  — counts bits in each domain
+//!   FindMinimumDomain   — finds smallest domain size
+//!   SelectVariable      — priority encodes the winner
 //
 // Parameters
-//   N         — board side length (board is N x N)
-//   VARIABLES — N * N
-//   ID_BITS   — $clog2(VARIABLES) — width of output ID
-//
-// Inputs
-//   variablesIncludedMask — 1=unassigned, 0=singleton
-//   r0..r3               — domain bitmasks per variable
-//
-// Outputs
-//   next_var  — binary encoded ID of chosen variable
-//   valid     — 1 if a valid candidate was found
-//               0 if no unassigned neighbours exist
+//   N — board side length (board is N x N)
+//   V — number of variables (derived from N — do not override)
 // ─────────────────────────────────────────────────────────────
 module ChooseNextVariable #(
-    parameter int N         = 4,
-    parameter int VARIABLES = N * N,
-    parameter int ID_BITS   = $clog2(VARIABLES)
+    parameter int N = 4,      //! Puzzle size
+    parameter int V = N * N   //! Number of variables — derived, do not override
 )(
-    input  logic [VARIABLES-1:0]           variablesIncludedMask,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] r0,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] r1,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] r2,
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] r3,
-    output logic [ID_BITS-1:0]             next_var,
-    output logic                           valid
+    input  logic [V-1:0]         in_unassignedVariables, //! bitmask — 1=unassigned, 0=singleton
+    input  logic [V-1:0][V-1:0] in_domain_r0,           //! domain rotation 0
+    input  logic [V-1:0][V-1:0] in_domain_r1,           //! domain rotation 1
+    input  logic [V-1:0][V-1:0] in_domain_r2,           //! domain rotation 2
+    input  logic [V-1:0][V-1:0] in_domain_r3,           //! domain rotation 3
+    output logic [$clog2(V)-1:0] out_next_var,           //! chosen variable ID
+    output logic                 out_valid                //! 1 if valid candidate found
 );
-    // ── Elaboration-time constants ─────────────────────────────
-    // validMask — 1 for all valid variable positions
-    localparam logic [VARIABLES-1:0] VALID_MASK = VARIABLES'((1 << VARIABLES) - 1);
+    localparam int ID_BITS = $clog2(V);
 
-    // notFirstCol — 1 everywhere except column 0
-    // prevents left-shift wrapping across row boundaries
-    function automatic logic [VARIABLES-1:0] calc_not_first_col();
-        logic [VARIABLES-1:0] mask;
+    // ── Compute column masks at elaboration time ───────────────
+    function automatic logic [V-1:0] calc_not_first_col();
+        logic [V-1:0] mask;
         mask = '0;
         for (int r = 0; r < N; r++)
             for (int c = 1; c < N; c++)
@@ -53,10 +45,8 @@ module ChooseNextVariable #(
         return mask;
     endfunction
 
-    // notLastCol — 1 everywhere except column N-1
-    // prevents right-shift wrapping across row boundaries
-    function automatic logic [VARIABLES-1:0] calc_not_last_col();
-        logic [VARIABLES-1:0] mask;
+    function automatic logic [V-1:0] calc_not_last_col();
+        logic [V-1:0] mask;
         mask = '0;
         for (int r = 0; r < N; r++)
             for (int c = 0; c < N-1; c++)
@@ -64,68 +54,50 @@ module ChooseNextVariable #(
         return mask;
     endfunction
 
-    localparam logic [VARIABLES-1:0] NOT_FIRST_COL = calc_not_first_col();
-    localparam logic [VARIABLES-1:0] NOT_LAST_COL  = calc_not_last_col();
+    localparam logic [V-1:0] NOT_FIRST_COL = calc_not_first_col();
+    localparam logic [V-1:0] NOT_LAST_COL  = calc_not_last_col();
 
     // ── Internal signals ───────────────────────────────────────
-    logic [VARIABLES-1:0] singletons;
-    logic [VARIABLES-1:0] expanded;
-    logic [VARIABLES-1:0] candidates;
-
-    // popcount per variable — sum of set bits across all rotations
-    // max value = 4 * VARIABLES, needs enough bits to hold that
-    logic [$clog2(4*VARIABLES+1)-1:0] pop_count [VARIABLES-1:0];
-
-    // minimum popcount among candidates
-    logic [$clog2(4*VARIABLES+1)-1:0] min_count;
+    logic [V-1:0]             singletons;
+    logic [V-1:0]             candidates;
+    logic [V-1:0][$clog2(4*V+1)-1:0] pop_count;
+    logic [$clog2(4*V+1)-1:0] min_count;
 
     // ── Step 1 — find singletons ───────────────────────────────
-    // Singletons are variables NOT in variablesIncludedMask
-    assign singletons = VALID_MASK & ~variablesIncludedMask;
+    assign singletons = V'((1 << V) - 1) & ~in_unassignedVariables;
 
-    // ── Step 2 — expand to neighbours ─────────────────────────
-    // Each singleton contributes its four neighbours
-    // Shifts implement up/down/left/right adjacency
-    always_comb begin
-        expanded =
-            (singletons >> N)                        |  // up
-            (singletons << N)                        |  // down
-            ((singletons & NOT_FIRST_COL) >> 1)      |  // left
-            ((singletons & NOT_LAST_COL)  << 1);        // right
+    // ── Step 2 — expand singletons to candidate neighbours ─────
+    ChooseNextVariable_ExpandSingletons #(.N(N), .V(V)) expand_inst (
+        .in_singletons           (singletons),
+        .in_not_first_col        (NOT_FIRST_COL),
+        .in_not_last_col         (NOT_LAST_COL),
+        .in_unassignedVariables  (in_unassignedVariables),
+        .out_candidates          (candidates)
+    );
 
-        // candidates = neighbours that are unassigned and in bounds
-        // strip singletons themselves (already assigned)
-        candidates = expanded & VALID_MASK & variablesIncludedMask;
-    end
+    // ── Step 3 — compute domain sizes for all variables ────────
+    ChooseNextVariable_ComputeDomainSizes #(.V(V)) domain_sizes_inst (
+        .in_domain_r0   (in_domain_r0),
+        .in_domain_r1   (in_domain_r1),
+        .in_domain_r2   (in_domain_r2),
+        .in_domain_r3   (in_domain_r3),
+        .out_pop_count  (pop_count)
+    );
 
-    // ── Step 3 — compute popcount for every variable ───────────
-    always_comb begin
-        for (int v = 0; v < VARIABLES; v++) begin
-            pop_count[v] = $countones(r0[v]) + $countones(r1[v]) +
-                           $countones(r2[v]) + $countones(r3[v]);
-        end
-    end
+    // ── Step 4 — find minimum domain size among candidates ─────
+    ChooseNextVariable_FindMinimumDomain #(.V(V)) min_domain_inst (
+        .in_candidates  (candidates),
+        .in_pop_count   (pop_count),
+        .out_min_count  (min_count)
+    );
 
-    // ── Step 4 — find minimum popcount among candidates ────────
-    always_comb begin
-        min_count = '1; // start at max value
-        for (int v = 0; v < VARIABLES; v++) begin
-            if (candidates[v] && pop_count[v] < min_count)
-                min_count = pop_count[v];
-        end
-    end
-
-    // ── Step 5 — priority encode: lowest candidate with min count
-    always_comb begin
-        next_var = '0;
-        valid    = 1'b0;
-        for (int v = VARIABLES-1; v >= 0; v--) begin
-            // iterate high to low so lowest bit wins (last write wins)
-            if (candidates[v] && pop_count[v] == min_count) begin
-                next_var = ID_BITS'(v);
-                valid    = 1'b1;
-            end
-        end
-    end
+    // ── Step 5 — select variable with minimum domain size ──────
+    ChooseNextVariable_SelectVariable #(.V(V)) select_inst (
+        .in_candidates  (candidates),
+        .in_pop_count   (pop_count),
+        .in_min_count   (min_count),
+        .out_next_var   (out_next_var),
+        .out_valid      (out_valid)
+    );
 
 endmodule

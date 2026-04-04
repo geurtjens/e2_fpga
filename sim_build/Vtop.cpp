@@ -9,20 +9,9 @@
 Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
-    , singleton_found{vlSymsp->TOP.singleton_found}
-    , deadend{vlSymsp->TOP.deadend}
-    , in_variablesIncludedMask{vlSymsp->TOP.in_variablesIncludedMask}
-    , in_unassignedTiles{vlSymsp->TOP.in_unassignedTiles}
-    , in_r0{vlSymsp->TOP.in_r0}
-    , in_r1{vlSymsp->TOP.in_r1}
-    , in_r2{vlSymsp->TOP.in_r2}
-    , in_r3{vlSymsp->TOP.in_r3}
-    , out_variablesIncludedMask{vlSymsp->TOP.out_variablesIncludedMask}
-    , out_unassignedTiles{vlSymsp->TOP.out_unassignedTiles}
-    , out_r0{vlSymsp->TOP.out_r0}
-    , out_r1{vlSymsp->TOP.out_r1}
-    , out_r2{vlSymsp->TOP.out_r2}
-    , out_r3{vlSymsp->TOP.out_r3}
+    , a{vlSymsp->TOP.a}
+    , b{vlSymsp->TOP.b}
+    , out{vlSymsp->TOP.out}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

@@ -4,136 +4,150 @@ from cocotb_tools.runner import get_runner
 import random
 
 N = 4
-VARIABLES = N
-ALL = (1 << N) - 1
-
-def reference(r0_in, r1_in, r2_in, r3_in, vim, tiles_taken):
-    mask = (~tiles_taken) & ALL
-    r0_out = list(r0_in)
-    r1_out = list(r1_in)
-    r2_out = list(r2_in)
-    r3_out = list(r3_in)
-    changed = False
-    deadend = False
-
-    for i in range(VARIABLES):
-        if (vim >> i) & 1:
-            r0_out[i] = r0_in[i] & mask
-            r1_out[i] = r1_in[i] & mask
-            r2_out[i] = r2_in[i] & mask
-            r3_out[i] = r3_in[i] & mask
-            if (r0_out[i] != r0_in[i] or r1_out[i] != r1_in[i] or
-                    r2_out[i] != r2_in[i] or r3_out[i] != r3_in[i]):
-                changed = True
-            if (r0_out[i] | r1_out[i] | r2_out[i] | r3_out[i]) == 0:
-                deadend = True
-
-    return r0_out, r1_out, r2_out, r3_out, changed, deadend
+V = N * N
+ALL = (1 << V) - 1
 
 def pack(arr):
     val = 0
-    for i in range(VARIABLES):
-        val |= (arr[i] & ALL) << (i * N)
+    for i in range(V):
+        val |= (arr[i] & ALL) << (i * V)
     return val
 
 def unpack(val):
-    return [(val >> (i * N)) & ALL for i in range(VARIABLES)]
+    return [(val >> (i * V)) & ALL for i in range(V)]
 
-async def apply(dut, r0, r1, r2, r3, vim, tiles_taken):
-    dut.r0_in.value = pack(r0)
-    dut.r1_in.value = pack(r1)
-    dut.r2_in.value = pack(r2)
-    dut.r3_in.value = pack(r3)
-    dut.variablesIncludedMask.value = vim
-    dut.tilesTaken.value = tiles_taken
+def reference(in_r0, in_r1, in_r2, in_r3, in_uv, in_ut):
+    out_r0 = list(in_r0)
+    out_r1 = list(in_r1)
+    out_r2 = list(in_r2)
+    out_r3 = list(in_r3)
+    changed = False
+    deadend = False
+    for i in range(V):
+        if (in_uv >> i) & 1:
+            out_r0[i] = in_r0[i] & in_ut
+            out_r1[i] = in_r1[i] & in_ut
+            out_r2[i] = in_r2[i] & in_ut
+            out_r3[i] = in_r3[i] & in_ut
+            if (out_r0[i] != in_r0[i] or out_r1[i] != in_r1[i] or
+                out_r2[i] != in_r2[i] or out_r3[i] != in_r3[i]):
+                changed = True
+            if (out_r0[i] | out_r1[i] | out_r2[i] | out_r3[i]) == 0:
+                deadend = True
+    return out_r0, out_r1, out_r2, out_r3, changed, deadend
+
+async def apply(dut, in_r0, in_r1, in_r2, in_r3, in_uv, in_ut):
+    dut.in_domain_r0.value           = pack(in_r0)
+    dut.in_domain_r1.value           = pack(in_r1)
+    dut.in_domain_r2.value           = pack(in_r2)
+    dut.in_domain_r3.value           = pack(in_r3)
+    dut.in_unassignedVariables.value = in_uv
+    dut.in_unassignedTiles.value     = in_ut
     await Timer(1, unit="ns")
 
-async def check(dut, r0, r1, r2, r3, vim, tiles_taken):
-    await apply(dut, r0, r1, r2, r3, vim, tiles_taken)
-    exp_r0, exp_r1, exp_r2, exp_r3, exp_changed, exp_deadend = \
-        reference(r0, r1, r2, r3, vim, tiles_taken)
+async def check(dut, in_r0, in_r1, in_r2, in_r3, in_uv, in_ut):
+    await apply(dut, in_r0, in_r1, in_r2, in_r3, in_uv, in_ut)
+    exp_r0, exp_r1, exp_r2, exp_r3, exp_ch, exp_de = \
+        reference(in_r0, in_r1, in_r2, in_r3, in_uv, in_ut)
+    act_r0 = unpack(dut.out_domain_r0.value.to_unsigned())
+    act_r1 = unpack(dut.out_domain_r1.value.to_unsigned())
+    act_r2 = unpack(dut.out_domain_r2.value.to_unsigned())
+    act_r3 = unpack(dut.out_domain_r3.value.to_unsigned())
+    for i in range(V):
+        assert act_r0[i] == exp_r0[i], f"r0[{i}]={act_r0[i]:#x} exp={exp_r0[i]:#x}"
+        assert act_r1[i] == exp_r1[i], f"r1[{i}]={act_r1[i]:#x} exp={exp_r1[i]:#x}"
+        assert act_r2[i] == exp_r2[i], f"r2[{i}]={act_r2[i]:#x} exp={exp_r2[i]:#x}"
+        assert act_r3[i] == exp_r3[i], f"r3[{i}]={act_r3[i]:#x} exp={exp_r3[i]:#x}"
+    assert dut.out_changed.value == int(exp_ch), \
+        f"changed={dut.out_changed.value} exp={int(exp_ch)}"
+    assert dut.out_deadend.value == int(exp_de), \
+        f"deadend={dut.out_deadend.value} exp={int(exp_de)}"
 
-    act_r0 = unpack(dut.r0_out.value.to_unsigned())
-    act_r1 = unpack(dut.r1_out.value.to_unsigned())
-    act_r2 = unpack(dut.r2_out.value.to_unsigned())
-    act_r3 = unpack(dut.r3_out.value.to_unsigned())
-
-    for i in range(VARIABLES):
-        assert act_r0[i] == exp_r0[i], f"r0[{i}]={act_r0[i]:04b} exp={exp_r0[i]:04b}"
-        assert act_r1[i] == exp_r1[i], f"r1[{i}]={act_r1[i]:04b} exp={exp_r1[i]:04b}"
-        assert act_r2[i] == exp_r2[i], f"r2[{i}]={act_r2[i]:04b} exp={exp_r2[i]:04b}"
-        assert act_r3[i] == exp_r3[i], f"r3[{i}]={act_r3[i]:04b} exp={exp_r3[i]:04b}"
-
-    assert dut.changed.value == int(exp_changed), \
-        f"changed={dut.changed.value} exp={int(exp_changed)}"
-    assert dut.deadend.value == int(exp_deadend), \
-        f"deadend={dut.deadend.value} exp={int(exp_deadend)}"
+def make_full():
+    return [ALL] * V
 
 @cocotb.test()
 async def test_no_tiles_taken(dut):
-    """No tiles taken — domains unchanged, no change."""
-    r = [ALL] * VARIABLES
-    await check(dut, r, r, r, r, ALL, 0)
-    assert dut.changed.value == 0
-    assert dut.deadend.value == 0
+    """All tiles unassigned — domains unchanged, no change, no deadend."""
+    r = make_full()
+    await check(dut, r, r, r, r, ALL, ALL)
+    assert dut.out_changed.value == 0
+    assert dut.out_deadend.value == 0
     cocotb.log.info("no tiles taken ✓")
 
 @cocotb.test()
-async def test_all_tiles_taken(dut):
-    """All tiles taken — all active domains go to zero — deadend."""
-    r = [ALL] * VARIABLES
-    await check(dut, r, r, r, r, ALL, ALL)
-    assert dut.deadend.value == 1
-    cocotb.log.info("all tiles taken → deadend ✓")
+async def test_tile_removed_from_domain(dut):
+    """Tile 0 taken — removed from all active variable domains."""
+    r = make_full()
+    in_ut = ALL & ~1
+    await check(dut, r, r, r, r, ALL, in_ut)
+    act_r0 = unpack(dut.out_domain_r0.value.to_unsigned())
+    for i in range(V):
+        assert not (act_r0[i] & 1), f"tile 0 should be removed from var {i}"
+    assert dut.out_changed.value == 1
+    cocotb.log.info("tile removed from domain ✓")
 
 @cocotb.test()
 async def test_inactive_variable_unchanged(dut):
-    """Variables not in mask are passed through unchanged."""
-    r = [ALL] * VARIABLES
-    vim = ALL & ~1  # var 0 inactive
-    await check(dut, r, r, r, r, vim, ALL)
-    act_r0 = unpack(dut.r0_out.value.to_unsigned())
+    """Inactive variable domain not masked."""
+    r = make_full()
+    in_ut = ALL & ~1
+    in_uv = ALL & ~1
+    await check(dut, r, r, r, r, in_uv, in_ut)
+    act_r0 = unpack(dut.out_domain_r0.value.to_unsigned())
     assert act_r0[0] == ALL, "inactive var 0 should be unchanged"
     cocotb.log.info("inactive variable unchanged ✓")
 
 @cocotb.test()
-async def test_partial_tiles_taken(dut):
-    """Some tiles taken — only those bits cleared from active domains."""
-    r = [ALL] * VARIABLES
-    tiles_taken = 0b0101
-    await check(dut, r, r, r, r, ALL, tiles_taken)
-    cocotb.log.info("partial tiles taken ✓")
+async def test_deadend(dut):
+    """All tiles taken for active variable — deadend."""
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
+    r0[0] = 0b0001
+    for i in range(1, V):
+        r0[i] = ALL
+    in_ut = ALL & ~1
+    await check(dut, r0, r1, r2, r3, ALL, in_ut)
+    assert dut.out_deadend.value == 1
+    cocotb.log.info("deadend ✓")
 
 @cocotb.test()
-async def test_changed_detected(dut):
-    """changed=1 when mask removes bits from active domain."""
-    r = [ALL] * VARIABLES
-    await check(dut, r, r, r, r, ALL, 0b0001)
-    assert dut.changed.value == 1
-    cocotb.log.info("changed detected ✓")
+async def test_no_change_when_tiles_not_in_domain(dut):
+    """Taken tile not in domain — no change."""
+    r0 = [ALL & ~1] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
+    in_ut = ALL & ~1
+    await check(dut, r0, r1, r2, r3, ALL, in_ut)
+    assert dut.out_changed.value == 0
+    assert dut.out_deadend.value == 0
+    cocotb.log.info("no change when tile not in domain ✓")
 
 @cocotb.test()
-async def test_no_change_when_already_clear(dut):
-    """changed=0 when taken tiles already absent from domain."""
-    r = [0b1010] * VARIABLES  # bits 0,2 already clear
-    tiles_taken = 0b0101       # taking bits 0,2 — no effect
-    await check(dut, r, r, r, r, ALL, tiles_taken)
-    assert dut.changed.value == 0
-    cocotb.log.info("no change when already clear ✓")
+async def test_all_variables_inactive(dut):
+    """No active variables — nothing changes."""
+    r = make_full()
+    await check(dut, r, r, r, r, 0, ALL & ~1)
+    assert dut.out_changed.value == 0
+    assert dut.out_deadend.value == 0
+    cocotb.log.info("all inactive ✓")
 
 @cocotb.test()
 async def test_random(dut):
-    """100 random inputs verified against reference."""
-    random.seed(42)
-    for _ in range(100):
-        r0 = [random.randint(0, ALL) for _ in range(VARIABLES)]
-        r1 = [random.randint(0, ALL) for _ in range(VARIABLES)]
-        r2 = [random.randint(0, ALL) for _ in range(VARIABLES)]
-        r3 = [random.randint(0, ALL) for _ in range(VARIABLES)]
-        vim = random.randint(0, ALL)
-        tiles_taken = random.randint(0, ALL)
-        await check(dut, r0, r1, r2, r3, vim, tiles_taken)
-    cocotb.log.info("100 random tests ✓")
+    """50 random inputs verified against reference."""
+    random.seed(77)
+    for _ in range(50):
+        in_uv = random.randint(0, ALL)
+        in_ut = random.randint(0, ALL)
+        r0 = [random.randint(0, ALL) for _ in range(V)]
+        r1 = [random.randint(0, ALL) for _ in range(V)]
+        r2 = [random.randint(0, ALL) for _ in range(V)]
+        r3 = [random.randint(0, ALL) for _ in range(V)]
+        await check(dut, r0, r1, r2, r3, in_uv, in_ut)
+    cocotb.log.info("50 random tests ✓")
 
 def test_AllDifferent():
     runner = get_runner("verilator")

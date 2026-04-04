@@ -1,13 +1,13 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775198572" />
-    <testcase name="test_no_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="90" time="0.0002315044403076172" sim_time_ns="1.0" ratio_time="4319.5715756951595" />
-    <testcase name="test_single_singleton_r0" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="99" time="9.822845458984375e-05" sim_time_ns="1.0" ratio_time="10180.349514563106" />
-    <testcase name="test_singleton_r2" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="115" time="7.581710815429688e-05" sim_time_ns="1.0" ratio_time="13189.635220125787" />
-    <testcase name="test_multiple_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="130" time="6.699562072753906e-05" sim_time_ns="1.0" ratio_time="14926.348754448398" />
-    <testcase name="test_deadend_same_tile" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="147" time="6.341934204101562e-05" sim_time_ns="1.0" ratio_time="15768.060150375939" />
-    <testcase name="test_inactive_variable_ignored" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="163" time="6.031990051269531e-05" sim_time_ns="1.0" ratio_time="16578.276679841896" />
-    <testcase name="test_all_singletons_unique" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="178" time="6.771087646484375e-05" sim_time_ns="1.0" ratio_time="14768.676056338029" />
-    <testcase name="test_random" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="192" time="0.0028493404388427734" sim_time_ns="50.0" ratio_time="17547.92067609405" />
+    <property name="random_seed" value="1775304178" />
+    <testcase name="test_no_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="86" time="0.00046181678771972656" sim_time_ns="1.0" ratio_time="2165.360867320599" />
+    <testcase name="test_single_singleton_r0" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="95" time="9.775161743164062e-05" sim_time_ns="1.0" ratio_time="10230.009756097561" />
+    <testcase name="test_singleton_r2" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="110" time="8.749961853027344e-05" sim_time_ns="1.0" ratio_time="11428.621253405994" />
+    <testcase name="test_multiple_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="125" time="7.915496826171875e-05" sim_time_ns="1.0" ratio_time="12633.44578313253" />
+    <testcase name="test_deadend_same_tile" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="140" time="8.559226989746094e-05" sim_time_ns="1.0" ratio_time="11683.298050139276" />
+    <testcase name="test_inactive_variable_ignored" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="155" time="0.00013971328735351562" sim_time_ns="1.0" ratio_time="7157.515358361775" />
+    <testcase name="test_all_singletons_unique" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="170" time="8.893013000488281e-05" sim_time_ns="1.0" ratio_time="11244.782841823057" />
+    <testcase name="test_random" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="184" time="0.0030596256256103516" sim_time_ns="50.0" ratio_time="16341.868619964154" />
   </testsuite>
 </testsuites>

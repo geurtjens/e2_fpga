@@ -4,12 +4,6 @@
 
 #include "Vtop__pch.h"
 
-// Parameter definitions for Vtop___024root
-constexpr IData/*31:0*/ Vtop___024root::SingletonDetectionSlower__DOT__N;
-constexpr IData/*31:0*/ Vtop___024root::SingletonDetectionSlower__DOT__VARIABLES;
-constexpr IData/*31:0*/ Vtop___024root::SingletonDetectionSlower__DOT__ID_BITS;
-
-
 void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf);
 
 Vtop___024root::Vtop___024root(Vtop__Syms* symsp, const char* namep)

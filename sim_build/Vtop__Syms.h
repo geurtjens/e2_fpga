@@ -30,11 +30,8 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop__Syms final : public VerilatedSyms {
     Vtop___024root                 TOP;
 
     // SCOPE NAMES
-    VerilatedScope* __Vscopep_SingletonDetectionSlower;
-    VerilatedScope* __Vscopep_SingletonDetectionSlower__unnamedblk2;
-    VerilatedScope* __Vscopep_SingletonDetectionSlower__unnamedblk2__unnamedblk3;
-    VerilatedScope* __Vscopep_SingletonDetectionSlower__unnamedblk2__unnamedblk3__unnamedblk4;
     VerilatedScope* __Vscopep_TOP;
+    VerilatedScope* __Vscopep_nand_gate;
 
     // SCOPE HIERARCHY
     VerilatedHierarchy __Vhier;

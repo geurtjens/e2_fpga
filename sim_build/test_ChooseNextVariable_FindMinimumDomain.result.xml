@@ -1,0 +1,9 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775304176" />
+    <testcase name="test_single_candidate" classname="test_ChooseNextVariable_FindMinimumDomain" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_FindMinimumDomain.py" lineno="22" time="0.0001647472381591797" sim_time_ns="1.0" ratio_time="6069.9044862518085" />
+    <testcase name="test_multiple_candidates" classname="test_ChooseNextVariable_FindMinimumDomain" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_FindMinimumDomain.py" lineno="31" time="0.0001010894775390625" sim_time_ns="1.0" ratio_time="9892.22641509434" />
+    <testcase name="test_ignores_non_candidates" classname="test_ChooseNextVariable_FindMinimumDomain" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_FindMinimumDomain.py" lineno="42" time="4.220008850097656e-05" sim_time_ns="1.0" ratio_time="23696.632768361582" />
+    <testcase name="test_random" classname="test_ChooseNextVariable_FindMinimumDomain" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_FindMinimumDomain.py" lineno="52" time="0.0007715225219726562" sim_time_ns="50.0" ratio_time="64806.92212608158" />
+  </testsuite>
+</testsuites>

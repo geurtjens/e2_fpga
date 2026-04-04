@@ -1,0 +1,9 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775304175" />
+    <testcase name="test_all_zeros" classname="test_ChooseNextVariable_ComputeDomainSizes" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ComputeDomainSizes.py" lineno="33" time="0.00014495849609375" sim_time_ns="1.0" ratio_time="6898.526315789473" />
+    <testcase name="test_all_ones" classname="test_ChooseNextVariable_ComputeDomainSizes" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ComputeDomainSizes.py" lineno="42" time="5.7697296142578125e-05" sim_time_ns="1.0" ratio_time="17331.834710743802" />
+    <testcase name="test_single_bit" classname="test_ChooseNextVariable_ComputeDomainSizes" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ComputeDomainSizes.py" lineno="51" time="6.0558319091796875e-05" sim_time_ns="1.0" ratio_time="16513.007874015748" />
+    <testcase name="test_random" classname="test_ChooseNextVariable_ComputeDomainSizes" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ComputeDomainSizes.py" lineno="61" time="0.0021474361419677734" sim_time_ns="50.0" ratio_time="23283.57943821472" />
+  </testsuite>
+</testsuites>

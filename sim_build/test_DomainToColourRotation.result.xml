@@ -1,11 +1,11 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775198572" />
-    <testcase name="test_empty_domain" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="43" time="0.00017213821411132812" sim_time_ns="1.0" ratio_time="5809.285318559557" />
-    <testcase name="test_single_piece" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="51" time="7.557868957519531e-05" sim_time_ns="1.0" ratio_time="13231.242902208201" />
-    <testcase name="test_all_pieces_same_colour" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="65" time="5.364418029785156e-05" sim_time_ns="1.0" ratio_time="18641.35111111111" />
-    <testcase name="test_or_accumulation" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="73" time="4.7206878662109375e-05" sim_time_ns="1.0" ratio_time="21183.353535353537" />
-    <testcase name="test_piece_not_in_domain_ignored" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="83" time="4.649162292480469e-05" sim_time_ns="1.0" ratio_time="21509.251282051282" />
-    <testcase name="test_random" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="95" time="0.003424406051635742" sim_time_ns="100.0" ratio_time="29202.14439880248" />
+    <property name="random_seed" value="1775273553" />
+    <testcase name="test_empty_domain" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="43" time="0.00017380714416503906" sim_time_ns="1.0" ratio_time="5753.503429355281" />
+    <testcase name="test_single_piece" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="51" time="6.318092346191406e-05" sim_time_ns="1.0" ratio_time="15827.562264150944" />
+    <testcase name="test_all_pieces_same_colour" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="65" time="5.1021575927734375e-05" sim_time_ns="1.0" ratio_time="19599.551401869157" />
+    <testcase name="test_or_accumulation" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="73" time="4.3392181396484375e-05" sim_time_ns="1.0" ratio_time="23045.626373626375" />
+    <testcase name="test_piece_not_in_domain_ignored" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="83" time="4.673004150390625e-05" sim_time_ns="1.0" ratio_time="21399.51020408163" />
+    <testcase name="test_random" classname="test_DomainToColourRotation" file="/home/parallels/e2_fpga/tests/test_DomainToColourRotation.py" lineno="95" time="0.0035533905029296875" sim_time_ns="100.0" ratio_time="28142.13633923779" />
   </testsuite>
 </testsuites>
