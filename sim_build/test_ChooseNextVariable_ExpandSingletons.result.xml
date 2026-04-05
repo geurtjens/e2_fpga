@@ -1,9 +1,15 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304176" />
-    <testcase name="test_no_singletons" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="46" time="0.000148773193359375" sim_time_ns="1.0" ratio_time="6721.641025641025" />
-    <testcase name="test_var0_singleton" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="53" time="4.267692565917969e-05" sim_time_ns="1.0" ratio_time="23431.86592178771" />
-    <testcase name="test_no_right_wrap" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="62" time="3.170967102050781e-05" sim_time_ns="1.0" ratio_time="31536.120300751878" />
-    <testcase name="test_random" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="71" time="0.00048828125" sim_time_ns="50.0" ratio_time="102400.0" />
+    <property name="random_seed" value="1775368401" />
+    <testcase name="test_no_singletons" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="53" time="0.0001246929168701172" sim_time_ns="1.0" ratio_time="8019.7017208413" />
+    <testcase name="test_var0_singleton" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="60" time="4.100799560546875e-05" sim_time_ns="1.0" ratio_time="24385.488372093023" />
+    <testcase name="test_no_right_wrap" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="69" time="3.0994415283203125e-05" sim_time_ns="1.0" ratio_time="32263.876923076925" />
+    <testcase name="test_no_left_wrap" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="78" time="2.9802322387695312e-05" sim_time_ns="1.0" ratio_time="33554.432" />
+    <testcase name="test_centre_singleton" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="87" time="3.0994415283203125e-05" sim_time_ns="1.0" ratio_time="32263.876923076925" />
+    <testcase name="test_already_assigned_neighbour_excluded" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="101" time="2.6702880859375e-05" sim_time_ns="1.0" ratio_time="37449.142857142855" />
+    <testcase name="test_top_row_no_up_neighbour" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="112" time="2.8848648071289062e-05" sim_time_ns="1.0" ratio_time="34663.669421487604" />
+    <testcase name="test_bottom_row_no_down_neighbour" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="123" time="2.7894973754882812e-05" sim_time_ns="1.0" ratio_time="35848.75213675214" />
+    <testcase name="test_all_assigned" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="134" time="2.5510787963867188e-05" sim_time_ns="1.0" ratio_time="39199.102803738315" />
+    <testcase name="test_random" classname="test_ChooseNextVariable_ExpandSingletons" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_ExpandSingletons.py" lineno="141" time="0.0004630088806152344" sim_time_ns="50.0" ratio_time="107989.289392379" />
   </testsuite>
 </testsuites>

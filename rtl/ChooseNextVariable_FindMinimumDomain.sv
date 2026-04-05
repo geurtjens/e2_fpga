@@ -7,9 +7,9 @@
 module ChooseNextVariable_FindMinimumDomain #(
     parameter int V = 16 //! Number of variables
 )(
-    input  logic [V-1:0]                    in_candidates,  //! bitmask of candidate variables
-    input  logic [V-1:0][$clog2(4*V+1)-1:0] in_pop_count, //! domain size per variable
-    output logic [$clog2(4*V+1)-1:0]        out_min_count  //! minimum domain size among candidates
+    input  logic [V-1:0]                    in_candidates,  //! bitmask of candidate variables, unassigned neighbours of singletons
+    input  logic [V-1:0][$clog2(4*V+1)-1:0] in_pop_count,   //! domain size per variable
+    output logic [$clog2(4*V+1)-1:0]        out_min_count   //! minimum domain size among candidates
 );
     //! Scan all candidates and find the smallest domain size.
     always_comb begin : find_minimum_domain_size

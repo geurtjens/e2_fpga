@@ -1,12 +1,12 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304175" />
-    <testcase name="test_rotation0" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="62" time="0.00011873245239257812" sim_time_ns="1.0" ratio_time="8422.29718875502" />
-    <testcase name="test_rotation1" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="74" time="5.936622619628906e-05" sim_time_ns="1.0" ratio_time="16844.59437751004" />
-    <testcase name="test_rotation2" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="86" time="4.8160552978515625e-05" sim_time_ns="1.0" ratio_time="20763.881188118812" />
-    <testcase name="test_rotation3" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="98" time="6.103515625e-05" sim_time_ns="1.0" ratio_time="16384.0" />
-    <testcase name="test_four_rotation_cycle" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="110" time="2.3603439331054688e-05" sim_time_ns="1.0" ratio_time="42366.707070707074" />
-    <testcase name="test_border_pieces_have_boundary_colour" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="119" time="3.337860107421875e-05" sim_time_ns="1.0" ratio_time="29959.314285714285" />
-    <testcase name="test_inner_pieces_no_boundary_colour" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="133" time="2.8371810913085938e-05" sim_time_ns="1.0" ratio_time="35246.252100840335" />
+    <property name="random_seed" value="1775360530" />
+    <testcase name="test_rotation0" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="62" time="0.00011539459228515625" sim_time_ns="1.0" ratio_time="8665.917355371901" />
+    <testcase name="test_rotation1" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="74" time="7.271766662597656e-05" sim_time_ns="1.0" ratio_time="13751.816393442623" />
+    <testcase name="test_rotation2" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="86" time="5.3882598876953125e-05" sim_time_ns="1.0" ratio_time="18558.867256637168" />
+    <testcase name="test_rotation3" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="98" time="4.696846008300781e-05" sim_time_ns="1.0" ratio_time="21290.883248730963" />
+    <testcase name="test_four_rotation_cycle" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="110" time="2.2172927856445312e-05" sim_time_ns="1.0" ratio_time="45100.04301075269" />
+    <testcase name="test_border_pieces_have_boundary_colour" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="119" time="3.314018249511719e-05" sim_time_ns="1.0" ratio_time="30174.84892086331" />
+    <testcase name="test_inner_pieces_no_boundary_colour" classname="test_Brendan4" file="/home/parallels/e2_fpga/tests/test_Brendan4.py" lineno="133" time="2.956390380859375e-05" sim_time_ns="1.0" ratio_time="33825.032258064515" />
   </testsuite>
 </testsuites>

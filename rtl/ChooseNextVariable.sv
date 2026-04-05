@@ -23,17 +23,16 @@
 // ─────────────────────────────────────────────────────────────
 module ChooseNextVariable #(
     parameter int N = 4,      //! Puzzle size
-    parameter int V = N * N   //! Number of variables — derived, do not override
+    parameter int V = N * N   //! Number of variables in game
 )(
     input  logic [V-1:0]         in_unassignedVariables, //! bitmask — 1=unassigned, 0=singleton
-    input  logic [V-1:0][V-1:0] in_domain_r0,           //! domain rotation 0
-    input  logic [V-1:0][V-1:0] in_domain_r1,           //! domain rotation 1
-    input  logic [V-1:0][V-1:0] in_domain_r2,           //! domain rotation 2
-    input  logic [V-1:0][V-1:0] in_domain_r3,           //! domain rotation 3
+    input  logic [V-1:0][V-1:0]  in_domain_r0,           //! domain rotation 0
+    input  logic [V-1:0][V-1:0]  in_domain_r1,           //! domain rotation 1
+    input  logic [V-1:0][V-1:0]  in_domain_r2,           //! domain rotation 2
+    input  logic [V-1:0][V-1:0]  in_domain_r3,           //! domain rotation 3
     output logic [$clog2(V)-1:0] out_next_var,           //! chosen variable ID
-    output logic                 out_valid                //! 1 if valid candidate found
+    output logic                 out_valid               //! 1 if valid candidate found
 );
-    localparam int ID_BITS = $clog2(V);
 
     // ── Compute column masks at elaboration time ───────────────
     function automatic logic [V-1:0] calc_not_first_col();

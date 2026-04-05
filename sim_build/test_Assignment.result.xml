@@ -1,12 +1,12 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304174" />
-    <testcase name="test_lock_rotation0" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="61" time="0.00023674964904785156" sim_time_ns="1.0" ratio_time="4223.8710976837865" />
-    <testcase name="test_lock_rotation1" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="76" time="7.534027099609375e-05" sim_time_ns="1.0" ratio_time="13273.113924050633" />
-    <testcase name="test_lock_rotation2" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="87" time="6.198883056640625e-05" sim_time_ns="1.0" ratio_time="16131.938461538462" />
-    <testcase name="test_lock_rotation3" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="96" time="5.650520324707031e-05" sim_time_ns="1.0" ratio_time="17697.48523206751" />
+    <property name="random_seed" value="1775368400" />
+    <testcase name="test_lock_rotation0" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="61" time="0.00022029876708984375" sim_time_ns="1.0" ratio_time="4539.290043290043" />
+    <testcase name="test_lock_rotation1" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="76" time="7.677078247070312e-05" sim_time_ns="1.0" ratio_time="13025.788819875776" />
+    <testcase name="test_lock_rotation2" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="87" time="6.103515625e-05" sim_time_ns="1.0" ratio_time="16384.0" />
+    <testcase name="test_lock_rotation3" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="96" time="6.29425048828125e-05" sim_time_ns="1.0" ratio_time="15887.515151515152" />
     <testcase name="test_other_variables_unchanged" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="105" time="6.198883056640625e-05" sim_time_ns="1.0" ratio_time="16131.938461538462" />
-    <testcase name="test_tile_mask_one_hot" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="119" time="0.0003952980041503906" sim_time_ns="16.0" ratio_time="40475.79252110977" />
-    <testcase name="test_random" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="129" time="0.0017638206481933594" sim_time_ns="50.0" ratio_time="28347.553392808866" />
+    <testcase name="test_tile_mask_one_hot" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="119" time="0.0003943443298339844" sim_time_ns="16.0" ratio_time="40573.67835550181" />
+    <testcase name="test_random" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="129" time="0.0018031597137451172" sim_time_ns="50.0" ratio_time="27729.10220811847" />
   </testsuite>
 </testsuites>

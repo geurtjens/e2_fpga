@@ -8,11 +8,11 @@
 module ChooseNextVariable_SelectVariable #(
     parameter int V = 16 //! Number of variables
 )(
-    input  logic [V-1:0]             in_candidates,  //! bitmask of candidate variables
+    input  logic [V-1:0]             in_candidates,       //! bitmask of candidate variables, unassigned neighbours of singletons
     input  logic [V-1:0][$clog2(4*V+1)-1:0] in_pop_count, //! domain size per variable
-    input  logic [$clog2(4*V+1)-1:0] in_min_count,  //! minimum domain size
-    output logic [$clog2(V)-1:0]     out_next_var,   //! chosen variable ID
-    output logic                     out_valid        //! 1 if valid candidate found
+    input  logic [$clog2(4*V+1)-1:0] in_min_count,        //! minimum domain size
+    output logic [$clog2(V)-1:0]     out_next_var,        //! chosen variable ID
+    output logic                     out_valid            //! 1 if valid candidate found
 );
     localparam int ID_BITS = $clog2(V);
 

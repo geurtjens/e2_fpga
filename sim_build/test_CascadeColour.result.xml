@@ -1,14 +1,14 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304175" />
-    <testcase name="test_all_ones_no_change" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="83" time="0.00019502639770507812" sim_time_ns="1.0" ratio_time="5127.511002444988" />
-    <testcase name="test_horizontal_cascade" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="92" time="7.343292236328125e-05" sim_time_ns="1.0" ratio_time="13617.87012987013" />
-    <testcase name="test_vertical_cascade" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="107" time="6.198883056640625e-05" sim_time_ns="1.0" ratio_time="16131.938461538462" />
-    <testcase name="test_horizontal_deadend" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="122" time="5.245208740234375e-05" sim_time_ns="1.0" ratio_time="19065.01818181818" />
-    <testcase name="test_vertical_deadend" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="134" time="5.364418029785156e-05" sim_time_ns="1.0" ratio_time="18641.35111111111" />
+    <property name="random_seed" value="1775368400" />
+    <testcase name="test_all_ones_no_change" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="83" time="0.00029969215393066406" sim_time_ns="1.0" ratio_time="3336.757358790772" />
+    <testcase name="test_horizontal_cascade" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="92" time="0.00010395050048828125" sim_time_ns="1.0" ratio_time="9619.963302752294" />
+    <testcase name="test_vertical_cascade" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="107" time="6.723403930664062e-05" sim_time_ns="1.0" ratio_time="14873.418439716312" />
+    <testcase name="test_horizontal_deadend" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="122" time="5.316734313964844e-05" sim_time_ns="1.0" ratio_time="18808.538116591928" />
+    <testcase name="test_vertical_deadend" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="134" time="5.269050598144531e-05" sim_time_ns="1.0" ratio_time="18978.75113122172" />
     <testcase name="test_last_column_not_cascaded" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="146" time="5.245208740234375e-05" sim_time_ns="1.0" ratio_time="19065.01818181818" />
-    <testcase name="test_last_row_not_cascaded" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="157" time="5.0067901611328125e-05" sim_time_ns="1.0" ratio_time="19972.876190476192" />
-    <testcase name="test_non_cascaded_passthrough" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="168" time="5.602836608886719e-05" sim_time_ns="1.0" ratio_time="17848.102127659575" />
-    <testcase name="test_random" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="179" time="0.004194021224975586" sim_time_ns="100.0" ratio_time="23843.4654084475" />
+    <testcase name="test_last_row_not_cascaded" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="157" time="5.173683166503906e-05" sim_time_ns="1.0" ratio_time="19328.589861751152" />
+    <testcase name="test_non_cascaded_passthrough" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="168" time="5.841255187988281e-05" sim_time_ns="1.0" ratio_time="17119.608163265308" />
+    <testcase name="test_random" classname="test_CascadeColour" file="/home/parallels/e2_fpga/tests/test_CascadeColour.py" lineno="179" time="0.004198789596557617" sim_time_ns="100.0" ratio_time="23816.387485094543" />
   </testsuite>
 </testsuites>

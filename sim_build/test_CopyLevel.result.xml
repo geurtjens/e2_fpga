@@ -1,11 +1,11 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304177" />
-    <testcase name="test_done_pulses" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="83" time="0.0007004737854003906" sim_time_ns="255.0" ratio_time="364039.319264806" />
-    <testcase name="test_correct_write_count" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="120" time="0.0007510185241699219" sim_time_ns="244.99999999999997" ratio_time="326223.6444444444" />
-    <testcase name="test_writes_to_correct_level" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="140" time="0.0006763935089111328" sim_time_ns="244.99999999999994" ratio_time="362215.1850546351" />
-    <testcase name="test_data_copied_correctly" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="159" time="0.0006983280181884766" sim_time_ns="245.0" ratio_time="350837.99248890404" />
-    <testcase name="test_metadata_copied" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="193" time="0.0005271434783935547" sim_time_ns="244.9999999999999" ratio_time="464769.0999547714" />
-    <testcase name="test_idle_after_done" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="231" time="0.0012664794921875" sim_time_ns="475.0" ratio_time="375055.421686747" />
+    <property name="random_seed" value="1775368402" />
+    <testcase name="test_done_pulses" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="83" time="0.0007016658782958984" sim_time_ns="255.0" ratio_time="363420.8358817533" />
+    <testcase name="test_correct_write_count" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="120" time="0.0007379055023193359" sim_time_ns="244.99999999999997" ratio_time="332020.8336025848" />
+    <testcase name="test_writes_to_correct_level" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="140" time="0.0006780624389648438" sim_time_ns="244.99999999999994" ratio_time="361323.6568213783" />
+    <testcase name="test_data_copied_correctly" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="159" time="0.0006852149963378906" sim_time_ns="245.0" ratio_time="357552.0111343076" />
+    <testcase name="test_metadata_copied" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="193" time="0.0005369186401367188" sim_time_ns="244.9999999999999" ratio_time="456307.49555950245" />
+    <testcase name="test_idle_after_done" classname="test_CopyLevel" file="/home/parallels/e2_fpga/tests/test_CopyLevel.py" lineno="231" time="0.001239776611328125" sim_time_ns="475.0" ratio_time="383133.53846153844" />
   </testsuite>
 </testsuites>

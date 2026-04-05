@@ -33,38 +33,38 @@
 // Inputs
 //   in_unassignedVariables — 1=unassigned, 0=already singleton
 //   in_unassignedTiles       — 1=tile not yet placed
-//   in_r0..r3               — current domain bitmasks
+//   in_domain_r0..r3               — current domain bitmasks
 //
 // Outputs
 //   out_unassignedVariables — updated mask with new singletons removed
 //   out_unassignedTiles       — updated tile availability
-//   out_r0..r3               — domains with singletons locked
+//   out_domain_r0..r3               — domains with singletons locked
 //   out_singleton           — 1 if at least one singleton was detected
 //   out_deadend                   — 1 if variable/tile counts diverged
 // ─────────────────────────────────────────────────────────────
 module SingletonDetection #(
-    parameter int N         = 8, //! size of puzzle 3,4,5,6,7,8
-    parameter int VARIABLES = N * N, //! number of positions in the grid.
-    parameter int ID_BITS   = $clog2(VARIABLES) //! number of bits needed to represent a variable ID e.g. 4 for 16 variables
+    parameter int N       = 4,                           //! size of puzzle 3,4,5,6,7,8
+    parameter int V       = N * N,                       //! number of positions in the grid.
+    parameter int ID_BITS = $clog2(V)                    //! number of bits needed to represent a variable ID e.g. 4 for 16 V
 )(
-    input  logic [VARIABLES-1:0]                in_unassignedVariables, //! original bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
-    input  logic [VARIABLES-1:0]                in_unassignedTiles, //! original VARIABLES-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
+    input  logic [V-1:0]        in_unassignedVariables,  //! original bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
+    input  logic [V-1:0]        in_unassignedTiles,      //! original V-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
 
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r0, //! original domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r1, //! original domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r2, //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
-    input  logic [VARIABLES-1:0][VARIABLES-1:0] in_r3, //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0] in_domain_r0,            //! original domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0] in_domain_r1,            //! original domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0] in_domain_r2,            //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0] in_domain_r3,            //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
 
-    output logic [VARIABLES-1:0]                out_unassignedVariables, //! updated bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
-    output logic [VARIABLES-1:0]                out_unassignedTiles, //! updated VARIABLES-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
+    output logic [V-1:0]        out_unassignedVariables, //! updated bitmask — one bit per variable, 1=unassigned, 0=already placed (singleton)
+    output logic [V-1:0]        out_unassignedTiles,     //! updated V-wide bitmask — one bit per tile, 1=tile not yet placed, 0=tile already use
 
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r0, //! updated domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r1, //! updated domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r2, //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable. 
-    output logic [VARIABLES-1:0][VARIABLES-1:0] out_r3, //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0] out_domain_r0,           //! updated domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0] out_domain_r1,           //! updated domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0] out_domain_r2,           //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable. 
+    output logic [V-1:0][V-1:0] out_domain_r3,           //! updated domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
 
-    output logic                                out_singleton, //! whether or not a singleton was detected, 1 = singleton was detected
-    output logic                                out_deadend //! whether or not a deadend was detected, 1 = deadend was detected
+    output logic                out_singleton,           //! whether or not a singleton was detected, 1 = singleton was detected
+    output logic                out_deadend              //! whether or not a deadend was detected, 1 = deadend was detected
 );
 
     
@@ -75,11 +75,11 @@ module SingletonDetection #(
     //! Not used for singleton detection — the faster one-hot
     //! bit trick (x & (x-1)) is used there instead.
     function automatic int popcount;
-        input logic [VARIABLES-1:0] vec;
+        input logic [V-1:0] vec;
         int count;
         begin
             count = 0;
-            for (int i = 0; i < VARIABLES; i++)
+            for (int i = 0; i < V; i++)
                 count = count + vec[i];
             popcount = count;
         end
@@ -96,25 +96,25 @@ module SingletonDetection #(
         // ── Default — pass everything through unchanged ────────
         out_unassignedVariables = in_unassignedVariables;
         out_unassignedTiles       = in_unassignedTiles;
-        out_r0 = in_r0;
-        out_r1 = in_r1;
-        out_r2 = in_r2;
-        out_r3 = in_r3;
+        out_domain_r0 = in_domain_r0;
+        out_domain_r1 = in_domain_r1;
+        out_domain_r2 = in_domain_r2;
+        out_domain_r3 = in_domain_r3;
 
         out_singleton = 1'b0;
 
         // ── Scan all active variables ──────────────────────────
-        for (int v = 0; v < VARIABLES; v++) begin
+        for (int v = 0; v < V; v++) begin
 
             if (in_unassignedVariables[v]) begin
 
-                automatic logic [VARIABLES-1:0] combined;
+                automatic logic [V-1:0] combined;
                 automatic logic [ID_BITS-1:0]   tile_id;
                 automatic logic [1:0]           rot;
 
                 // OR all rotations — bits are non-overlapping
                 // since each piece can only be in one rotation
-                combined = in_r0[v] | in_r1[v] | in_r2[v] | in_r3[v];
+                combined = in_domain_r0[v] | in_domain_r1[v] | in_domain_r2[v] | in_domain_r3[v];
 
                 // ── One-hot detection ──────────────────────────
                 // x & (x-1) clears the lowest set bit.
@@ -130,22 +130,22 @@ module SingletonDetection #(
                     // Extract tileId — position of the single set bit
                     // Priority encode: find lowest set bit
                     tile_id = '0;
-                    for (int p = VARIABLES-1; p >= 0; p--) begin
+                    for (int p = V-1; p >= 0; p--) begin
                         if (combined[p])
                             tile_id = ID_BITS'(p);
                     end
 
                     // Extract rotation — which array has the bit set
-                    if      (in_r0[v] != '0) rot = 2'd0;
-                    else if (in_r1[v] != '0) rot = 2'd1;
-                    else if (in_r2[v] != '0) rot = 2'd2;
+                    if      (in_domain_r0[v] != '0) rot = 2'd0;
+                    else if (in_domain_r1[v] != '0) rot = 2'd1;
+                    else if (in_domain_r2[v] != '0) rot = 2'd2;
                     else                     rot = 2'd3;
 
                     // Lock domain to this one piece at this rotation
-                    out_r0[v] = (rot == 2'd0) ? combined : '0;
-                    out_r1[v] = (rot == 2'd1) ? combined : '0;
-                    out_r2[v] = (rot == 2'd2) ? combined : '0;
-                    out_r3[v] = (rot == 2'd3) ? combined : '0;
+                    out_domain_r0[v] = (rot == 2'd0) ? combined : '0;
+                    out_domain_r1[v] = (rot == 2'd1) ? combined : '0;
+                    out_domain_r2[v] = (rot == 2'd2) ? combined : '0;
+                    out_domain_r3[v] = (rot == 2'd3) ? combined : '0;
 
                     // Remove variable from unassigned mask
                     out_unassignedVariables[v] = 1'b0;

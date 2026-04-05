@@ -22,5 +22,5 @@ VL_ATTR_COLD void Vtop_ColourToDomain_Rotation___ctor_var_reset(Vtop_ColourToDom
     vlSelf->out_domain = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 5197531358171655438ull);
     vlSelf->out_changed = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 8844864791567013543ull);
     vlSelf->out_deadend = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 7493292469854410692ull);
-    vlSelf->unnamedblk1__DOT__p = 0;
+    vlSelf->apply_colour_to_domain_and_detect_change_deadend__DOT__unnamedblk1__DOT__p = 0;
 }

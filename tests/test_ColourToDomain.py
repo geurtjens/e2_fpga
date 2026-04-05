@@ -43,6 +43,23 @@ def rotation_for_position(x, y):
     elif x == N-1:                return 3  # right edge
     else:                         return -1 # inner
 
+def rotate_elements(el_top, el_right, el_bottom, el_left, rotation):
+    """Derive a rotated element set from the base orientation.
+    Matches the internal rewiring done by ColourToDomain:
+      rotation 0:  top=top,    right=right,  bottom=bottom, left=left
+      rotation 1:  top=left,   right=top,    bottom=right,  left=bottom
+      rotation 2:  top=bottom, right=left,   bottom=top,    left=right
+      rotation 3:  top=right,  right=bottom, bottom=left,   left=top
+    """
+    if rotation == 0:
+        return el_top, el_right, el_bottom, el_left
+    elif rotation == 1:
+        return el_left, el_top, el_right, el_bottom
+    elif rotation == 2:
+        return el_bottom, el_left, el_top, el_right
+    elif rotation == 3:
+        return el_right, el_bottom, el_left, el_top
+
 def reference_rotation(domain, c_top, c_right, c_bottom, c_left,
                         el_top, el_right, el_bottom, el_left):
     out = 0
@@ -59,17 +76,10 @@ def reference_rotation(domain, c_top, c_right, c_bottom, c_left,
 
 def reference(in_r0, in_r1, in_r2, in_r3,
               c_top, c_right, c_bottom, c_left,
-              el0_t, el0_r, el0_b, el0_l,
-              el1_t, el1_r, el1_b, el1_l,
-              el2_t, el2_r, el2_b, el2_l,
-              el3_t, el3_r, el3_b, el3_l):
+              el_top, el_right, el_bottom, el_left):
+    """Reference model — derives rotations from base element set,
+    matching the internal rewiring in ColourToDomain."""
 
-    elements = [
-        (el0_t, el0_r, el0_b, el0_l),
-        (el1_t, el1_r, el1_b, el1_l),
-        (el2_t, el2_r, el2_b, el2_l),
-        (el3_t, el3_r, el3_b, el3_l),
-    ]
     domains_in  = [in_r0, in_r1, in_r2, in_r3]
     out_r0 = list(in_r0)
     out_r1 = list(in_r1)
@@ -86,22 +96,24 @@ def reference(in_r0, in_r1, in_r2, in_r3,
             rot = rotation_for_position(gx, gy)
 
             if rot >= 0:
-                el_t, el_r, el_b, el_l = elements[rot]
+                r_top, r_right, r_bottom, r_left = rotate_elements(
+                    el_top, el_right, el_bottom, el_left, rot)
                 result, ch, de = reference_rotation(
                     domains_in[rot][i],
                     c_top[i], c_right[i], c_bottom[i], c_left[i],
-                    el_t, el_r, el_b, el_l)
+                    r_top, r_right, r_bottom, r_left)
                 out_domains[rot][i] = result
                 if ch: changed = True
                 if de: deadend = True
             else:
                 # inner — all four rotations
                 for r_idx in range(4):
-                    el_t, el_r, el_b, el_l = elements[r_idx]
+                    r_top, r_right, r_bottom, r_left = rotate_elements(
+                        el_top, el_right, el_bottom, el_left, r_idx)
                     result, ch, de = reference_rotation(
                         domains_in[r_idx][i],
                         c_top[i], c_right[i], c_bottom[i], c_left[i],
-                        el_t, el_r, el_b, el_l)
+                        r_top, r_right, r_bottom, r_left)
                     out_domains[r_idx][i] = result
                     if ch: changed = True
                     if de: deadend = True
@@ -111,10 +123,7 @@ def reference(in_r0, in_r1, in_r2, in_r3,
 async def apply(dut,
                 in_r0, in_r1, in_r2, in_r3,
                 c_top, c_right, c_bottom, c_left,
-                el0_t, el0_r, el0_b, el0_l,
-                el1_t, el1_r, el1_b, el1_l,
-                el2_t, el2_r, el2_b, el2_l,
-                el3_t, el3_r, el3_b, el3_l):
+                el_top, el_right, el_bottom, el_left):
     dut.in_domain_r0.value = pack_domain_array(in_r0)
     dut.in_domain_r1.value = pack_domain_array(in_r1)
     dut.in_domain_r2.value = pack_domain_array(in_r2)
@@ -123,46 +132,25 @@ async def apply(dut,
     dut.in_colours_right.value  = pack_colour_array(c_right)
     dut.in_colours_bottom.value = pack_colour_array(c_bottom)
     dut.in_colours_left.value   = pack_colour_array(c_left)
-    dut.in_element0_top.value    = pack_elements(el0_t)
-    dut.in_element0_right.value  = pack_elements(el0_r)
-    dut.in_element0_bottom.value = pack_elements(el0_b)
-    dut.in_element0_left.value   = pack_elements(el0_l)
-    dut.in_element1_top.value    = pack_elements(el1_t)
-    dut.in_element1_right.value  = pack_elements(el1_r)
-    dut.in_element1_bottom.value = pack_elements(el1_b)
-    dut.in_element1_left.value   = pack_elements(el1_l)
-    dut.in_element2_top.value    = pack_elements(el2_t)
-    dut.in_element2_right.value  = pack_elements(el2_r)
-    dut.in_element2_bottom.value = pack_elements(el2_b)
-    dut.in_element2_left.value   = pack_elements(el2_l)
-    dut.in_element3_top.value    = pack_elements(el3_t)
-    dut.in_element3_right.value  = pack_elements(el3_r)
-    dut.in_element3_bottom.value = pack_elements(el3_b)
-    dut.in_element3_left.value   = pack_elements(el3_l)
+    dut.in_elements_top.value    = pack_elements(el_top)
+    dut.in_elements_right.value  = pack_elements(el_right)
+    dut.in_elements_bottom.value = pack_elements(el_bottom)
+    dut.in_elements_left.value   = pack_elements(el_left)
     await Timer(1, unit="ns")
 
 async def check(dut,
                 in_r0, in_r1, in_r2, in_r3,
                 c_top, c_right, c_bottom, c_left,
-                el0_t, el0_r, el0_b, el0_l,
-                el1_t, el1_r, el1_b, el1_l,
-                el2_t, el2_r, el2_b, el2_l,
-                el3_t, el3_r, el3_b, el3_l):
+                el_top, el_right, el_bottom, el_left):
     await apply(dut,
                 in_r0, in_r1, in_r2, in_r3,
                 c_top, c_right, c_bottom, c_left,
-                el0_t, el0_r, el0_b, el0_l,
-                el1_t, el1_r, el1_b, el1_l,
-                el2_t, el2_r, el2_b, el2_l,
-                el3_t, el3_r, el3_b, el3_l)
+                el_top, el_right, el_bottom, el_left)
 
     exp_r0, exp_r1, exp_r2, exp_r3, exp_ch, exp_de = reference(
         in_r0, in_r1, in_r2, in_r3,
         c_top, c_right, c_bottom, c_left,
-        el0_t, el0_r, el0_b, el0_l,
-        el1_t, el1_r, el1_b, el1_l,
-        el2_t, el2_r, el2_b, el2_l,
-        el3_t, el3_r, el3_b, el3_l)
+        el_top, el_right, el_bottom, el_left)
 
     act_r0 = unpack_domain_array(dut.out_domain_r0.value.to_unsigned())
     act_r1 = unpack_domain_array(dut.out_domain_r1.value.to_unsigned())
@@ -193,9 +181,7 @@ async def test_empty_domains(dut):
     r  = make_zero_dom()
     c  = make_full_col()
     el = make_full_el()
-    await check(dut, r, r, r, r, c, c, c, c,
-                el, el, el, el, el, el, el, el,
-                el, el, el, el, el, el, el, el)
+    await check(dut, r, r, r, r, c, c, c, c, el, el, el, el)
     assert dut.out_changed.value == 0
     assert dut.out_deadend.value == 0
     cocotb.log.info("empty domains ✓")
@@ -206,29 +192,23 @@ async def test_all_pass_full_colours(dut):
     r  = make_full_dom()
     c  = make_full_col()
     el = make_full_el()
-    await check(dut, r, r, r, r, c, c, c, c,
-                el, el, el, el, el, el, el, el,
-                el, el, el, el, el, el, el, el)
+    await check(dut, r, r, r, r, c, c, c, c, el, el, el, el)
     assert dut.out_changed.value == 0
     assert dut.out_deadend.value == 0
     cocotb.log.info("all pass full colours ✓")
 
 @cocotb.test()
 async def test_bottom_left_uses_rotation0(dut):
-    """Bottom-left corner uses rotation 0 only."""
+    """Bottom-left corner uses rotation 0 only.
+    Zero base elements means rotation 0 gets zero top/right/bottom/left
+    so all pieces are filtered out — deadend expected."""
     i  = vid(0, N-1)
     r0 = make_zero_dom(); r0[i] = ALL_DOMAIN
     r1 = r2 = r3 = make_zero_dom()
     c  = make_full_col()
-    el = make_full_el()
-    el0 = make_full_el()
     el_zero = make_zero_el()
-    # zero elements for rotation 0 — should cause deadend at bottom-left
     await check(dut, r0, r1, r2, r3, c, c, c, c,
-                el_zero, el_zero, el_zero, el_zero,
-                el, el, el, el,
-                el, el, el, el,
-                el, el, el, el)
+                el_zero, el_zero, el_zero, el_zero)
     act_r0 = unpack_domain_array(dut.out_domain_r0.value.to_unsigned())
     assert act_r0[i] == 0, "bottom-left should use rotation 0 elements"
     assert dut.out_deadend.value == 1
@@ -236,18 +216,17 @@ async def test_bottom_left_uses_rotation0(dut):
 
 @cocotb.test()
 async def test_top_left_uses_rotation1(dut):
-    """Top-left corner uses rotation 1 only."""
+    """Top-left corner uses rotation 1 (top=left, right=top, bottom=right, left=bottom).
+    Setting only el_top to zero means rotation 1 gets zero right — deadend expected."""
     i  = vid(0, 0)
     r1 = make_zero_dom(); r1[i] = ALL_DOMAIN
     r0 = r2 = r3 = make_zero_dom()
     c  = make_full_col()
-    el = make_full_el()
+    el_full = make_full_el()
     el_zero = make_zero_el()
+    # rotation 1: right=top, so zeroing el_top kills the right side
     await check(dut, r0, r1, r2, r3, c, c, c, c,
-                el, el, el, el,
-                el_zero, el_zero, el_zero, el_zero,
-                el, el, el, el,
-                el, el, el, el)
+                el_zero, el_full, el_full, el_full)
     act_r1 = unpack_domain_array(dut.out_domain_r1.value.to_unsigned())
     assert act_r1[i] == 0, "top-left should use rotation 1 elements"
     assert dut.out_deadend.value == 1
@@ -263,9 +242,7 @@ async def test_inner_uses_all_rotations(dut):
     r3 = make_zero_dom(); r3[i] = 1 << 3
     c  = make_full_col()
     el = make_full_el()
-    await check(dut, r0, r1, r2, r3, c, c, c, c,
-                el, el, el, el, el, el, el, el,
-                el, el, el, el, el, el, el, el)
+    await check(dut, r0, r1, r2, r3, c, c, c, c, el, el, el, el)
     act_r0 = unpack_domain_array(dut.out_domain_r0.value.to_unsigned())
     act_r1 = unpack_domain_array(dut.out_domain_r1.value.to_unsigned())
     act_r2 = unpack_domain_array(dut.out_domain_r2.value.to_unsigned())
@@ -287,29 +264,25 @@ async def test_zero_colour_causes_deadend(dut):
     el = make_full_el()
     await check(dut, r0, r1, r2, r3,
                 c_zero, c_full, c_full, c_full,
-                el, el, el, el, el, el, el, el,
-                el, el, el, el, el, el, el, el)
+                el, el, el, el)
     assert dut.out_deadend.value == 1
     cocotb.log.info("zero colour → deadend ✓")
 
 @cocotb.test()
 async def test_changed_detected(dut):
-    """Domain shrinks — changed flag set."""
+    """Domain shrinks — changed flag set.
+    Only piece 0 has matching elements in the base orientation,
+    so only piece 0 survives at the bottom-left corner (rotation 0)."""
     i  = vid(0, N-1)  # bottom-left uses rotation 0
     r0 = make_zero_dom(); r0[i] = ALL_DOMAIN
     r1 = r2 = r3 = make_zero_dom()
     c  = make_full_col()
-    # only piece 0 has matching elements
-    el0_t = make_zero_el(); el0_t[0] = CC_MASK
-    el0_r = make_zero_el(); el0_r[0] = CC_MASK
-    el0_b = make_zero_el(); el0_b[0] = CC_MASK
-    el0_l = make_zero_el(); el0_l[0] = CC_MASK
-    el = make_full_el()
-    await check(dut, r0, r1, r2, r3, c, c, c, c,
-                el0_t, el0_r, el0_b, el0_l,
-                el, el, el, el,
-                el, el, el, el,
-                el, el, el, el)
+    # only piece 0 has matching elements in base orientation
+    el_t = make_zero_el(); el_t[0] = CC_MASK
+    el_r = make_zero_el(); el_r[0] = CC_MASK
+    el_b = make_zero_el(); el_b[0] = CC_MASK
+    el_l = make_zero_el(); el_l[0] = CC_MASK
+    await check(dut, r0, r1, r2, r3, c, c, c, c, el_t, el_r, el_b, el_l)
     assert dut.out_changed.value == 1
     act_r0 = unpack_domain_array(dut.out_domain_r0.value.to_unsigned())
     assert act_r0[i] == 1, f"only piece 0 should survive, got {act_r0[i]:#x}"
@@ -325,9 +298,7 @@ async def test_unused_rotations_pass_through(dut):
     r3 = make_zero_dom(); r3[i] = 0b0011
     c  = make_full_col()
     el = make_full_el()
-    await check(dut, r0, r1, r2, r3, c, c, c, c,
-                el, el, el, el, el, el, el, el,
-                el, el, el, el, el, el, el, el)
+    await check(dut, r0, r1, r2, r3, c, c, c, c, el, el, el, el)
     act_r1 = unpack_domain_array(dut.out_domain_r1.value.to_unsigned())
     act_r2 = unpack_domain_array(dut.out_domain_r2.value.to_unsigned())
     act_r3 = unpack_domain_array(dut.out_domain_r3.value.to_unsigned())
@@ -335,6 +306,54 @@ async def test_unused_rotations_pass_through(dut):
     assert act_r2[i] == 0b1100, "r2 should pass through unchanged"
     assert act_r3[i] == 0b0011, "r3 should pass through unchanged"
     cocotb.log.info("unused rotations pass through ✓")
+
+@cocotb.test()
+async def test_rotation_wiring(dut):
+    """Verify the internal rotation rewiring is correct.
+    Uses asymmetric elements so each rotation produces a distinct result,
+    then checks that each grid position gets the expected rotation."""
+    i_bl = vid(0, N-1)  # bottom-left — rotation 0
+    i_tl = vid(0, 0)    # top-left    — rotation 1
+    i_tr = vid(N-1, 0)  # top-right   — rotation 2
+    i_br = vid(N-1, N-1)# bottom-right — rotation 3
+
+    # unique colour per side so rotations are distinguishable
+    A, B, C, D = 0b000001, 0b000010, 0b000100, 0b001000
+
+    el_top    = [A] * V
+    el_right  = [B] * V
+    el_bottom = [C] * V
+    el_left   = [D] * V
+
+    # colour constraints that only match one specific side pattern
+    # rotation 0: top=A right=B bottom=C left=D
+    # rotation 1: top=D right=A bottom=B left=C
+    # rotation 2: top=C right=D bottom=A left=B
+    # rotation 3: top=B right=C bottom=D left=A
+
+    for corner, rx, c_t, c_r, c_b, c_l in [
+        (i_bl, 0, A, B, C, D),  # rotation 0
+        (i_tl, 1, D, A, B, C),  # rotation 1
+        (i_tr, 2, C, D, A, B),  # rotation 2
+        (i_br, 3, B, C, D, A),  # rotation 3
+    ]:
+        r0 = make_zero_dom()
+        r1 = make_zero_dom()
+        r2 = make_zero_dom()
+        r3 = make_zero_dom()
+        [r0, r1, r2, r3][rx][corner] = ALL_DOMAIN
+
+        c_top    = [c_t] * V
+        c_right  = [c_r] * V
+        c_bottom = [c_b] * V
+        c_left   = [c_l] * V
+
+        await check(dut, r0, r1, r2, r3,
+                    c_top, c_right, c_bottom, c_left,
+                    el_top, el_right, el_bottom, el_left)
+        assert dut.out_deadend.value == 0, \
+            f"rotation {rx} at corner {corner} should not deadend"
+        cocotb.log.info(f"rotation wiring {rx} ✓")
 
 @cocotb.test()
 async def test_random(dut):
@@ -346,15 +365,9 @@ async def test_random(dut):
         def re(): return [random.randint(0, CC_MASK)    for _ in range(V)]
         r0, r1, r2, r3 = rd(), rd(), rd(), rd()
         c_t, c_r, c_b, c_l = rc(), rc(), rc(), rc()
-        el0_t, el0_r, el0_b, el0_l = re(), re(), re(), re()
-        el1_t, el1_r, el1_b, el1_l = re(), re(), re(), re()
-        el2_t, el2_r, el2_b, el2_l = re(), re(), re(), re()
-        el3_t, el3_r, el3_b, el3_l = re(), re(), re(), re()
+        el_t, el_r, el_b, el_l = re(), re(), re(), re()
         await check(dut, r0, r1, r2, r3, c_t, c_r, c_b, c_l,
-                    el0_t, el0_r, el0_b, el0_l,
-                    el1_t, el1_r, el1_b, el1_l,
-                    el2_t, el2_r, el2_b, el2_l,
-                    el3_t, el3_r, el3_b, el3_l)
+                    el_t, el_r, el_b, el_l)
     cocotb.log.info("20 random tests ✓")
 
 def test_ColourToDomain():

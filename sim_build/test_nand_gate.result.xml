@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304178" />
-    <testcase name="test_nand_all_inputs" classname="test_nand_gate" file="/home/parallels/e2_fpga/tests/test_nand_gate.py" lineno="6" time="0.00015687942504882812" sim_time_ns="4.0" ratio_time="25497.288753799392" />
+    <property name="random_seed" value="1775368404" />
+    <testcase name="test_nand_all_inputs" classname="test_nand_gate" file="/home/parallels/e2_fpga/tests/test_nand_gate.py" lineno="6" time="0.00011658668518066406" sim_time_ns="4.0" ratio_time="34309.235173824134" />
   </testsuite>
 </testsuites>

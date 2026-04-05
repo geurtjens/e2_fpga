@@ -1,82 +1,99 @@
 // ─────────────────────────────────────────────────────────────
-// ColoursToDomain
+// ColourToDomain
 //
-// Filters the domain of every variable on the board by checking
-// each piece against the variable's colour constraints.
-//
-// Border and corner positions have only one valid rotation.
-// Inner positions have all four rotations.
-//
-// Rotation convention:
-//   rotation 0 — border faces bottom  (bottom edge / BL corner)
-//   rotation 1 — border faces left    (left edge  / TL corner)
-//   rotation 2 — border faces top     (top edge   / TR corner)
-//   rotation 3 — border faces right   (right edge / BR corner)
-//
-// Parameters
-//   N         — board side length (board is N x N)
-//   CC        — total colour bits per edge
-//   V — N * N
-//
-// Outputs
-//   r0_out..r3_out — filtered domain bitmasks per variable
-//   changed        — 1 if any domain changed
-//   deadend        — 1 if any variable has empty domain
+//! Filters the domain of every variable on the board by checking
+//! each piece against the variable's colour constraints.
+//!
+//! Takes a single set of tile elements and derives all four
+//! rotations internally by rewiring the four sides:
+//!   rotation 0:  top=top,    right=right,  bottom=bottom, left=left
+//!   rotation 1:  top=left,   right=top,    bottom=right,  left=bottom
+//!   rotation 2:  top=bottom, right=left,   bottom=top,    left=right
+//!   rotation 3:  top=right,  right=bottom, bottom=left,   left=top
+//!
+//! Border and corner positions have only one valid rotation.
+//! Inner positions have all four rotations.
+//!
+//! Rotation convention:
+//!   rotation 0 — border faces bottom  (bottom edge / BL corner)
+//!   rotation 1 — border faces left    (left edge  / TL corner)
+//!   rotation 2 — border faces top     (top edge   / TR corner)
+//!   rotation 3 — border faces right   (right edge / BR corner)
+//!
+//! out_changed — 1 if any domain changed
+//! out_deadend — 1 if any variable has empty domain
 // ─────────────────────────────────────────────────────────────
 module ColourToDomain #(
-    parameter int N         = 4,
-    parameter int CC        = 6,
-    parameter int V = N * N
+    parameter int N  = 4,    //! Size of grid.
+    parameter int CC = 6,    //! Colour count — number of bits to represent colours.
+    parameter int V  = N * N //! Variables in grid — N * N.
 )(
-    // ── Domain inputs ──────────────────────────────────────────
-    input  logic [V-1:0][V-1:0] in_domain_r0,
-    input  logic [V-1:0][V-1:0] in_domain_r1,
-    input  logic [V-1:0][V-1:0] in_domain_r2,
-    input  logic [V-1:0][V-1:0] in_domain_r3,
+    // ── Domain inputs ─────────────────────────────────────────
+    input  logic [V-1:0][V-1:0] in_domain_r0,        //! rotation 0 domain bitmask for each variable.
+    input  logic [V-1:0][V-1:0] in_domain_r1,        //! rotation 1 domain bitmask for each variable.
+    input  logic [V-1:0][V-1:0] in_domain_r2,        //! rotation 2 domain bitmask for each variable.
+    input  logic [V-1:0][V-1:0] in_domain_r3,        //! rotation 3 domain bitmask for each variable.
 
     // ── Colour constraint inputs ───────────────────────────────
-    input  logic [V-1:0][CC-1:0] in_colours_top,
-    input  logic [V-1:0][CC-1:0] in_colours_right,
-    input  logic [V-1:0][CC-1:0] in_colours_bottom,
-    input  logic [V-1:0][CC-1:0] in_colours_left,
+    input  logic [V-1:0][CC-1:0] in_colours_top,     //! top colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_right,   //! right colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_bottom,  //! bottom colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_left,    //! left colour mask for each variable.
 
-    // ── Piece pattern data (broadcast to all instances) ────────
-    input  logic [V-1:0][CC-1:0] in_element0_top,
-    input  logic [V-1:0][CC-1:0] in_element0_right,
-    input  logic [V-1:0][CC-1:0] in_element0_bottom,
-    input  logic [V-1:0][CC-1:0] in_element0_left,
+    // ── Tile elements (base orientation, rotation handled internally) ──
+    input  logic [V-1:0][CC-1:0] in_elements_top,    //! top colour for each tile in base orientation.
+    input  logic [V-1:0][CC-1:0] in_elements_right,  //! right colour for each tile in base orientation.
+    input  logic [V-1:0][CC-1:0] in_elements_bottom, //! bottom colour for each tile in base orientation.
+    input  logic [V-1:0][CC-1:0] in_elements_left,   //! left colour for each tile in base orientation.
 
-    input  logic [V-1:0][CC-1:0] in_element1_top,
-    input  logic [V-1:0][CC-1:0] in_element1_right,
-    input  logic [V-1:0][CC-1:0] in_element1_bottom,
-    input  logic [V-1:0][CC-1:0] in_element1_left,
+    // ── Domain outputs ────────────────────────────────────────
+    output logic [V-1:0][V-1:0] out_domain_r0,       //! updated rotation 0 domain bitmask for each variable.
+    output logic [V-1:0][V-1:0] out_domain_r1,       //! updated rotation 1 domain bitmask for each variable.
+    output logic [V-1:0][V-1:0] out_domain_r2,       //! updated rotation 2 domain bitmask for each variable.
+    output logic [V-1:0][V-1:0] out_domain_r3,       //! updated rotation 3 domain bitmask for each variable.
 
-    input  logic [V-1:0][CC-1:0] in_element2_top,
-    input  logic [V-1:0][CC-1:0] in_element2_right,
-    input  logic [V-1:0][CC-1:0] in_element2_bottom,
-    input  logic [V-1:0][CC-1:0] in_element2_left,
-
-    input  logic [V-1:0][CC-1:0] in_element3_top,
-    input  logic [V-1:0][CC-1:0] in_element3_right,
-    input  logic [V-1:0][CC-1:0] in_element3_bottom,
-    input  logic [V-1:0][CC-1:0] in_element3_left,
-
-    // ── Outputs ────────────────────────────────────────────────
-    output logic [V-1:0][V-1:0] out_domain_r0,
-    output logic [V-1:0][V-1:0] out_domain_r1,
-    output logic [V-1:0][V-1:0] out_domain_r2,
-    output logic [V-1:0][V-1:0] out_domain_r3,
-    output logic                out_changed,
-    output logic                out_deadend
+    output logic                out_changed,          //! 1 if any domain changed.
+    output logic                out_deadend           //! 1 if any variable has an empty domain.
 );
-    // ── Per-variable changed and deadend wires ─────────────────
-    logic [V-1:0] v_changed;
-    logic [V-1:0] v_deadend;
 
-    // ── Unused rotation outputs tied off ───────────────────────
-    // Border/corner positions only use one rotation; the unused
-    // rotation outputs are tied to the input domain unchanged
-    // so they neither signal changed nor deadend
+    // ── Per-variable changed and deadend wires ─────────────────
+    logic [V-1:0] v_changed; //! per-variable changed flag.
+    logic [V-1:0] v_deadend; //! per-variable deadend flag.
+
+    // ── Rotation wiring ───────────────────────────────────────
+    //! The four rotations are derived purely by rewiring the four
+    //! sides of the base element set. No logic is required — the
+    //! synthesiser will connect these directly as wires.
+    //!
+    //!   rotation 0:  top=top,    right=right,  bottom=bottom, left=left
+    //!   rotation 1:  top=left,   right=top,    bottom=right,  left=bottom
+    //!   rotation 2:  top=bottom, right=left,   bottom=top,    left=right
+    //!   rotation 3:  top=right,  right=bottom, bottom=left,   left=top
+
+    logic [V-1:0][CC-1:0] el0_top, el0_right, el0_bottom, el0_left; //! base orientation.
+    logic [V-1:0][CC-1:0] el1_top, el1_right, el1_bottom, el1_left; //! 90 degrees clockwise.
+    logic [V-1:0][CC-1:0] el2_top, el2_right, el2_bottom, el2_left; //! 180 degrees.
+    logic [V-1:0][CC-1:0] el3_top, el3_right, el3_bottom, el3_left; //! 270 degrees clockwise.
+
+    assign el0_top    = in_elements_top;
+    assign el0_right  = in_elements_right;
+    assign el0_bottom = in_elements_bottom;
+    assign el0_left   = in_elements_left;
+
+    assign el1_top    = in_elements_left;
+    assign el1_right  = in_elements_top;
+    assign el1_bottom = in_elements_right;
+    assign el1_left   = in_elements_bottom;
+
+    assign el2_top    = in_elements_bottom;
+    assign el2_right  = in_elements_left;
+    assign el2_bottom = in_elements_top;
+    assign el2_left   = in_elements_right;
+
+    assign el3_top    = in_elements_right;
+    assign el3_right  = in_elements_bottom;
+    assign el3_bottom = in_elements_left;
+    assign el3_left   = in_elements_top;
 
     genvar gx, gy;
     generate
@@ -84,161 +101,171 @@ module ColourToDomain #(
             for (gx = 0; gx < N; gx++) begin : gen_x
                 localparam int id = gy*N + gx;
 
-                // ── Corners — one rotation each ────────────────
+                // ── Bottom-left corner — rotation 0 ───────────
                 if (gx == 0 && gy == N-1) begin : bottom_left
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r0[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element0_top), 
-                        .in_element_right(in_element0_right),
-                        .in_element_bottom(in_element0_bottom), 
-                        .in_element_left(in_element0_left),
-                        .out_domain(out_domain_r0[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r0[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el0_top),
+                        .in_element_right  (el0_right),
+                        .in_element_bottom (el0_bottom),
+                        .in_element_left   (el0_left),
+                        .out_domain        (out_domain_r0[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Top-left corner — rotation 1 ──────────────
                 end else if (gx == 0 && gy == 0) begin : top_left
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r1[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element1_top), 
-                        .in_element_right(in_element1_right),
-                        .in_element_bottom(in_element1_bottom), 
-                        .in_element_left(in_element1_left),
-                        .out_domain(out_domain_r1[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r1[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el1_top),
+                        .in_element_right  (el1_right),
+                        .in_element_bottom (el1_bottom),
+                        .in_element_left   (el1_left),
+                        .out_domain        (out_domain_r1[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Top-right corner — rotation 2 ─────────────
                 end else if (gx == N-1 && gy == 0) begin : top_right
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r2[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element2_top), 
-                        .in_element_right(in_element2_right),
-                        .in_element_bottom(in_element2_bottom), 
-                        .in_element_left(in_element2_left),
-                        .out_domain(out_domain_r2[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r2[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el2_top),
+                        .in_element_right  (el2_right),
+                        .in_element_bottom (el2_bottom),
+                        .in_element_left   (el2_left),
+                        .out_domain        (out_domain_r2[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Bottom-right corner — rotation 3 ──────────
                 end else if (gx == N-1 && gy == N-1) begin : bottom_right
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r3[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element3_top), 
-                        .in_element_right(in_element3_right),
-                        .in_element_bottom(in_element3_bottom), 
-                        .in_element_left(in_element3_left),
-                        .out_domain(out_domain_r3[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r3[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el3_top),
+                        .in_element_right  (el3_right),
+                        .in_element_bottom (el3_bottom),
+                        .in_element_left   (el3_left),
+                        .out_domain        (out_domain_r3[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
 
-                // ── Edges — one rotation each ──────────────────
+                // ── Bottom edge — rotation 0 ───────────────────
                 end else if (gy == N-1) begin : bottom_edge
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r0[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element0_top), 
-                        .in_element_right(in_element0_right),
-                        .in_element_bottom(in_element0_bottom), 
-                        .in_element_left(in_element0_left),
-                        .out_domain(out_domain_r0[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r0[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el0_top),
+                        .in_element_right  (el0_right),
+                        .in_element_bottom (el0_bottom),
+                        .in_element_left   (el0_left),
+                        .out_domain        (out_domain_r0[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Left edge — rotation 1 ─────────────────────
                 end else if (gx == 0) begin : left_edge
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r1[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element1_top), 
-                        .in_element_right(in_element1_right),
-                        .in_element_bottom(in_element1_bottom), 
-                        .in_element_left(in_element1_left),
-                        .out_domain(out_domain_r1[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r1[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el1_top),
+                        .in_element_right  (el1_right),
+                        .in_element_bottom (el1_bottom),
+                        .in_element_left   (el1_left),
+                        .out_domain        (out_domain_r1[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Top edge — rotation 2 ──────────────────────
                 end else if (gy == 0) begin : top_edge
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r2[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element2_top), 
-                        .in_element_right(in_element2_right),
-                        .in_element_bottom(in_element2_bottom), 
-                        .in_element_left(in_element2_left),
-                        .out_domain(out_domain_r2[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r2[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el2_top),
+                        .in_element_right  (el2_right),
+                        .in_element_bottom (el2_bottom),
+                        .in_element_left   (el2_left),
+                        .out_domain        (out_domain_r2[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r3[id] = in_domain_r3[id];
 
+                // ── Right edge — rotation 3 ────────────────────
                 end else if (gx == N-1) begin : right_edge
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot (
-                        .in_domain(in_domain_r3[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element3_top), 
-                        .in_element_right(in_element3_right),
-                        .in_element_bottom(in_element3_bottom), 
-                        .in_element_left(in_element3_left),
-                        .out_domain(out_domain_r3[id]),
-                        .out_changed(v_changed[id]), 
-                        .out_deadend(v_deadend[id])
+                        .in_domain         (in_domain_r3[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el3_top),
+                        .in_element_right  (el3_right),
+                        .in_element_bottom (el3_bottom),
+                        .in_element_left   (el3_left),
+                        .out_domain        (out_domain_r3[id]),
+                        .out_changed       (v_changed[id]),
+                        .out_deadend       (v_deadend[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
 
                 // ── Inner — all four rotations ─────────────────
+                //! Inner variables can hold any tile in any rotation
+                //! so all four rotations are filtered independently.
+                //! The variable is a deadend only if all four
+                //! rotation domains are empty simultaneously.
                 end else begin : inner
                     logic rot0_changed, rot0_deadend;
                     logic rot1_changed, rot1_deadend;
@@ -246,63 +273,63 @@ module ColourToDomain #(
                     logic rot3_changed, rot3_deadend;
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot0 (
-                        .in_domain(in_domain_r0[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element0_top), 
-                        .in_element_right(in_element0_right),
-                        .in_element_bottom(in_element0_bottom), 
-                        .in_element_left(in_element0_left),
-                        .out_domain(out_domain_r0[id]),
-                        .out_changed(rot0_changed), 
-                        .out_deadend(rot0_deadend)
+                        .in_domain         (in_domain_r0[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el0_top),
+                        .in_element_right  (el0_right),
+                        .in_element_bottom (el0_bottom),
+                        .in_element_left   (el0_left),
+                        .out_domain        (out_domain_r0[id]),
+                        .out_changed       (rot0_changed),
+                        .out_deadend       (rot0_deadend)
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot1 (
-                        .in_domain(in_domain_r1[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element1_top), 
-                        .in_element_right(in_element1_right),
-                        .in_element_bottom(in_element1_bottom), 
-                        .in_element_left(in_element1_left),
-                        .out_domain(out_domain_r1[id]),
-                        .out_changed(rot1_changed), 
-                        .out_deadend(rot1_deadend)
+                        .in_domain         (in_domain_r1[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el1_top),
+                        .in_element_right  (el1_right),
+                        .in_element_bottom (el1_bottom),
+                        .in_element_left   (el1_left),
+                        .out_domain        (out_domain_r1[id]),
+                        .out_changed       (rot1_changed),
+                        .out_deadend       (rot1_deadend)
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot2 (
-                        .in_domain(in_domain_r2[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element2_top), 
-                        .in_element_right(in_element2_right),
-                        .in_element_bottom(in_element2_bottom), 
-                        .in_element_left(in_element2_left),
-                        .out_domain(out_domain_r2[id]),
-                        .out_changed(rot2_changed), 
-                        .out_deadend(rot2_deadend)
+                        .in_domain         (in_domain_r2[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el2_top),
+                        .in_element_right  (el2_right),
+                        .in_element_bottom (el2_bottom),
+                        .in_element_left   (el2_left),
+                        .out_domain        (out_domain_r2[id]),
+                        .out_changed       (rot2_changed),
+                        .out_deadend       (rot2_deadend)
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot3 (
-                        .in_domain(in_domain_r3[id]), 
-                        .in_colour_top(in_colours_top[id]), 
-                        .in_colour_right(in_colours_right[id]),
-                        .in_colour_bottom(in_colours_bottom[id]), 
-                        .in_colour_left(in_colours_left[id]),
-                        .in_element_top(in_element3_top), 
-                        .in_element_right(in_element3_right),
-                        .in_element_bottom(in_element3_bottom), 
-                        .in_element_left(in_element3_left),
-                        .out_domain(out_domain_r3[id]),
-                        .out_changed(rot3_changed), 
-                        .out_deadend(rot3_deadend)
+                        .in_domain         (in_domain_r3[id]),
+                        .in_colour_top     (in_colours_top[id]),
+                        .in_colour_right   (in_colours_right[id]),
+                        .in_colour_bottom  (in_colours_bottom[id]),
+                        .in_colour_left    (in_colours_left[id]),
+                        .in_element_top    (el3_top),
+                        .in_element_right  (el3_right),
+                        .in_element_bottom (el3_bottom),
+                        .in_element_left   (el3_left),
+                        .out_domain        (out_domain_r3[id]),
+                        .out_changed       (rot3_changed),
+                        .out_deadend       (rot3_deadend)
                     );
 
                     assign v_changed[id] = rot0_changed | rot1_changed |

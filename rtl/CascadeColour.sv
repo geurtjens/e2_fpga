@@ -23,10 +23,10 @@ module CascadeColour #(
     parameter int CC = 6,     //! Colour count per edge
     parameter int V  = N * N  //! Number of variables — derived from N, do not override
 )(
-    input  logic [V-1:0][CC-1:0] in_colours_top,    //! top colour for each grid position
-    input  logic [V-1:0][CC-1:0] in_colours_right,  //! right colour for each grid position
-    input  logic [V-1:0][CC-1:0] in_colours_bottom, //! bottom colour for each grid position
-    input  logic [V-1:0][CC-1:0] in_colours_left,   //! left colour for each grid position
+    input  logic [V-1:0][CC-1:0] in_colours_top,    //! top colours for each grid position
+    input  logic [V-1:0][CC-1:0] in_colours_right,  //! right colours for each grid position
+    input  logic [V-1:0][CC-1:0] in_colours_bottom, //! bottom colours for each grid position
+    input  logic [V-1:0][CC-1:0] in_colours_left,   //! left colours for each grid position
 
     output logic [V-1:0][CC-1:0] out_colours_top,    //! updated top colour for each grid position
     output logic [V-1:0][CC-1:0] out_colours_right,  //! updated right colour for each grid position

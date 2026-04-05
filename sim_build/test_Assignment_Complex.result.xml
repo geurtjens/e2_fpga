@@ -1,11 +1,19 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775304174" />
-    <testcase name="test_domain_locked" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="195" time="0.00037479400634765625" sim_time_ns="1.0" ratio_time="2668.1323155216287" />
-    <testcase name="test_own_colours_set" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="211" time="0.0001590251922607422" sim_time_ns="1.0" ratio_time="6288.311844077961" />
-    <testcase name="test_neighbour_colours_updated" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="230" time="0.00017118453979492188" sim_time_ns="1.0" ratio_time="5841.649025069638" />
-    <testcase name="test_corner_no_missing_neighbours" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="239" time="0.00014519691467285156" sim_time_ns="1.0" ratio_time="6887.1986863711" />
-    <testcase name="test_colours_changed_when_restricted" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="247" time="0.00014591217041015625" sim_time_ns="1.0" ratio_time="6853.437908496732" />
-    <testcase name="test_random" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="257" time="0.0036993026733398438" sim_time_ns="30.000000000000004" ratio_time="8109.6365042536745" />
+    <property name="random_seed" value="1775368400" />
+    <testcase name="test_domain_locked_r0" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="204" time="0.00033974647521972656" sim_time_ns="1.0" ratio_time="2943.371228070175" />
+    <testcase name="test_domain_locked_r1" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="222" time="0.00012826919555664062" sim_time_ns="1.0" ratio_time="7796.1040892193305" />
+    <testcase name="test_own_colours_set" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="236" time="0.00011777877807617188" sim_time_ns="1.0" ratio_time="8490.493927125506" />
+    <testcase name="test_neighbour_colours_updated" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="257" time="0.00010728836059570312" sim_time_ns="1.0" ratio_time="9320.675555555556" />
+    <testcase name="test_top_left_corner_safe" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="267" time="0.00010776519775390625" sim_time_ns="1.0" ratio_time="9279.433628318584" />
+    <testcase name="test_bottom_right_corner_safe" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="277" time="0.00010251998901367188" sim_time_ns="1.0" ratio_time="9754.19534883721" />
+    <testcase name="test_top_right_corner_safe" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="287" time="0.00010180473327636719" sim_time_ns="1.0" ratio_time="9822.72599531616" />
+    <testcase name="test_bottom_left_corner_safe" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="297" time="9.608268737792969e-05" sim_time_ns="1.0" ratio_time="10407.70223325062" />
+    <testcase name="test_unassigned_variable_bit_cleared" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="307" time="0.00010013580322265625" sim_time_ns="1.0" ratio_time="9986.438095238096" />
+    <testcase name="test_unassigned_tile_bit_cleared" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="321" time="9.655952453613281e-05" sim_time_ns="1.0" ratio_time="10356.306172839506" />
+    <testcase name="test_other_variables_unchanged" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="335" time="0.00010156631469726562" sim_time_ns="1.0" ratio_time="9845.784037558686" />
+    <testcase name="test_colours_changed_detected" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="352" time="9.894371032714844e-05" sim_time_ns="1.0" ratio_time="10106.756626506025" />
+    <testcase name="test_no_colours_changed_when_already_constrained" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="363" time="9.894371032714844e-05" sim_time_ns="1.0" ratio_time="10106.756626506025" />
+    <testcase name="test_random" classname="test_Assignment_Complex" file="/home/parallels/e2_fpga/tests/test_Assignment_Complex.py" lineno="386" time="0.0024361610412597656" sim_time_ns="30.0" ratio_time="12314.456840869054" />
   </testsuite>
 </testsuites>

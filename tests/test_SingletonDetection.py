@@ -3,10 +3,10 @@ from cocotb.triggers import Timer
 from cocotb_tools.runner import get_runner
 import random
 
-N = 4
-VARIABLES = N * N
-ALL_VARS = (1 << VARIABLES) - 1
-ALL_TILES = (1 << VARIABLES) - 1
+N         = 4
+V         = N * N
+ALL_VARS  = (1 << V) - 1
+ALL_TILES = (1 << V) - 1
 
 def popcount(x):
     return bin(x).count('1')
@@ -20,13 +20,13 @@ def reference(in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
     out_r3 = list(in_r3)
     singleton_found = False
 
-    for v in range(VARIABLES):
+    for v in range(V):
         if (in_uv >> v) & 1:
             combined = in_r0[v] | in_r1[v] | in_r2[v] | in_r3[v]
             if combined != 0 and (combined & (combined - 1)) == 0:
                 singleton_found = True
                 tile_id = combined.bit_length() - 1
-                if in_r0[v] != 0:   rot = 0
+                if   in_r0[v] != 0: rot = 0
                 elif in_r1[v] != 0: rot = 1
                 elif in_r2[v] != 0: rot = 2
                 else:                rot = 3
@@ -42,20 +42,20 @@ def reference(in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
 
 def pack_domain_array(arr):
     val = 0
-    for i in range(VARIABLES):
-        val |= (arr[i] & ALL_VARS) << (i * VARIABLES)
+    for i in range(V):
+        val |= (arr[i] & ALL_VARS) << (i * V)
     return val
 
 def unpack_domain_array(val):
-    return [(val >> (i * VARIABLES)) & ALL_VARS for i in range(VARIABLES)]
+    return [(val >> (i * V)) & ALL_VARS for i in range(V)]
 
 async def apply(dut, in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
     dut.in_unassignedVariables.value = in_uv
     dut.in_unassignedTiles.value     = in_ut
-    dut.in_r0.value = pack_domain_array(in_r0)
-    dut.in_r1.value = pack_domain_array(in_r1)
-    dut.in_r2.value = pack_domain_array(in_r2)
-    dut.in_r3.value = pack_domain_array(in_r3)
+    dut.in_domain_r0.value           = pack_domain_array(in_r0)
+    dut.in_domain_r1.value           = pack_domain_array(in_r1)
+    dut.in_domain_r2.value           = pack_domain_array(in_r2)
+    dut.in_domain_r3.value           = pack_domain_array(in_r3)
     await Timer(1, unit="ns")
 
 async def check(dut, in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
@@ -63,10 +63,10 @@ async def check(dut, in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
     exp_uv, exp_ut, exp_r0, exp_r1, exp_r2, exp_r3, exp_sf, exp_de = \
         reference(in_uv, in_ut, in_r0, in_r1, in_r2, in_r3)
 
-    act_r0 = unpack_domain_array(dut.out_r0.value.to_unsigned())
-    act_r1 = unpack_domain_array(dut.out_r1.value.to_unsigned())
-    act_r2 = unpack_domain_array(dut.out_r2.value.to_unsigned())
-    act_r3 = unpack_domain_array(dut.out_r3.value.to_unsigned())
+    act_r0 = unpack_domain_array(dut.out_domain_r0.value.to_unsigned())
+    act_r1 = unpack_domain_array(dut.out_domain_r1.value.to_unsigned())
+    act_r2 = unpack_domain_array(dut.out_domain_r2.value.to_unsigned())
+    act_r3 = unpack_domain_array(dut.out_domain_r3.value.to_unsigned())
 
     assert dut.out_unassignedVariables.value == exp_uv, \
         f"unassignedVariables={dut.out_unassignedVariables.value:016b} expected={exp_uv:016b}"
@@ -77,7 +77,7 @@ async def check(dut, in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
     assert dut.out_deadend.value == int(exp_de), \
         f"out_deadend={dut.out_deadend.value} expected={int(exp_de)}"
 
-    for v in range(VARIABLES):
+    for v in range(V):
         assert act_r0[v] == exp_r0[v], f"r0[{v}]={act_r0[v]:016b} expected={exp_r0[v]:016b}"
         assert act_r1[v] == exp_r1[v], f"r1[{v}]={act_r1[v]:016b} expected={exp_r1[v]:016b}"
         assert act_r2[v] == exp_r2[v], f"r2[{v}]={act_r2[v]:016b} expected={exp_r2[v]:016b}"
@@ -86,7 +86,7 @@ async def check(dut, in_uv, in_ut, in_r0, in_r1, in_r2, in_r3):
 @cocotb.test()
 async def test_no_singletons(dut):
     """No variables with single piece — nothing changes."""
-    r = [0b11 for _ in range(VARIABLES)]
+    r = [0b11 for _ in range(V)]
     await check(dut, ALL_VARS, ALL_TILES, r, r, r, r)
     assert dut.out_singleton.value == 0
     assert dut.out_deadend.value == 0
@@ -95,12 +95,12 @@ async def test_no_singletons(dut):
 @cocotb.test()
 async def test_single_singleton_r0(dut):
     """Variable 0 has exactly one piece in r0 — gets locked."""
-    r0 = [0] * VARIABLES
-    r1 = [0] * VARIABLES
-    r2 = [0] * VARIABLES
-    r3 = [0] * VARIABLES
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
     r0[0] = 1 << 5
-    for v in range(1, VARIABLES):
+    for v in range(1, V):
         r0[v] = 0b11
     await check(dut, ALL_VARS, ALL_TILES, r0, r1, r2, r3)
     assert dut.out_singleton.value == 1
@@ -110,10 +110,10 @@ async def test_single_singleton_r0(dut):
 @cocotb.test()
 async def test_singleton_r2(dut):
     """Variable 3 has exactly one piece in r2 — gets locked."""
-    r0 = [0b11] * VARIABLES
-    r1 = [0b11] * VARIABLES
-    r2 = [0b11] * VARIABLES
-    r3 = [0b11] * VARIABLES
+    r0 = [0b11] * V
+    r1 = [0b11] * V
+    r2 = [0b11] * V
+    r3 = [0b11] * V
     r0[3] = 0
     r1[3] = 0
     r2[3] = 1 << 7
@@ -125,13 +125,13 @@ async def test_singleton_r2(dut):
 @cocotb.test()
 async def test_multiple_singletons(dut):
     """Multiple variables each have one piece — all locked."""
-    r0 = [0] * VARIABLES
-    r1 = [0] * VARIABLES
-    r2 = [0] * VARIABLES
-    r3 = [0] * VARIABLES
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
     r0[0] = 1 << 0
     r1[1] = 1 << 1
-    for v in range(2, VARIABLES):
+    for v in range(2, V):
         r0[v] = 0b11
     await check(dut, ALL_VARS, ALL_TILES, r0, r1, r2, r3)
     assert dut.out_singleton.value == 1
@@ -140,13 +140,13 @@ async def test_multiple_singletons(dut):
 @cocotb.test()
 async def test_deadend_same_tile(dut):
     """Two variables forced to same tile — deadend."""
-    r0 = [0] * VARIABLES
-    r1 = [0] * VARIABLES
-    r2 = [0] * VARIABLES
-    r3 = [0] * VARIABLES
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
     r0[0] = 1 << 5
     r0[1] = 1 << 5
-    for v in range(2, VARIABLES):
+    for v in range(2, V):
         r0[v] = 0b11
     await check(dut, ALL_VARS, ALL_TILES, r0, r1, r2, r3)
     assert dut.out_deadend.value == 1
@@ -154,15 +154,15 @@ async def test_deadend_same_tile(dut):
 
 @cocotb.test()
 async def test_inactive_variable_ignored(dut):
-    """Variable not in mask is ignored even if singleton."""
-    r0 = [0] * VARIABLES
-    r1 = [0] * VARIABLES
-    r2 = [0] * VARIABLES
-    r3 = [0] * VARIABLES
+    """Variable not in in_unassignedVariables is ignored even if singleton."""
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
     r0[0] = 1 << 3
-    for v in range(1, VARIABLES):
+    for v in range(1, V):
         r0[v] = 0b11
-    uv = ALL_VARS & ~1
+    uv = ALL_VARS & ~1  # var 0 inactive
     await check(dut, uv, ALL_TILES, r0, r1, r2, r3)
     assert dut.out_singleton.value == 0
     cocotb.log.info("inactive variable ignored ✓")
@@ -170,11 +170,11 @@ async def test_inactive_variable_ignored(dut):
 @cocotb.test()
 async def test_all_singletons_unique(dut):
     """Every variable has a unique singleton — all locked, no deadend."""
-    r0 = [0] * VARIABLES
-    r1 = [0] * VARIABLES
-    r2 = [0] * VARIABLES
-    r3 = [0] * VARIABLES
-    for v in range(VARIABLES):
+    r0 = [0] * V
+    r1 = [0] * V
+    r2 = [0] * V
+    r3 = [0] * V
+    for v in range(V):
         r0[v] = 1 << v
     await check(dut, ALL_VARS, ALL_TILES, r0, r1, r2, r3)
     assert dut.out_singleton.value == 1
@@ -188,10 +188,10 @@ async def test_random(dut):
     for _ in range(50):
         uv = random.randint(0, ALL_VARS)
         ut = random.randint(0, ALL_TILES)
-        r0 = [random.randint(0, ALL_VARS) for _ in range(VARIABLES)]
-        r1 = [random.randint(0, ALL_VARS) for _ in range(VARIABLES)]
-        r2 = [random.randint(0, ALL_VARS) for _ in range(VARIABLES)]
-        r3 = [random.randint(0, ALL_VARS) for _ in range(VARIABLES)]
+        r0 = [random.randint(0, ALL_VARS) for _ in range(V)]
+        r1 = [random.randint(0, ALL_VARS) for _ in range(V)]
+        r2 = [random.randint(0, ALL_VARS) for _ in range(V)]
+        r3 = [random.randint(0, ALL_VARS) for _ in range(V)]
         await check(dut, uv, ut, r0, r1, r2, r3)
     cocotb.log.info("50 random tests ✓")
 

@@ -16,11 +16,11 @@
 module CascadeColour_Single #(
     parameter int CC = 6 //! colourCount - total colour bits (register width)
 )(
-    input  logic [CC-1:0] in_slotColour, //! colour of the current variable slot
+    input  logic [CC-1:0] in_slotColour,      //! colour of the current variable slot
     input  logic [CC-1:0] in_neighbourColour, //! colour of the neighbours slot
     output logic [CC-1:0] out_combinedColour, //! colour & neighbourColour. Include those which are in both only
-    output logic          out_deadend, //! it is impossible for any side to not have a colour
-    output logic          out_updated //! has the colour or neighbour colour changed
+    output logic          out_deadend,        //! it is impossible for any side to not have a colour
+    output logic          out_updated         //! has the colour or neighbour colour changed
 );
 
 //! The out_combinedColour will become in_slotColour AND in_neighbourColour

@@ -9,11 +9,11 @@ module ChooseNextVariable_ExpandSingletons #(
     parameter int N = 4, //! Puzzle size
     parameter int V = N * N //! Number of variables — derived, do not override
 )(
-    input  logic [V-1:0] in_singletons,      //! bitmask of assigned variables
-    input  logic [V-1:0] in_not_first_col,   //! mask — 1 everywhere except column 0
-    input  logic [V-1:0] in_not_last_col,    //! mask — 1 everywhere except column N-1
+    input  logic [V-1:0] in_singletons,          //! bitmask of assigned variables
+    input  logic [V-1:0] in_not_first_col,       //! mask — 1 everywhere except column 0
+    input  logic [V-1:0] in_not_last_col,        //! mask — 1 everywhere except column N-1
     input  logic [V-1:0] in_unassignedVariables, //! bitmask — 1=unassigned
-    output logic [V-1:0] out_candidates      //! unassigned neighbours of singletons
+    output logic [V-1:0] out_candidates          //! unassigned neighbours of singletons
 );
     localparam logic [V-1:0] VALID_MASK = V'((1 << V) - 1);
 

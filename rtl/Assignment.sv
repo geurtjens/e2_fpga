@@ -35,22 +35,22 @@
 //   out_r0..r3 — updated domain arrays with assignment locked
 // ─────────────────────────────────────────────────────────────
 module Assignment #(
-    parameter int N = 4, //! puzzle size
-    parameter int V = N * N //! number of variables in the puzzle
+    parameter int N = 4,     //! puzzle size
+    parameter int V = N * N  //! number of variables in the puzzle
 )(
     input  logic [$clog2(V)-1:0]  in_variableId, //! variable to be assigned a value
-    input  logic [$clog2(V)-1:0]  in_tileId, //! value being assigned to variable
-    input  logic [1:0]            in_rotation, //! rotation of the tile assigned to variable
+    input  logic [$clog2(V)-1:0]  in_tileId,     //! value being assigned to variable
+    input  logic [1:0]            in_rotation,   //! rotation of the tile assigned to variable
 
-    input  logic [V-1:0][V-1:0] in_domain_r0,
-    input  logic [V-1:0][V-1:0] in_domain_r1,
-    input  logic [V-1:0][V-1:0] in_domain_r2,
-    input  logic [V-1:0][V-1:0] in_domain_r3,
+    input  logic [V-1:0][V-1:0]   in_domain_r0,  //! original domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0]   in_domain_r1,  //! original domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0]   in_domain_r2,  //! original domain rotation 2 (180 degrees), one bit per tile, 1=available, 0=unavailable.
+    input  logic [V-1:0][V-1:0]   in_domain_r3,  //! original domain rotation 3 (270 degrees), one bit per tile, 1=available, 0=unavailable.
 
-    output logic [V-1:0][V-1:0] out_domain_r0,
-    output logic [V-1:0][V-1:0] out_domain_r1,
-    output logic [V-1:0][V-1:0] out_domain_r2,
-    output logic [V-1:0][V-1:0] out_domain_r3
+    output logic [V-1:0][V-1:0]   out_domain_r0, //! updated domain rotation 0 (0 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0]   out_domain_r1, //! updated domain rotation 1 (90 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0]   out_domain_r2, //! updated domain rotation 2 (190 degrees), one bit per tile, 1=available, 0=unavailable.
+    output logic [V-1:0][V-1:0]   out_domain_r3  //! updated domain rotation 3 (270 degrees), one bit per tile, 1=available, 0=unavailable.
 );
     //! One-hot tile mask 
     logic [N*N-1:0] tile_mask;

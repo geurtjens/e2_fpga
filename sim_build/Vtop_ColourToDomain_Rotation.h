@@ -26,7 +26,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop_ColourToDomain_Rotation final {
     CData/*0:0*/ out_deadend;
     SData/*15:0*/ in_domain;
     SData/*15:0*/ out_domain;
-    IData/*31:0*/ unnamedblk1__DOT__p;
+    IData/*31:0*/ apply_colour_to_domain_and_detect_change_deadend__DOT__unnamedblk1__DOT__p;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;
