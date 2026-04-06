@@ -13,8 +13,6 @@
 
 class Vtop__Syms;
 class Vtop___024root;
-class Vtop_PropagateOnce__N3_V9_C5;
-
 
 // This class is the main interface to the Verilated model
 class alignas(VL_CACHE_LINE_BYTES) Vtop VL_NOT_FINAL : public VerilatedModel {
@@ -31,26 +29,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vtop VL_NOT_FINAL : public VerilatedModel {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_OUT64(&out_colours_top,44,0);
-    VL_OUT64(&out_colours_right,44,0);
-    VL_OUT64(&out_colours_bottom,44,0);
-    VL_OUT64(&out_colours_left,44,0);
-    VL_OUT8(&out_next_var,3,0);
-    VL_OUT8(&out_valid,0,0);
-    VL_OUT8(&out_changed,0,0);
-    VL_OUT8(&out_deadend,0,0);
-    VL_OUTW(&out_domain_r0,80,0,3);
-    VL_OUTW(&out_domain_r1,80,0,3);
-    VL_OUTW(&out_domain_r2,80,0,3);
-    VL_OUTW(&out_domain_r3,80,0,3);
-    VL_OUT16(&out_unassigned_variables,8,0);
-    VL_OUT16(&out_unassigned_tiles,8,0);
+    VL_IN8(&a,0,0);
+    VL_IN8(&b,0,0);
+    VL_OUT8(&out,0,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
     // Otherwise the application code can consider these internals.
-    Vtop_PropagateOnce__N3_V9_C5* const __PVT__Brendan3_OneStep__DOT__prop1;
-    Vtop_PropagateOnce__N3_V9_C5* const __PVT__Brendan3_OneStep__DOT__prop2;
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.

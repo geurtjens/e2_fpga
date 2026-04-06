@@ -17,10 +17,9 @@ INNER_C  = ((1 << INNER_COLOUR_COUNT)  - 1) << (BORDER_COLOUR_COUNT + 1)
 CC_MASK  = (1 << CC) - 1
 
 # ── Domain masks ──────────────────────────────────────────────
-FIXED_CORNER = 1
-FREE_CORNER  = 0b1110
-EDGE_D       = ((1 << NUM_EDGES) - 1) << 4
-INNER_D      = ((1 << NUM_INNER) - 1) << (4 + NUM_EDGES)
+ALL_CORNERS = 0b1111                                      # all 4 corner tiles
+EDGE_D      = ((1 << NUM_EDGES) - 1) << 4                # all edge tiles
+INNER_D     = ((1 << NUM_INNER) - 1) << (4 + NUM_EDGES)  # all inner tiles
 
 def vid(x, y): return y * N + x
 
@@ -32,7 +31,8 @@ def unpack_domain(val):
 
 @cocotb.test()
 async def test_top_left_corner(dut):
-    """Variable 0 (top-left) is fixed — boundary top/left, border right/bottom, r1 only."""
+    """Top-left corner (var 0) — boundary top/left, border right/bottom.
+    All 4 corner tiles available in rotation 1 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -49,14 +49,15 @@ async def test_top_left_corner(dut):
     assert right[v]  == BORDER,       f"top-left right={right[v]:#x}"
     assert bottom[v] == BORDER,       f"top-left bottom={bottom[v]:#x}"
     assert r0[v]     == 0,            "top-left r0 should be 0"
-    assert r1[v]     == FIXED_CORNER, f"top-left r1={r1[v]:#x}"
+    assert r1[v]     == ALL_CORNERS,  f"top-left r1={r1[v]:#x} expected={ALL_CORNERS:#x}"
     assert r2[v]     == 0,            "top-left r2 should be 0"
     assert r3[v]     == 0,            "top-left r3 should be 0"
     cocotb.log.info("top-left corner ✓")
 
 @cocotb.test()
 async def test_top_right_corner(dut):
-    """Top-right corner — boundary top/right, border left/bottom, r2 only."""
+    """Top-right corner — boundary top/right, border left/bottom.
+    All 4 corner tiles available in rotation 2 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -74,13 +75,14 @@ async def test_top_right_corner(dut):
     assert bottom[v] == BORDER,      f"top-right bottom={bottom[v]:#x}"
     assert r0[v]     == 0,           "top-right r0 should be 0"
     assert r1[v]     == 0,           "top-right r1 should be 0"
-    assert r2[v]     == FREE_CORNER, f"top-right r2={r2[v]:#x}"
+    assert r2[v]     == ALL_CORNERS, f"top-right r2={r2[v]:#x} expected={ALL_CORNERS:#x}"
     assert r3[v]     == 0,           "top-right r3 should be 0"
     cocotb.log.info("top-right corner ✓")
 
 @cocotb.test()
 async def test_bottom_left_corner(dut):
-    """Bottom-left corner — boundary left/bottom, border right/top, r0 only."""
+    """Bottom-left corner — boundary left/bottom, border right/top.
+    All 4 corner tiles available in rotation 0 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -96,7 +98,7 @@ async def test_bottom_left_corner(dut):
     assert bottom[v] == BOUNDARY,    f"bottom-left bottom={bottom[v]:#x}"
     assert right[v]  == BORDER,      f"bottom-left right={right[v]:#x}"
     assert top[v]    == BORDER,      f"bottom-left top={top[v]:#x}"
-    assert r0[v]     == FREE_CORNER, f"bottom-left r0={r0[v]:#x}"
+    assert r0[v]     == ALL_CORNERS, f"bottom-left r0={r0[v]:#x} expected={ALL_CORNERS:#x}"
     assert r1[v]     == 0,           "bottom-left r1 should be 0"
     assert r2[v]     == 0,           "bottom-left r2 should be 0"
     assert r3[v]     == 0,           "bottom-left r3 should be 0"
@@ -104,7 +106,8 @@ async def test_bottom_left_corner(dut):
 
 @cocotb.test()
 async def test_bottom_right_corner(dut):
-    """Bottom-right corner — boundary right/bottom, border left/top, r3 only."""
+    """Bottom-right corner — boundary right/bottom, border left/top.
+    All 4 corner tiles available in rotation 3 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -123,12 +126,13 @@ async def test_bottom_right_corner(dut):
     assert r0[v]     == 0,           "bottom-right r0 should be 0"
     assert r1[v]     == 0,           "bottom-right r1 should be 0"
     assert r2[v]     == 0,           "bottom-right r2 should be 0"
-    assert r3[v]     == FREE_CORNER, f"bottom-right r3={r3[v]:#x}"
+    assert r3[v]     == ALL_CORNERS, f"bottom-right r3={r3[v]:#x} expected={ALL_CORNERS:#x}"
     cocotb.log.info("bottom-right corner ✓")
 
 @cocotb.test()
 async def test_left_edge(dut):
-    """Left edge variables — boundary left, inner right, border top/bottom, r1 only."""
+    """Left edge variables — boundary left, inner right, border top/bottom.
+    All edge tiles available in rotation 1 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -153,7 +157,8 @@ async def test_left_edge(dut):
 
 @cocotb.test()
 async def test_top_edge(dut):
-    """Top edge variables — boundary top, inner bottom, border left/right, r2 only."""
+    """Top edge variables — boundary top, inner bottom, border left/right.
+    All edge tiles available in rotation 2 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -178,7 +183,8 @@ async def test_top_edge(dut):
 
 @cocotb.test()
 async def test_bottom_edge(dut):
-    """Bottom edge variables — boundary bottom, inner top, border left/right, r0 only."""
+    """Bottom edge variables — boundary bottom, inner top, border left/right.
+    All edge tiles available in rotation 0 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -203,7 +209,8 @@ async def test_bottom_edge(dut):
 
 @cocotb.test()
 async def test_right_edge(dut):
-    """Right edge variables — boundary right, inner left, border top/bottom, r3 only."""
+    """Right edge variables — boundary right, inner left, border top/bottom.
+    All edge tiles available in rotation 3 only."""
     await Timer(1, unit="ns")
     top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
     right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
@@ -254,12 +261,12 @@ async def test_inner_variables(dut):
 
 @cocotb.test()
 async def test_unassigned_masks(dut):
-    """Variable 0 is placed — all others unassigned.
-    unassignedVariables and unassignedTiles have all bits set except bit 0."""
+    """All variables and tiles start unassigned — nothing placed yet.
+    Both masks should be all ones since the first assignment is made externally."""
     await Timer(1, unit="ns")
     uv       = int(dut.out_unassignedVariables.value)
     ut       = int(dut.out_unassignedTiles.value)
-    expected = ((1 << V) - 1) & ~1  # 0xfffe for V=16
+    expected = (1 << V) - 1  # all bits set
     assert uv == expected, f"out_unassignedVariables={uv:#x} expected={expected:#x}"
     assert ut == expected, f"out_unassignedTiles={ut:#x} expected={expected:#x}"
     cocotb.log.info("unassigned masks ✓")

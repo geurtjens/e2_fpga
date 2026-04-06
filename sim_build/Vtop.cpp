@@ -9,22 +9,9 @@
 Vtop::Vtop(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtop__Syms(contextp(), _vcname__, this)}
-    , out_colours_top{vlSymsp->TOP.out_colours_top}
-    , out_colours_right{vlSymsp->TOP.out_colours_right}
-    , out_colours_bottom{vlSymsp->TOP.out_colours_bottom}
-    , out_colours_left{vlSymsp->TOP.out_colours_left}
-    , out_next_var{vlSymsp->TOP.out_next_var}
-    , out_valid{vlSymsp->TOP.out_valid}
-    , out_changed{vlSymsp->TOP.out_changed}
-    , out_deadend{vlSymsp->TOP.out_deadend}
-    , out_domain_r0{vlSymsp->TOP.out_domain_r0}
-    , out_domain_r1{vlSymsp->TOP.out_domain_r1}
-    , out_domain_r2{vlSymsp->TOP.out_domain_r2}
-    , out_domain_r3{vlSymsp->TOP.out_domain_r3}
-    , out_unassigned_variables{vlSymsp->TOP.out_unassigned_variables}
-    , out_unassigned_tiles{vlSymsp->TOP.out_unassigned_tiles}
-    , __PVT__Brendan3_OneStep__DOT__prop1{vlSymsp->TOP.__PVT__Brendan3_OneStep__DOT__prop1}
-    , __PVT__Brendan3_OneStep__DOT__prop2{vlSymsp->TOP.__PVT__Brendan3_OneStep__DOT__prop2}
+    , a{vlSymsp->TOP.a}
+    , b{vlSymsp->TOP.b}
+    , out{vlSymsp->TOP.out}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

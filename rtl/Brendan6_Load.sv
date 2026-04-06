@@ -3,18 +3,18 @@
 //
 //! Loads the initial game state for the Brendan6 puzzle (6x6).
 //!
-//! Instantiates Brendan6_Elements and CreateInitialGame.
+//! N=6, borderColours=3, innerColours=5, CC=9, V=36
+//!
 //! No inputs, no parameters — all sizes are hardcoded.
 //! Pure combinational — all outputs are constant wires.
-//!
-//! N=6, borderColours=3, innerColours=5, CC=9, V=36
 // ─────────────────────────────────────────────────────────────
 module Brendan6_Load (
-    // ── Tile elements ─────────────────────────────────────────
-    output logic [35:0][8:0]  out_elements_top,         //! top colour for each tile.
-    output logic [35:0][8:0]  out_elements_right,       //! right colour for each tile.
-    output logic [35:0][8:0]  out_elements_bottom,      //! bottom colour for each tile.
-    output logic [35:0][8:0]  out_elements_left,        //! left colour for each tile.
+
+    // ── Initial domains ───────────────────────────────────────
+    output logic [35:0][35:0] out_domain_r0,            //! initial domain bitmask rotation 0 for each variable.
+    output logic [35:0][35:0] out_domain_r1,            //! initial domain bitmask rotation 1 for each variable.
+    output logic [35:0][35:0] out_domain_r2,            //! initial domain bitmask rotation 2 for each variable.
+    output logic [35:0][35:0] out_domain_r3,            //! initial domain bitmask rotation 3 for each variable.
 
     // ── Initial colours ───────────────────────────────────────
     output logic [35:0][8:0]  out_colours_top,          //! initial top colour mask for each variable.
@@ -22,41 +22,19 @@ module Brendan6_Load (
     output logic [35:0][8:0]  out_colours_bottom,       //! initial bottom colour mask for each variable.
     output logic [35:0][8:0]  out_colours_left,         //! initial left colour mask for each variable.
 
-    // ── Initial domains ───────────────────────────────────────
-    output logic [35:0][35:0]   out_domain_r0,            //! initial domain bitmask rotation 0 for each variable.
-    output logic [35:0][35:0]   out_domain_r1,            //! initial domain bitmask rotation 1 for each variable.
-    output logic [35:0][35:0]   out_domain_r2,            //! initial domain bitmask rotation 2 for each variable.
-    output logic [35:0][35:0]   out_domain_r3,            //! initial domain bitmask rotation 3 for each variable.
-
     // ── Availability masks ────────────────────────────────────
-    output logic [35:0]               out_unassigned_variables, //! 1=variable position available.
-    output logic [35:0]               out_unassigned_tiles      //! 1=tile available.
+    output logic [35:0]       out_unassigned_variables, //! 1=variable position available.
+    output logic [35:0]       out_unassigned_tiles      //! 1=tile available.
 );
 
     // ── Puzzle constants ──────────────────────────────────────
     localparam int N                   = 6;    //! int. grid size.
-    localparam int V                   = 36;   //! int. number of variables (N*N).
     localparam int BORDER_COLOUR_COUNT = 3;    //! int. number of border colours.
     localparam int INNER_COLOUR_COUNT  = 5;   //! int. number of inner colours.
-    localparam int CC                  = 9;   //! int. total colour count (1 + BORDER_COLOUR_COUNT + INNER_COLOUR_COUNT).
-
-    // ── Brendan6_Elements ─────────────────────────────────────────
-    //! Provides the colour masks for all 36 tiles in their base
-    //! orientation. Rotation is handled downstream by DomainToColour.
-    Brendan6_Elements #(
-        .CC (CC),
-        .V  (V)
-    ) elements (
-        .out_elements_top    (out_elements_top),
-        .out_elements_right  (out_elements_right),
-        .out_elements_bottom (out_elements_bottom),
-        .out_elements_left   (out_elements_left)
-    );
-
+ 
     // ── CreateInitialGame ─────────────────────────────────────
     //! Assigns initial colour masks and domain bitmasks to each
-    //! variable based on its position in the grid (corner, edge
-    //! or inner), and fixes tile 0 at the top-left corner.
+    //! variable based on its position in the grid (corner, edge or inner)
     CreateInitialGame #(
         .N                   (N),
         .BORDER_COLOUR_COUNT (BORDER_COLOUR_COUNT),

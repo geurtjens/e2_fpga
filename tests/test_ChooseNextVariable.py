@@ -36,7 +36,7 @@ async def test_mrv_picks_smallest(dut):
     r1 = [0] * V
     r2 = [0] * V
     r3 = [0] * V
-    r0[1] = 0b0001
+    r0[1] = 0b0011
     r0[4] = 0b1111
     unassigned = ALL_VARS & ~1
     await apply(dut, unassigned, r0, r1, r2, r3)

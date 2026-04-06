@@ -161,7 +161,7 @@ def test_Brendan3_OneStep():
             "rtl/ChooseNextVariable_FindMinimumDomain.sv",
             "rtl/ChooseNextVariable_SelectVariable.sv",
             "rtl/ChooseNextVariable.sv",
-            "rtl/Assignment_Complex.sv",
+            "rtl/Assignment.sv",
             "rtl/Brendan3_OneStep.sv",
         ],
         hdl_toplevel="Brendan3_OneStep",

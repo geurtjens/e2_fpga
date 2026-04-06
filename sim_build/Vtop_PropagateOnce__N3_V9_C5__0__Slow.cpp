@@ -9,8 +9,8 @@ VL_ATTR_COLD void Vtop_PropagateOnce__N3_V9_C5___eval_initial__TOP__Brendan3_One
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
-    vlSelfRef.in_unassigned_tiles = 0x01feU;
-    vlSelfRef.in_unassigned_variables = 0x01feU;
+    vlSelfRef.in_unassigned_tiles = 0x01ffU;
+    vlSelfRef.in_unassigned_variables = 0x01ffU;
 }
 
 VL_ATTR_COLD void Vtop_PropagateOnce__N3_V9_C5___ctor_var_reset(Vtop_PropagateOnce__N3_V9_C5* vlSelf) {

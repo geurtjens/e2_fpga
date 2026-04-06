@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470401" />
+    <testcase name="test_initial_state" classname="test_Brendan8_Load" file="/home/parallels/e2_fpga/tests/test_Brendan8_Load.py" lineno="5" time="0.0002944469451904297" sim_time_ns="1.0" ratio_time="3396.1975708502023" />
+  </testsuite>
+</testsuites>

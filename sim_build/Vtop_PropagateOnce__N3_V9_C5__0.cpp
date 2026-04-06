@@ -6386,10 +6386,10 @@ void Vtop_PropagateOnce__N3_V9_C5___ico_comb__TOP__Brendan3_OneStep__DOT__prop2_
     // Body
     vlSelfRef.in_unassigned_variables = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_unassigned_variables;
     vlSelfRef.in_unassigned_tiles = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_unassigned_tiles;
-    vlSelfRef.in_colours_top = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_top;
-    vlSelfRef.in_colours_right = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_right;
     vlSelfRef.in_colours_bottom = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_bottom;
+    vlSelfRef.in_colours_top = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_top;
     vlSelfRef.in_colours_left = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_left;
+    vlSelfRef.in_colours_right = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_colours_right;
     vlSelfRef.in_domain_r2[0U] = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_domain_r2[0U];
     vlSelfRef.in_domain_r2[1U] = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_domain_r2[1U];
     vlSelfRef.in_domain_r2[2U] = vlSymsp->TOP.Brendan3_OneStep__DOT__w_assign_domain_r2[2U];
@@ -6414,14 +6414,14 @@ void Vtop_PropagateOnce__N3_V9_C5___ico_comb__TOP__Brendan3_OneStep__DOT__prop2_
         = vlSelfRef.in_unassigned_tiles;
     vlSelfRef.stage5_tile_frequency__DOT__in_unassigned_tiles 
         = vlSelfRef.in_unassigned_tiles;
-    vlSelfRef.stage1_domain_to_colour__DOT__in_colours_top 
-        = vlSelfRef.in_colours_top;
-    vlSelfRef.stage1_domain_to_colour__DOT__in_colours_right 
-        = vlSelfRef.in_colours_right;
     vlSelfRef.stage1_domain_to_colour__DOT__in_colours_bottom 
         = vlSelfRef.in_colours_bottom;
+    vlSelfRef.stage1_domain_to_colour__DOT__in_colours_top 
+        = vlSelfRef.in_colours_top;
     vlSelfRef.stage1_domain_to_colour__DOT__in_colours_left 
         = vlSelfRef.in_colours_left;
+    vlSelfRef.stage1_domain_to_colour__DOT__in_colours_right 
+        = vlSelfRef.in_colours_right;
     vlSelfRef.stage3_colour_to_domain__DOT__in_domain_r2[0U] 
         = vlSelfRef.in_domain_r2[0U];
     vlSelfRef.stage3_colour_to_domain__DOT__in_domain_r2[1U] 

@@ -3,18 +3,18 @@
 //
 //! Loads the initial game state for the Brendan7 puzzle (7x7).
 //!
-//! Instantiates Brendan7_Elements and CreateInitialGame.
+//! N=7, borderColours=3, innerColours=6, CC=10, V=49
+//!
 //! No inputs, no parameters — all sizes are hardcoded.
 //! Pure combinational — all outputs are constant wires.
-//!
-//! N=7, borderColours=3, innerColours=6, CC=10, V=49
 // ─────────────────────────────────────────────────────────────
 module Brendan7_Load (
-    // ── Tile elements ─────────────────────────────────────────
-    output logic [48:0][9:0]  out_elements_top,         //! top colour for each tile.
-    output logic [48:0][9:0]  out_elements_right,       //! right colour for each tile.
-    output logic [48:0][9:0]  out_elements_bottom,      //! bottom colour for each tile.
-    output logic [48:0][9:0]  out_elements_left,        //! left colour for each tile.
+    
+    // ── Initial domains ───────────────────────────────────────
+    output logic [48:0][48:0] out_domain_r0,            //! initial domain bitmask rotation 0 for each variable.
+    output logic [48:0][48:0] out_domain_r1,            //! initial domain bitmask rotation 1 for each variable.
+    output logic [48:0][48:0] out_domain_r2,            //! initial domain bitmask rotation 2 for each variable.
+    output logic [48:0][48:0] out_domain_r3,            //! initial domain bitmask rotation 3 for each variable.
 
     // ── Initial colours ───────────────────────────────────────
     output logic [48:0][9:0]  out_colours_top,          //! initial top colour mask for each variable.
@@ -22,36 +22,15 @@ module Brendan7_Load (
     output logic [48:0][9:0]  out_colours_bottom,       //! initial bottom colour mask for each variable.
     output logic [48:0][9:0]  out_colours_left,         //! initial left colour mask for each variable.
 
-    // ── Initial domains ───────────────────────────────────────
-    output logic [48:0][48:0]   out_domain_r0,            //! initial domain bitmask rotation 0 for each variable.
-    output logic [48:0][48:0]   out_domain_r1,            //! initial domain bitmask rotation 1 for each variable.
-    output logic [48:0][48:0]   out_domain_r2,            //! initial domain bitmask rotation 2 for each variable.
-    output logic [48:0][48:0]   out_domain_r3,            //! initial domain bitmask rotation 3 for each variable.
-
     // ── Availability masks ────────────────────────────────────
-    output logic [48:0]               out_unassigned_variables, //! 1=variable position available.
-    output logic [48:0]               out_unassigned_tiles      //! 1=tile available.
+    output logic [48:0]       out_unassigned_variables, //! 1=variable position available.
+    output logic [48:0]       out_unassigned_tiles      //! 1=tile available.
 );
 
     // ── Puzzle constants ──────────────────────────────────────
-    localparam int N                   = 7;    //! int. grid size.
-    localparam int V                   = 49;   //! int. number of variables (N*N).
-    localparam int BORDER_COLOUR_COUNT = 3;    //! int. number of border colours.
-    localparam int INNER_COLOUR_COUNT  = 6;   //! int. number of inner colours.
-    localparam int CC                  = 10;   //! int. total colour count (1 + BORDER_COLOUR_COUNT + INNER_COLOUR_COUNT).
-
-    // ── Brendan7_Elements ─────────────────────────────────────────
-    //! Provides the colour masks for all 49 tiles in their base
-    //! orientation. Rotation is handled downstream by DomainToColour.
-    Brendan7_Elements #(
-        .CC (CC),
-        .V  (V)
-    ) elements (
-        .out_elements_top    (out_elements_top),
-        .out_elements_right  (out_elements_right),
-        .out_elements_bottom (out_elements_bottom),
-        .out_elements_left   (out_elements_left)
-    );
+    localparam int N                   = 7;  //! int. grid size.
+    localparam int BORDER_COLOUR_COUNT = 3;  //! int. number of border colours.
+    localparam int INNER_COLOUR_COUNT  = 6;  //! int. number of inner colours.
 
     // ── CreateInitialGame ─────────────────────────────────────
     //! Assigns initial colour masks and domain bitmasks to each

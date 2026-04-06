@@ -1,12 +1,12 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1775368399" />
-    <testcase name="test_no_tiles_taken" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="69" time="0.0003204345703125" sim_time_ns="1.0" ratio_time="3120.7619047619046" />
-    <testcase name="test_tile_removed_from_domain" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="78" time="0.00010704994201660156" sim_time_ns="1.0" ratio_time="9341.43429844098" />
-    <testcase name="test_inactive_variable_unchanged" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="90" time="6.914138793945312e-05" sim_time_ns="1.0" ratio_time="14463.11724137931" />
-    <testcase name="test_deadend" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="101" time="6.198883056640625e-05" sim_time_ns="1.0" ratio_time="16131.938461538462" />
-    <testcase name="test_no_change_when_tiles_not_in_domain" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="116" time="6.0558319091796875e-05" sim_time_ns="1.0" ratio_time="16513.007874015748" />
-    <testcase name="test_all_variables_inactive" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="129" time="5.8650970458984375e-05" sim_time_ns="1.0" ratio_time="17050.016260162603" />
-    <testcase name="test_random" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="138" time="0.0027904510498046875" sim_time_ns="50.0" ratio_time="17918.25017088175" />
+    <property name="random_seed" value="1775470397" />
+    <testcase name="test_no_tiles_taken" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="69" time="0.0002498626708984375" sim_time_ns="1.0" ratio_time="4002.1984732824426" />
+    <testcase name="test_tile_removed_from_domain" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="78" time="0.0002562999725341797" sim_time_ns="1.0" ratio_time="3901.678139534884" />
+    <testcase name="test_inactive_variable_unchanged" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="90" time="6.842613220214844e-05" sim_time_ns="1.0" ratio_time="14614.299651567944" />
+    <testcase name="test_deadend" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="101" time="6.175041198730469e-05" sim_time_ns="1.0" ratio_time="16194.223938223939" />
+    <testcase name="test_no_change_when_tiles_not_in_domain" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="116" time="5.984306335449219e-05" sim_time_ns="1.0" ratio_time="16710.37450199203" />
+    <testcase name="test_all_variables_inactive" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="129" time="6.222724914550781e-05" sim_time_ns="1.0" ratio_time="16070.130268199233" />
+    <testcase name="test_random" classname="test_AllDifferent" file="/home/parallels/e2_fpga/tests/test_AllDifferent.py" lineno="138" time="0.003407716751098633" sim_time_ns="50.0" ratio_time="14672.580983698314" />
   </testsuite>
 </testsuites>

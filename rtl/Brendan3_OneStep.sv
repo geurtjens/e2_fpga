@@ -190,7 +190,7 @@ module Brendan3_OneStep (
     //! Locks the chosen variable to the first available tile,
     //! sets its colours from the element data, propagates
     //! colour constraints to neighbours, and updates masks.
-    Assignment_Complex #(.N(N), .CC(CC)) assign_inst (
+    Assignment #(.N(N), .CC(CC)) assign_inst (
         .in_variableId           (w_next_var),
         .in_tileId               (w_tile_id),
         .in_rotation             (w_rotation),
@@ -217,8 +217,7 @@ module Brendan3_OneStep (
         .out_domain_r2           (w_assign_domain_r2),
         .out_domain_r3           (w_assign_domain_r3),
         .out_unassigned_variables(w_assign_unassigned_variables),
-        .out_unassigned_tiles    (w_assign_unassigned_tiles),
-        .out_colours_changed     ()
+        .out_unassigned_tiles    (w_assign_unassigned_tiles)
     );
 
     // ── PropagateOnce (second pass) ───────────────────────────
