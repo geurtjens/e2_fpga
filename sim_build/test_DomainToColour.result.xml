@@ -1,0 +1,14 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470404" />
+    <testcase name="test_empty_domains" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="177" time="0.00029158592224121094" sim_time_ns="1.0" ratio_time="3429.520850367948" />
+    <testcase name="test_single_piece_bottom_left_corner" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="188" time="0.00010704994201660156" sim_time_ns="1.0" ratio_time="9341.43429844098" />
+    <testcase name="test_single_piece_top_left_corner" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="207" time="9.274482727050781e-05" sim_time_ns="1.0" ratio_time="10782.272493573264" />
+    <testcase name="test_inner_ors_all_rotations" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="227" time="9.107589721679688e-05" sim_time_ns="1.0" ratio_time="10979.853403141362" />
+    <testcase name="test_changed_detected" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="255" time="8.630752563476562e-05" sim_time_ns="1.0" ratio_time="11586.475138121546" />
+    <testcase name="test_no_change_when_colours_match" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="271" time="8.58306884765625e-05" sim_time_ns="1.0" ratio_time="11650.844444444445" />
+    <testcase name="test_deadend_active_variable_zero_colours" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="290" time="8.368492126464844e-05" sim_time_ns="1.0" ratio_time="11949.584045584046" />
+    <testcase name="test_rotation_wiring" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="304" time="0.0003495216369628906" sim_time_ns="4.0" ratio_time="11444.212824010914" />
+    <testcase name="test_random" classname="test_DomainToColour" file="/home/parallels/e2_fpga/tests/test_DomainToColour.py" lineno="345" time="0.00397181510925293" sim_time_ns="30.000000000000004" ratio_time="7553.221681973709" />
+  </testsuite>
+</testsuites>

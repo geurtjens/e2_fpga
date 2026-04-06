@@ -1,0 +1,13 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470405" />
+    <testcase name="test_no_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="86" time="0.0002396106719970703" sim_time_ns="1.0" ratio_time="4173.436815920398" />
+    <testcase name="test_single_singleton_r0" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="95" time="7.843971252441406e-05" sim_time_ns="1.0" ratio_time="12748.644376899696" />
+    <testcase name="test_singleton_r2" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="110" time="8.082389831542969e-05" sim_time_ns="1.0" ratio_time="12372.578171091445" />
+    <testcase name="test_multiple_singletons" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="125" time="6.341934204101562e-05" sim_time_ns="1.0" ratio_time="15768.060150375939" />
+    <testcase name="test_deadend_same_tile" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="140" time="6.914138793945312e-05" sim_time_ns="1.0" ratio_time="14463.11724137931" />
+    <testcase name="test_inactive_variable_ignored" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="155" time="5.936622619628906e-05" sim_time_ns="1.0" ratio_time="16844.59437751004" />
+    <testcase name="test_all_singletons_unique" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="170" time="6.532669067382812e-05" sim_time_ns="1.0" ratio_time="15307.678832116788" />
+    <testcase name="test_random" classname="test_SingletonDetection" file="/home/parallels/e2_fpga/tests/test_SingletonDetection.py" lineno="184" time="0.0028426647186279297" sim_time_ns="50.0" ratio_time="17589.13025245324" />
+  </testsuite>
+</testsuites>

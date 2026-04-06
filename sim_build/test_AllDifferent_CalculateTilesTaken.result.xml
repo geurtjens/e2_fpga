@@ -1,0 +1,12 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470397" />
+    <testcase name="test_all_active_no_singletons" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="36" time="0.00014257431030273438" sim_time_ns="1.0" ratio_time="7013.886287625418" />
+    <testcase name="test_all_inactive" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="44" time="4.220008850097656e-05" sim_time_ns="1.0" ratio_time="23696.632768361582" />
+    <testcase name="test_one_singleton" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="52" time="3.409385681152344e-05" sim_time_ns="1.0" ratio_time="29330.797202797203" />
+    <testcase name="test_multiple_singletons_or" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="65" time="3.075599670410156e-05" sim_time_ns="1.0" ratio_time="32513.98449612403" />
+    <testcase name="test_active_variable_not_counted" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="77" time="3.0517578125e-05" sim_time_ns="1.0" ratio_time="32768.0" />
+    <testcase name="test_all_rotations_ored" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="89" time="2.86102294921875e-05" sim_time_ns="1.0" ratio_time="34952.53333333333" />
+    <testcase name="test_random" classname="test_AllDifferent_CalculateTilesTaken" file="/home/parallels/e2_fpga/tests/test_AllDifferent_CalculateTilesTaken.py" lineno="101" time="0.0014119148254394531" sim_time_ns="100.0" ratio_time="70825.8020938872" />
+  </testsuite>
+</testsuites>

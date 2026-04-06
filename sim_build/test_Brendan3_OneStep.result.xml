@@ -1,0 +1,12 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775455699" />
+    <testcase name="test_no_deadend" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="31" time="0.00012350082397460938" sim_time_ns="100.0" ratio_time="809711.1969111969" />
+    <testcase name="test_valid_variable_chosen" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="39" time="7.176399230957031e-05" sim_time_ns="100.0" ratio_time="1393456.4784053157" />
+    <testcase name="test_domains_shrank" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="50" time="7.009506225585938e-05" sim_time_ns="100.0" ratio_time="1426634.0136054421" />
+    <testcase name="test_colours_set" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="66" time="6.198883056640625e-05" sim_time_ns="100.0" ratio_time="1613193.8461538462" />
+    <testcase name="test_assigned_variable_locked" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="81" time="3.910064697265625e-05" sim_time_ns="100.0" ratio_time="2557502.43902439" />
+    <testcase name="test_unassigned_counts_decreased" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="96" time="3.552436828613281e-05" sim_time_ns="100.0" ratio_time="2814969.1275167787" />
+    <testcase name="test_corner_constraints_respected" classname="test_Brendan3_OneStep" file="/home/parallels/e2_fpga/tests/test_Brendan3_OneStep.py" lineno="109" time="3.457069396972656e-05" sim_time_ns="100.0" ratio_time="2892623.4482758623" />
+  </testsuite>
+</testsuites>

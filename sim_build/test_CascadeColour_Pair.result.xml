@@ -1,0 +1,13 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470402" />
+    <testcase name="test_all_ones_no_change" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="39" time="0.00015854835510253906" sim_time_ns="1.0" ratio_time="6307.224060150376" />
+    <testcase name="test_horizontal_cascade" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="47" time="8.511543273925781e-05" sim_time_ns="1.0" ratio_time="11748.750700280112" />
+    <testcase name="test_vertical_cascade" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="55" time="5.888938903808594e-05" sim_time_ns="1.0" ratio_time="16980.987854251012" />
+    <testcase name="test_horizontal_deadend" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="63" time="3.361701965332031e-05" sim_time_ns="1.0" ratio_time="29746.836879432623" />
+    <testcase name="test_vertical_deadend" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="70" time="3.147125244140625e-05" sim_time_ns="1.0" ratio_time="31775.030303030304" />
+    <testcase name="test_both_deadend" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="77" time="3.075599670410156e-05" sim_time_ns="1.0" ratio_time="32513.98449612403" />
+    <testcase name="test_zero_inputs" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="84" time="3.1948089599609375e-05" sim_time_ns="1.0" ratio_time="31300.776119402984" />
+    <testcase name="test_random" classname="test_CascadeColour_Pair" file="/home/parallels/e2_fpga/tests/test_CascadeColour_Pair.py" lineno="92" time="0.0012369155883789062" sim_time_ns="100.0" ratio_time="80846.26060138782" />
+  </testsuite>
+</testsuites>

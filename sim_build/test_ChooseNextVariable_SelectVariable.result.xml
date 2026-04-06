@@ -1,0 +1,17 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470403" />
+    <testcase name="test_no_candidates" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="44" time="0.00013256072998046875" sim_time_ns="1.0" ratio_time="7543.712230215828" />
+    <testcase name="test_single_candidate" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="51" time="6.079673767089844e-05" sim_time_ns="1.0" ratio_time="16448.250980392157" />
+    <testcase name="test_single_candidate_var0" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="60" time="4.4345855712890625e-05" sim_time_ns="1.0" ratio_time="22550.021505376346" />
+    <testcase name="test_single_candidate_last_var" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="69" time="3.600120544433594e-05" sim_time_ns="1.0" ratio_time="27776.847682119205" />
+    <testcase name="test_tie_lowest_id" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="78" time="3.981590270996094e-05" sim_time_ns="1.0" ratio_time="25115.59281437126" />
+    <testcase name="test_tie_two_vars" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="87" time="3.361701965332031e-05" sim_time_ns="1.0" ratio_time="29746.836879432623" />
+    <testcase name="test_mrv" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="98" time="3.814697265625e-05" sim_time_ns="1.0" ratio_time="26214.4" />
+    <testcase name="test_mrv_first_var_not_minimum" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="110" time="3.2901763916015625e-05" sim_time_ns="1.0" ratio_time="30393.507246376812" />
+    <testcase name="test_non_candidate_ignored" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="122" time="2.9802322387695312e-05" sim_time_ns="1.0" ratio_time="33554.432" />
+    <testcase name="test_all_candidates_same_count" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="134" time="3.910064697265625e-05" sim_time_ns="1.0" ratio_time="25575.024390243903" />
+    <testcase name="test_count_zero" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="142" time="3.504753112792969e-05" sim_time_ns="1.0" ratio_time="28532.680272108842" />
+    <testcase name="test_random" classname="test_ChooseNextVariable_SelectVariable" file="/home/parallels/e2_fpga/tests/test_ChooseNextVariable_SelectVariable.py" lineno="152" time="0.0008599758148193359" sim_time_ns="50.0" ratio_time="58141.16994732465" />
+  </testsuite>
+</testsuites>

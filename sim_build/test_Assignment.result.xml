@@ -1,0 +1,17 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1775470397" />
+    <testcase name="test_domain_locked_r0" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="193" time="0.00037169456481933594" sim_time_ns="1.0" ratio_time="2690.381013470173" />
+    <testcase name="test_domain_locked_r1" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="211" time="0.00012564659118652344" sim_time_ns="1.0" ratio_time="7958.831119544592" />
+    <testcase name="test_own_colours_set" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="225" time="0.00011229515075683594" sim_time_ns="1.0" ratio_time="8905.104033970276" />
+    <testcase name="test_neighbour_colours_updated" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="246" time="9.775161743164062e-05" sim_time_ns="1.0" ratio_time="10230.009756097561" />
+    <testcase name="test_top_left_corner_safe" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="256" time="0.00010132789611816406" sim_time_ns="1.0" ratio_time="9868.950588235293" />
+    <testcase name="test_bottom_right_corner_safe" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="266" time="0.00010132789611816406" sim_time_ns="1.0" ratio_time="9868.950588235293" />
+    <testcase name="test_top_right_corner_safe" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="276" time="9.465217590332031e-05" sim_time_ns="1.0" ratio_time="10564.997481108312" />
+    <testcase name="test_bottom_left_corner_safe" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="286" time="9.441375732421875e-05" sim_time_ns="1.0" ratio_time="10591.676767676769" />
+    <testcase name="test_unassigned_variable_bit_cleared" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="296" time="9.775161743164062e-05" sim_time_ns="1.0" ratio_time="10230.009756097561" />
+    <testcase name="test_unassigned_tile_bit_cleared" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="310" time="9.5367431640625e-05" sim_time_ns="1.0" ratio_time="10485.76" />
+    <testcase name="test_other_variables_unchanged" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="324" time="0.00010561943054199219" sim_time_ns="1.0" ratio_time="9467.954853273137" />
+    <testcase name="test_random" classname="test_Assignment" file="/home/parallels/e2_fpga/tests/test_Assignment.py" lineno="339" time="0.0023648738861083984" sim_time_ns="30.000000000000004" ratio_time="12685.66589373929" />
+  </testsuite>
+</testsuites>
