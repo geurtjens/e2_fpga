@@ -28,6 +28,21 @@ class GridState:
     DEADEND:              bool = False
     UPDATED:              bool = False
 
+    def pack_colour(self, arr: List[int]) -> int:
+        """Pack a list of CC-bit colour values into a single wide integer."""
+        val = 0
+        for i, v in enumerate(arr):
+            val |= (v & ((1 << self.CC) - 1)) << (i * self.CC)
+        return val
+
+    def pack_domain(self, arr: List[int]) -> int:
+        """Pack a list of V-bit domain values into a single wide integer."""
+        val = 0
+        for i, d in enumerate(arr):
+            val |= (d & ((1 << self.V) - 1)) << (i * self.V)
+        return val
+
+
     def _unpack_domain(self, val: int) -> List[int]:
         """Unpack a packed [V-1:0][V-1:0] domain array into a list of V ints."""
         mask = (1 << self.V) - 1

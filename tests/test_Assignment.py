@@ -3,6 +3,9 @@ from cocotb.triggers import Timer
 from cocotb_tools.runner import get_runner
 import random
 
+from elements_state import ElementsState
+from grid_state     import GridState
+
 N         = 4
 CC        = 6
 V         = N * N
@@ -121,10 +124,10 @@ async def apply(dut, variable_id, tile_id, rotation,
     dut.in_rotation.value             = rotation
     dut.in_unassigned_variables.value = in_uv
     dut.in_unassigned_tiles.value     = in_ut
-    dut.in_colour_top.value           = pack_colour(in_top)
-    dut.in_colour_right.value         = pack_colour(in_right)
-    dut.in_colour_bottom.value        = pack_colour(in_bottom)
-    dut.in_colour_left.value          = pack_colour(in_left)
+    dut.in_colours_top.value          = pack_colour(in_top)
+    dut.in_colours_right.value        = pack_colour(in_right)
+    dut.in_colours_bottom.value       = pack_colour(in_bottom)
+    dut.in_colours_left.value         = pack_colour(in_left)
     dut.in_domain_r0.value            = pack_domain(in_r0)
     dut.in_domain_r1.value            = pack_domain(in_r1)
     dut.in_domain_r2.value            = pack_domain(in_r2)
@@ -152,10 +155,10 @@ async def check(dut, variable_id, tile_id, rotation,
         in_top, in_right, in_bottom, in_left,
         in_r0, in_r1, in_r2, in_r3)
 
-    act_top    = unpack_colour(dut.out_colour_top.value.to_unsigned())
-    act_right  = unpack_colour(dut.out_colour_right.value.to_unsigned())
-    act_bottom = unpack_colour(dut.out_colour_bottom.value.to_unsigned())
-    act_left   = unpack_colour(dut.out_colour_left.value.to_unsigned())
+    act_top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
+    act_right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
+    act_bottom = unpack_colour(dut.out_colours_bottom.value.to_unsigned())
+    act_left   = unpack_colour(dut.out_colours_left.value.to_unsigned())
     act_r0     = unpack_domain(dut.out_domain_r0.value.to_unsigned())
     act_r1     = unpack_domain(dut.out_domain_r1.value.to_unsigned())
     act_r2     = unpack_domain(dut.out_domain_r2.value.to_unsigned())
@@ -233,10 +236,10 @@ async def test_own_colours_set(dut):
                 full_domains(), full_domains(),
                 full_domains(), full_domains())
     exp_t, exp_r, exp_b, exp_l = piece_colours(tile_id, rotation)
-    act_top    = unpack_colour(dut.out_colour_top.value.to_unsigned())
-    act_right  = unpack_colour(dut.out_colour_right.value.to_unsigned())
-    act_bottom = unpack_colour(dut.out_colour_bottom.value.to_unsigned())
-    act_left   = unpack_colour(dut.out_colour_left.value.to_unsigned())
+    act_top    = unpack_colour(dut.out_colours_top.value.to_unsigned())
+    act_right  = unpack_colour(dut.out_colours_right.value.to_unsigned())
+    act_bottom = unpack_colour(dut.out_colours_bottom.value.to_unsigned())
+    act_left   = unpack_colour(dut.out_colours_left.value.to_unsigned())
     assert act_top[6]    == exp_t, f"top mismatch got={act_top[6]:06b} exp={exp_t:06b}"
     assert act_right[6]  == exp_r, f"right mismatch"
     assert act_bottom[6] == exp_b, f"bottom mismatch"
@@ -350,6 +353,10 @@ async def test_random(dut):
         c   = [random.randint(1, CC_MASK) for _ in range(V)]
         await check(dut, vid, tid, rot, uv, ut, c, c, c, c, r, r, r, r)
     cocotb.log.info("30 random tests ✓")
+
+
+
+
 
 def test_Assignment():
     runner = get_runner("verilator")

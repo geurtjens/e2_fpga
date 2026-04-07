@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Assignment
 //
-//! Assigns a specific piece at a specific rotation to a variable.
+//! Assign a tile and rotation to a variable.
 //! Updates the assigned variable's domain and colours, then
 //! propagates colour constraints to all four neighbours.
 //! Also updates the unassigned variables and tiles masks.
@@ -45,10 +45,10 @@ module Assignment #(
     input  logic [V-1:0] in_unassigned_tiles,     //! current unassigned tiles — 1=available, 0=placed.
 
     // ── Colour inputs ─────────────────────────────────────────
-    input  logic [V-1:0][CC-1:0] in_colour_top,    //! current top colour mask for each variable.
-    input  logic [V-1:0][CC-1:0] in_colour_right,  //! current right colour mask for each variable.
-    input  logic [V-1:0][CC-1:0] in_colour_bottom, //! current bottom colour mask for each variable.
-    input  logic [V-1:0][CC-1:0] in_colour_left,   //! current left colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_top,    //! current top colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_right,  //! current right colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_bottom, //! current bottom colour mask for each variable.
+    input  logic [V-1:0][CC-1:0] in_colours_left,   //! current left colour mask for each variable.
 
     // ── Domain inputs ─────────────────────────────────────────
     input  logic [V-1:0][V-1:0] in_domain_r0, //! current rotation 0 domain bitmask for each variable.
@@ -63,10 +63,10 @@ module Assignment #(
     input  logic [V-1:0][CC-1:0] in_elements_left,   //! left colour for each tile in base orientation.
 
     // ── Colour outputs ────────────────────────────────────────
-    output logic [V-1:0][CC-1:0] out_colour_top,    //! updated top colour mask for each variable.
-    output logic [V-1:0][CC-1:0] out_colour_right,  //! updated right colour mask for each variable.
-    output logic [V-1:0][CC-1:0] out_colour_bottom, //! updated bottom colour mask for each variable.
-    output logic [V-1:0][CC-1:0] out_colour_left,   //! updated left colour mask for each variable.
+    output logic [V-1:0][CC-1:0] out_colours_top,    //! updated top colour mask for each variable.
+    output logic [V-1:0][CC-1:0] out_colours_right,  //! updated right colour mask for each variable.
+    output logic [V-1:0][CC-1:0] out_colours_bottom, //! updated bottom colour mask for each variable.
+    output logic [V-1:0][CC-1:0] out_colours_left,   //! updated left colour mask for each variable.
 
     // ── Domain outputs ────────────────────────────────────────
     output logic [V-1:0][V-1:0] out_domain_r0, //! updated rotation 0 domain bitmask for each variable.
@@ -100,6 +100,7 @@ module Assignment #(
     logic [CC-1:0] piece_bottom; //! bottom colour of assigned tile at chosen rotation.
     logic [CC-1:0] piece_left;   //! left colour of assigned tile at chosen rotation.
 
+    //! calculate the colours of top, right, bottom, left
     always_comb begin : derive_piece_colours
         case (in_rotation)
             2'd0: begin
@@ -131,8 +132,10 @@ module Assignment #(
 
     // ── Tile domain mask — one hot for the chosen tile ────────
     logic [V-1:0] tile_mask; //! one-hot bitmask with only the chosen tile's bit set.
+    //! Create the tile mask by first setting the tile bit to 0 and then setting the bit of the tileId to 1
     always_comb begin : create_tile_mask
         tile_mask      = '0;
+        // Sets the bit corresponding to the tileId to 1 which is one hot encoding
         tile_mask[tid] = 1'b1;
     end
 
@@ -140,10 +143,10 @@ module Assignment #(
     always_comb begin : apply_assignment
 
         // ── Default: pass everything through unchanged ─────────
-        out_colour_top    = in_colour_top;
-        out_colour_right  = in_colour_right;
-        out_colour_bottom = in_colour_bottom;
-        out_colour_left   = in_colour_left;
+        out_colours_top    = in_colours_top;
+        out_colours_right  = in_colours_right;
+        out_colours_bottom = in_colours_bottom;
+        out_colours_left   = in_colours_left;
         out_domain_r0     = in_domain_r0;
         out_domain_r1     = in_domain_r1;
         out_domain_r2     = in_domain_r2;
@@ -160,10 +163,10 @@ module Assignment #(
         // ── Part 2 — set the assigned variable's own colours ───
         //! Colours are locked to exactly what the piece provides
         //! at the chosen rotation.
-        out_colour_top[vid]    = piece_top;
-        out_colour_right[vid]  = piece_right;
-        out_colour_bottom[vid] = piece_bottom;
-        out_colour_left[vid]   = piece_left;
+        out_colours_top[vid]    = piece_top;
+        out_colours_right[vid]  = piece_right;
+        out_colours_bottom[vid] = piece_bottom;
+        out_colours_left[vid]   = piece_left;
 
         // ── Part 3 — update neighbouring colours ───────────────
         //! Each neighbour's shared edge is ANDed with the piece's
@@ -172,19 +175,19 @@ module Assignment #(
 
         // right neighbour (col < N-1)
         if ((vid % N) < N-1)
-            out_colour_left[vid+1] = in_colour_left[vid+1] & piece_right;
+            out_colours_left[vid+1] = in_colours_left[vid+1] & piece_right;
 
         // below neighbour (row < N-1)
         if ((vid / N) < N-1)
-            out_colour_top[vid+N] = in_colour_top[vid+N] & piece_bottom;
+            out_colours_top[vid+N] = in_colours_top[vid+N] & piece_bottom;
 
         // left neighbour (col > 0)
         if ((vid % N) > 0)
-            out_colour_right[vid-1] = in_colour_right[vid-1] & piece_left;
+            out_colours_right[vid-1] = in_colours_right[vid-1] & piece_left;
 
         // above neighbour (row > 0)
         if ((vid / N) > 0)
-            out_colour_bottom[vid-N] = in_colour_bottom[vid-N] & piece_top;
+            out_colours_bottom[vid-N] = in_colours_bottom[vid-N] & piece_top;
 
     end
 

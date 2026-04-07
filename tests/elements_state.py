@@ -12,6 +12,15 @@ class ElementsState:
     ELEMENTS_BOTTOM: List[int]
     ELEMENTS_LEFT:   List[int]
 
+    def pack_colour(self, arr: List[int]) -> int:
+        """Pack a list of CC-bit colour values into a single wide integer."""
+        val = 0
+        for i, v in enumerate(arr):
+            val |= (v & ((1 << self.CC) - 1)) << (i * self.CC)
+        return val
+
+
+
     def _unpack_colour(self, val: int) -> List[int]:
         mask = (1 << self.CC) - 1
         V = len(self.ELEMENTS_TOP)
