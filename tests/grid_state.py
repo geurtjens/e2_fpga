@@ -42,7 +42,6 @@ class GridState:
             val |= (d & ((1 << self.V) - 1)) << (i * self.V)
         return val
 
-
     def _unpack_domain(self, val: int) -> List[int]:
         """Unpack a packed [V-1:0][V-1:0] domain array into a list of V ints."""
         mask = (1 << self.V) - 1
@@ -52,6 +51,112 @@ class GridState:
         """Unpack a packed [V-1:0][CC-1:0] colour array into a list of V ints."""
         mask = (1 << self.CC) - 1
         return [(val >> (i * self.CC)) & mask for i in range(self.V)]
+
+    # ── Print helpers ─────────────────────────────────────────
+
+    def print_colours(self, label: str, top: list, right: list,
+                      bottom: list, left: list, highlight: int = -1):
+        """Print a colour array snapshot with a label and optional highlighted variable."""
+        cocotb.log.info(f"── {label} ───────────────────────────────────────")
+        for v in range(self.V):
+            marker = " ◄" if v == highlight else ""
+            cocotb.log.info(
+                f"  var={v}  "
+                f"top={top[v]:0{self.CC}b}  "
+                f"right={right[v]:0{self.CC}b}  "
+                f"bottom={bottom[v]:0{self.CC}b}  "
+                f"left={left[v]:0{self.CC}b}"
+                f"{marker}"
+            )
+
+    def print_dut_colours(self, label: str, dut, highlight: int = -1):
+        """Unpack and print the DUT's current colour outputs."""
+        top    = self._unpack_colour(dut.out_colours_top.value.to_unsigned())
+        right  = self._unpack_colour(dut.out_colours_right.value.to_unsigned())
+        bottom = self._unpack_colour(dut.out_colours_bottom.value.to_unsigned())
+        left   = self._unpack_colour(dut.out_colours_left.value.to_unsigned())
+        self.print_colours(label, top, right, bottom, left, highlight)
+
+    def print_expected_colours(self, label: str, highlight: int = -1):
+        """Print this GridState's own colour arrays as expected values."""
+        self.print_colours(label, self.TOP, self.RIGHT,
+                           self.BOTTOM, self.LEFT, highlight)
+
+    def print_colour_comparison(self, label: str, dut, highlight: int = -1):
+        """Print DUT vs expected colours side by side with a match indicator."""
+        cocotb.log.info(f"── {label} ───────────────────────────────────────")
+        top    = self._unpack_colour(dut.out_colours_top.value.to_unsigned())
+        right  = self._unpack_colour(dut.out_colours_right.value.to_unsigned())
+        bottom = self._unpack_colour(dut.out_colours_bottom.value.to_unsigned())
+        left   = self._unpack_colour(dut.out_colours_left.value.to_unsigned())
+        for v in range(self.V):
+            marker = " ◄" if v == highlight else ""
+            for name, act, exp in [
+                ("top",    top[v],    self.TOP[v]),
+                ("right",  right[v],  self.RIGHT[v]),
+                ("bottom", bottom[v], self.BOTTOM[v]),
+                ("left",   left[v],   self.LEFT[v]),
+            ]:
+                match = "✓" if act == exp else "✗"
+                cocotb.log.info(
+                    f"  {match} var={v} {name:6} "
+                    f"DUT={act:0{self.CC}b}  "
+                    f"EXP={exp:0{self.CC}b}"
+                    f"{marker}"
+                )
+
+    def print_domains(self, label: str, r0: list, r1: list,
+                      r2: list, r3: list, highlight: int = -1):
+        """Print a domain array snapshot with a label and optional highlighted variable."""
+        cocotb.log.info(f"── {label} ───────────────────────────────────────")
+        for v in range(self.V):
+            marker = " ◄" if v == highlight else ""
+            cocotb.log.info(
+                f"  var={v}  "
+                f"r0={r0[v]:0{self.V}b}  "
+                f"r1={r1[v]:0{self.V}b}  "
+                f"r2={r2[v]:0{self.V}b}  "
+                f"r3={r3[v]:0{self.V}b}"
+                f"{marker}"
+            )
+
+    def print_dut_domains(self, label: str, dut, highlight: int = -1):
+        """Unpack and print the DUT's current domain outputs."""
+        r0 = self._unpack_domain(dut.out_domain_r0.value.to_unsigned())
+        r1 = self._unpack_domain(dut.out_domain_r1.value.to_unsigned())
+        r2 = self._unpack_domain(dut.out_domain_r2.value.to_unsigned())
+        r3 = self._unpack_domain(dut.out_domain_r3.value.to_unsigned())
+        self.print_domains(label, r0, r1, r2, r3, highlight)
+
+    def print_expected_domains(self, label: str, highlight: int = -1):
+        """Print this GridState's own domain arrays as expected values."""
+        self.print_domains(label, self.R0, self.R1,
+                           self.R2, self.R3, highlight)
+
+    def print_domain_comparison(self, label: str, dut, highlight: int = -1):
+        """Print DUT vs expected domains side by side with a match indicator."""
+        cocotb.log.info(f"── {label} ───────────────────────────────────────")
+        r0 = self._unpack_domain(dut.out_domain_r0.value.to_unsigned())
+        r1 = self._unpack_domain(dut.out_domain_r1.value.to_unsigned())
+        r2 = self._unpack_domain(dut.out_domain_r2.value.to_unsigned())
+        r3 = self._unpack_domain(dut.out_domain_r3.value.to_unsigned())
+        for v in range(self.V):
+            marker = " ◄" if v == highlight else ""
+            for rname, act, exp in [
+                ("r0", r0[v], self.R0[v]),
+                ("r1", r1[v], self.R1[v]),
+                ("r2", r2[v], self.R2[v]),
+                ("r3", r3[v], self.R3[v]),
+            ]:
+                match = "✓" if act == exp else "✗"
+                cocotb.log.info(
+                    f"  {match} var={v} {rname} "
+                    f"DUT={act:0{self.V}b}  "
+                    f"EXP={exp:0{self.V}b}"
+                    f"{marker}"
+                )
+
+    # ── Assertion ─────────────────────────────────────────────
 
     async def assert_dut(self, dut):
         """Compare all DUT outputs against this GridState snapshot."""

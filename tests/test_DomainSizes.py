@@ -151,15 +151,15 @@ async def test_incremental_domain_counts_all_rotations(dut):
 
 # Entry point called by pytest. Builds the Verilator simulation then runs
 # all @cocotb.test() functions defined above.
-def test_ChooseNextVariable_ComputeDomainSizes():
+def test_DomainSizes():
     runner = get_runner("verilator")
     runner.build(
-        sources=["rtl/ChooseNextVariable_ComputeDomainSizes.sv"],
-        hdl_toplevel="ChooseNextVariable_ComputeDomainSizes",
+        sources=["rtl/DomainSizes.sv"],
+        hdl_toplevel="DomainSizes",
         parameters={"V": V},
         build_args=["--public-flat-rw"],
     )
     runner.test(
-        hdl_toplevel="ChooseNextVariable_ComputeDomainSizes",
-        test_module="test_ChooseNextVariable_ComputeDomainSizes",
+        hdl_toplevel="DomainSizes",
+        test_module="test_DomainSizes",
     )

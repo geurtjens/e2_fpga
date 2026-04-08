@@ -46,7 +46,7 @@ module ChooseNextVariable #(
     );
 
     //! Step 2 — compute domain sizes for all variables. 
-    ChooseNextVariable_ComputeDomainSizes #(.V(V)) domain_sizes_inst (
+    DomainSizes #(.V(V)) domain_sizes_inst (
         .in_domain_r0   (in_domain_r0),
         .in_domain_r1   (in_domain_r1),
         .in_domain_r2   (in_domain_r2),

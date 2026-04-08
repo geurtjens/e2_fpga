@@ -59,7 +59,7 @@ def test_ChooseNextVariable():
     runner.build(
         sources=[
             "rtl/ChooseNextVariable_ExpandSingletons.sv",
-            "rtl/ChooseNextVariable_ComputeDomainSizes.sv",
+            "rtl/DomainSizes.sv",
             "rtl/ChooseNextVariable_FindMinimumDomain.sv",
             "rtl/ChooseNextVariable_SelectVariable.sv",
             "rtl/ChooseNextVariable.sv",

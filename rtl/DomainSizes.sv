@@ -1,11 +1,11 @@
 // ─────────────────────────────────────────────────────────────
-// ComputeDomainSizes
+// DomainSizes
 //
 //! Computes the total domain size for each variable by counting
 //! set bits across all four rotation arrays combined.
 //! Smaller count = fewer options = higher MRV priority.
 // ─────────────────────────────────────────────────────────────
-module ChooseNextVariable_ComputeDomainSizes #(
+module DomainSizes #(
     parameter int V = 16 //! Number of variables 
 )(
     input  logic [V-1:0][V-1:0] in_domain_r0, //! original domain rotation 0

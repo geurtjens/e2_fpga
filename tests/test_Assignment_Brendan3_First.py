@@ -47,21 +47,21 @@ async def test_first_assignment_brendan3(dut):
     )
 
     # ── Dump DUT vs expected domain outputs before checking ───
-    #gs = data_brendan3_first_assignment
-    #for rname, act_raw, exp in [
-    #    ("r0", dut.out_domain_r0.value.to_unsigned(), gs.R0),
-    #    ("r1", dut.out_domain_r1.value.to_unsigned(), gs.R1),
-    #    ("r2", dut.out_domain_r2.value.to_unsigned(), gs.R2),
-    #    ("r3", dut.out_domain_r3.value.to_unsigned(), gs.R3),
-    #]:
-    #    act = gs._unpack_domain(act_raw)
-    #    for v in range(gs.V):
-    #        match = "✓" if act[v] == exp[v] else "✗"
-    #        cocotb.log.info(
-    #            f"{match} domain_{rname}[{v}] "
-    #            f"DUT={act[v]:#018b} "
-    #            f"EXP={exp[v]:#018b}"
-    #        )
+    gs = data_brendan3_first_assignment
+    for rname, act_raw, exp in [
+        ("r0", dut.out_domain_r0.value.to_unsigned(), gs.R0),
+        ("r1", dut.out_domain_r1.value.to_unsigned(), gs.R1),
+        ("r2", dut.out_domain_r2.value.to_unsigned(), gs.R2),
+        ("r3", dut.out_domain_r3.value.to_unsigned(), gs.R3),
+    ]:
+        act = gs._unpack_domain(act_raw)
+        for v in range(gs.V):
+            match = "✓" if act[v] == exp[v] else "✗"
+            cocotb.log.info(
+                f"{match} domain_{rname}[{v}] "
+                f"DUT={act[v]:#018b} "
+                f"EXP={exp[v]:#018b}"
+            )
     # Dump out values end
 
 
@@ -72,7 +72,10 @@ async def test_first_assignment_brendan3(dut):
 def test_Assignment_Brendan3_First():
     runner = get_runner("verilator")
     runner.build(
-        sources=["rtl/Assignment.sv"],
+        sources=["rtl/Assignment.sv",
+                "rtl/AllDifferent_Simple.sv",
+                "rtl/DomainToColour.sv",
+                "rtl/DomainToColour_Rotation.sv"],
         hdl_toplevel="Assignment",
         parameters={
             "N":  data_brendan3_initial_grid.N,
