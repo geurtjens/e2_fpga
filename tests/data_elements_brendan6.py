@@ -1,5 +1,5 @@
 from elements_state import ElementsState
-data_element_brendan6 = ElementsState(
+data_elements_brendan6 = ElementsState(
     CC = 9,
     ELEMENTS_TOP = [
         0b000000010,0b000000010,0b000000100,0b000000100,0b001000000,0b001000000,
