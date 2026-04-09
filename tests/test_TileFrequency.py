@@ -168,23 +168,6 @@ async def test_inactive_variable_ignored(dut):
     cocotb.log.info("inactive variable ignored ✓")
 
 @cocotb.test()
-async def test_two_stage_propagation(dut):
-    """Forcing in stage 1 enables forcing in stage 2."""
-    r0 = [0] * V
-    r1 = [0] * V
-    r2 = [0] * V
-    r3 = [0] * V
-    # tile 0 only in var 0 — stage 1 forces var 0 to tile 0
-    # tile 1 only in var 0 and var 1 — after stage 1 var 0 loses tile 1
-    # so stage 2 forces var 1 to tile 1
-    r0[0] = (1 << 0) | (1 << 1)  # var 0 has tiles 0 and 1
-    r0[1] = (1 << 1) | (1 << 2)  # var 1 has tiles 1 and 2
-    for v in range(2, V):
-        r0[v] = ALL & ~1 & ~2    # others have tiles 2..V-1
-    await check(dut, ALL, ALL, r0, r1, r2, r3)
-    cocotb.log.info("two stage propagation ✓")
-
-@cocotb.test()
 async def test_popcount_deadend(dut):
     """popcount(unassigned_tiles) != popcount(unassigned_variables) → deadend."""
     r = [ALL] * V
@@ -214,9 +197,10 @@ def test_TileFrequency():
         sources=[
             "rtl/TileFrequency_Single.sv",
             "rtl/TileFrequency.sv",
+            "rtl/SingletonAssignment.sv",
         ],
         hdl_toplevel="TileFrequency",
-        parameters={"N": N, "ITERATIONS": ITERATIONS},
+        parameters={"N": N},
         build_args=["--public-flat-rw", "-Wno-WIDTHEXPAND", "-Wno-WIDTHTRUNC", "-Wno-UNOPTFLAT"],
     )
     runner.test(

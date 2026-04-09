@@ -196,3 +196,55 @@ class GridState:
                 assert act[v] == exp[v], \
                     f"colours_{name}[{v}]={act[v]:#08b} exp={exp[v]:#08b}"
         cocotb.log.info("all colours match ✓")
+
+
+    async def assert_dut_domains_and_masks(self, dut):
+        """Assert DUT outputs match this GridState for domain and mask outputs only.
+        Used when the DUT has no colour outputs e.g. TileFrequencyProcess,
+        AllDifferentProcess, SingletonAssignment, AllDifferent."""
+
+        # ── Unassigned masks ──────────────────────────────────────
+        act_uv = int(dut.out_unassigned_variables.value)
+        act_ut = int(dut.out_unassigned_tiles.value)
+        assert act_uv == self.UNASSIGNED_VARIABLES, \
+            f"unassigned_variables={act_uv:#0{self.V+2}b} exp={self.UNASSIGNED_VARIABLES:#0{self.V+2}b}"
+        assert act_ut == self.UNASSIGNED_TILES, \
+            f"unassigned_tiles={act_ut:#0{self.V+2}b} exp={self.UNASSIGNED_TILES:#0{self.V+2}b}"
+
+        # ── Domains ───────────────────────────────────────────────
+        act_r0 = self._unpack_domain(dut.out_domain_r0.value.to_unsigned())
+        act_r1 = self._unpack_domain(dut.out_domain_r1.value.to_unsigned())
+        act_r2 = self._unpack_domain(dut.out_domain_r2.value.to_unsigned())
+        act_r3 = self._unpack_domain(dut.out_domain_r3.value.to_unsigned())
+
+        for v in range(self.V):
+            assert act_r0[v] == self.R0[v], \
+                f"domain_r0[{v}]={act_r0[v]:#0{self.V+2}b} exp={self.R0[v]:#0{self.V+2}b}"
+            assert act_r1[v] == self.R1[v], \
+                f"domain_r1[{v}]={act_r1[v]:#0{self.V+2}b} exp={self.R1[v]:#0{self.V+2}b}"
+            assert act_r2[v] == self.R2[v], \
+                f"domain_r2[{v}]={act_r2[v]:#0{self.V+2}b} exp={self.R2[v]:#0{self.V+2}b}"
+            assert act_r3[v] == self.R3[v], \
+                f"domain_r3[{v}]={act_r3[v]:#0{self.V+2}b} exp={self.R3[v]:#0{self.V+2}b}"
+
+
+    def print_domains_and_masks_comparison(self, label: str, dut):
+        """Print domain and mask comparison — no colours.
+        Used when the DUT has no colour outputs e.g. TileFrequencyProcess,
+        AllDifferentProcess, SingletonAssignment, AllDifferent."""
+        cocotb.log.info(f"── {label} {'─' * (60 - len(label))}")
+
+        act_uv = int(dut.out_unassigned_variables.value)
+        act_ut = int(dut.out_unassigned_tiles.value)
+        match_uv = "✓" if act_uv == self.UNASSIGNED_VARIABLES else "✗"
+        match_ut = "✓" if act_ut == self.UNASSIGNED_TILES     else "✗"
+        cocotb.log.info(
+            f"  {match_uv} unassigned_variables "
+            f"DUT={act_uv:#0{self.V+2}b} "
+            f"EXP={self.UNASSIGNED_VARIABLES:#0{self.V+2}b}")
+        cocotb.log.info(
+            f"  {match_ut} unassigned_tiles     "
+            f"DUT={act_ut:#0{self.V+2}b} "
+            f"EXP={self.UNASSIGNED_TILES:#0{self.V+2}b}")
+
+        self.print_domain_comparison(label, dut)
