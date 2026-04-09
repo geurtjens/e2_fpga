@@ -4,8 +4,8 @@ from cocotb_tools.runner import get_runner
 
 from elements_state             import ElementsState
 from grid_state                 import GridState
-from data_brendan3_elements     import data_brendan3_elements
-from data_brendan3_initial_grid import data_brendan3_initial_grid
+from data_elements_brendan3     import data_elements_brendan3
+from data_initial_grid_brendan3 import data_initial_grid_brendan3
 
 
 def rotate_cw(top, right, bottom, left):
@@ -42,11 +42,11 @@ async def apply(dut, grid: GridState,
 @cocotb.test()
 async def test_colour_assignment_brendan3(dut):
     """
-    Tests ColourAssignment using data_brendan3_initial_grid and
-    data_brendan3_elements as the single source of truth.
+    Tests ColourAssignment using data_initial_grid_brendan3 and
+    data_elements_brendan3 as the single source of truth.
 
     Expected piece colours for tile 0 at rotation 1 are derived
-    from data_brendan3_elements in Python and driven directly into
+    from data_elements_brendan3 in Python and driven directly into
     the DUT as in_piece_top/right/bottom/left — ColourAssignment
     only writes colours into the array, it does not do lookup.
 
@@ -59,32 +59,32 @@ async def test_colour_assignment_brendan3(dut):
     rotation    = 1
 
     exp_t, exp_r, exp_b, exp_l = expected_colours(
-        data_brendan3_elements, tile_id, rotation)
+        data_elements_brendan3, tile_id, rotation)
 
     cocotb.log.info(
         f"Assigning variable={variable_id} tile={tile_id} rotation={rotation}"
     )
     cocotb.log.info(
-        f"Piece colours: top={exp_t:0{data_brendan3_elements.CC}b} "
-        f"right={exp_r:0{data_brendan3_elements.CC}b} "
-        f"bottom={exp_b:0{data_brendan3_elements.CC}b} "
-        f"left={exp_l:0{data_brendan3_elements.CC}b}"
+        f"Piece colours: top={exp_t:0{data_elements_brendan3.CC}b} "
+        f"right={exp_r:0{data_elements_brendan3.CC}b} "
+        f"bottom={exp_b:0{data_elements_brendan3.CC}b} "
+        f"left={exp_l:0{data_elements_brendan3.CC}b}"
     )
 
-    await apply(dut, data_brendan3_initial_grid,
+    await apply(dut, data_initial_grid_brendan3,
                 variable_id, exp_t, exp_r, exp_b, exp_l)
 
     # ── Unpack DUT output colour arrays ───────────────────────
-    cc = data_brendan3_initial_grid.CC
-    V  = data_brendan3_initial_grid.V
+    cc = data_initial_grid_brendan3.CC
+    V  = data_initial_grid_brendan3.V
 
-    act_top    = data_brendan3_initial_grid._unpack_colour(
+    act_top    = data_initial_grid_brendan3._unpack_colour(
         dut.out_colours_top.value.to_unsigned())
-    act_right  = data_brendan3_initial_grid._unpack_colour(
+    act_right  = data_initial_grid_brendan3._unpack_colour(
         dut.out_colours_right.value.to_unsigned())
-    act_bottom = data_brendan3_initial_grid._unpack_colour(
+    act_bottom = data_initial_grid_brendan3._unpack_colour(
         dut.out_colours_bottom.value.to_unsigned())
-    act_left   = data_brendan3_initial_grid._unpack_colour(
+    act_left   = data_initial_grid_brendan3._unpack_colour(
         dut.out_colours_left.value.to_unsigned())
 
     # ── Print all variable colours after assignment ────────────
@@ -113,13 +113,13 @@ async def test_colour_assignment_brendan3(dut):
     # ── Assert all other variables are unchanged ───────────────
     for v in range(V):
         if v != variable_id:
-            assert act_top[v]    == data_brendan3_initial_grid.TOP[v], \
+            assert act_top[v]    == data_initial_grid_brendan3.TOP[v], \
                 f"var={v} top changed unexpectedly"
-            assert act_right[v]  == data_brendan3_initial_grid.RIGHT[v], \
+            assert act_right[v]  == data_initial_grid_brendan3.RIGHT[v], \
                 f"var={v} right changed unexpectedly"
-            assert act_bottom[v] == data_brendan3_initial_grid.BOTTOM[v], \
+            assert act_bottom[v] == data_initial_grid_brendan3.BOTTOM[v], \
                 f"var={v} bottom changed unexpectedly"
-            assert act_left[v]   == data_brendan3_initial_grid.LEFT[v], \
+            assert act_left[v]   == data_initial_grid_brendan3.LEFT[v], \
                 f"var={v} left changed unexpectedly"
 
     cocotb.log.info("colour assignment brendan3 ✓")
@@ -131,8 +131,8 @@ def test_ColourAssignment_Brendan3():
         sources=["rtl/ColourAssignment.sv"],
         hdl_toplevel="ColourAssignment",
         parameters={
-            "N":  data_brendan3_initial_grid.N,
-            "CC": data_brendan3_initial_grid.CC,
+            "N":  data_initial_grid_brendan3.N,
+            "CC": data_initial_grid_brendan3.CC,
         },
         build_args=["--public-flat-rw", "-Wno-WIDTHEXPAND", "-Wno-WIDTHTRUNC"],
     )

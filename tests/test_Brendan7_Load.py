@@ -1,11 +1,11 @@
 import cocotb
 from cocotb_tools.runner import get_runner
-from data_brendan7_initial_grid import data_brendan7_initial_grid
+from data_initial_grid_brendan7 import data_initial_grid_brendan7
 
 @cocotb.test()
 async def test_initial_state(dut):
     """FPGA output matches C++ solver snapshot: InitialGridCreated."""
-    await data_brendan7_initial_grid.assert_dut(dut)
+    await data_initial_grid_brendan7.assert_dut(dut)
     cocotb.log.info("Brendan7_Load initial state matches C++ snapshot ✓")
 
 def test_Brendan7_Load():

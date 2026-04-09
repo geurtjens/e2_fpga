@@ -1,12 +1,12 @@
 # test_Brendan4_Elements.py
 import cocotb
 from cocotb_tools.runner import get_runner
-from data_brendan4_elements import data_brendan4_elements
+from data_elements_brendan4 import data_elements_brendan4
 
 @cocotb.test()
 async def test_elements(dut):
     """FPGA elements match C++ solver snapshot."""
-    await data_brendan4_elements.assert_dut(dut)
+    await data_elements_brendan4.assert_dut(dut)
     cocotb.log.info("Brendan4_Elements matches C++ snapshot ✓")
 
 def test_Brendan4_Elements():

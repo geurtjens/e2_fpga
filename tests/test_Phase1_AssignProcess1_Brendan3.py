@@ -4,9 +4,9 @@ from cocotb_tools.runner import get_runner
 
 from elements_state                 import ElementsState
 from grid_state                     import GridState
-from data_brendan3_elements         import data_brendan3_elements
-from data_brendan3_initial_grid     import data_brendan3_initial_grid
-from data_brendan3_first_assignment import data_brendan3_first_assignment
+from data_elements_brendan3         import data_elements_brendan3
+from data_initial_grid_brendan3     import data_initial_grid_brendan3
+from data_first_assignment_brendan3 import data_first_assignment_brendan3
 
 
 async def _apply(dut, elements: ElementsState, grid: GridState):
@@ -45,24 +45,24 @@ async def test_phase1_assign_process_brendan3(dut):
                     SingletonDetection_WithoutDeadend, repeated DEPTH times.
       Step 4 — DomainToColour: recompute colours from settled domains.
 
-    data_brendan3_elements and data_brendan3_initial_grid are the single
-    source of truth for inputs. data_brendan3_first_assignment is the
+    data_elements_brendan3 and data_initial_grid_brendan3 are the single
+    source of truth for inputs. data_first_assignment_brendan3 is the
     expected output after Phase1_AssignProcess completes.
     """
-    await _apply(dut, data_brendan3_elements, data_brendan3_initial_grid)
+    await _apply(dut, data_elements_brendan3, data_initial_grid_brendan3)
 
     cocotb.log.info(
-        f"Assigning variable={data_brendan3_initial_grid.VARIABLE_TO_ASSIGN} "
-        f"tile={data_brendan3_initial_grid.TILE_TO_ASSIGN} "
-        f"rotation={data_brendan3_initial_grid.ROTATION_TO_ASSIGN}"
+        f"Assigning variable={data_initial_grid_brendan3.VARIABLE_TO_ASSIGN} "
+        f"tile={data_initial_grid_brendan3.TILE_TO_ASSIGN} "
+        f"rotation={data_initial_grid_brendan3.ROTATION_TO_ASSIGN}"
     )
 
     # ── Dump DUT vs expected domain outputs before checking ───
-    gs = data_brendan3_first_assignment
+    gs = data_first_assignment_brendan3
     gs.print_domain_comparison("Domains after Phase1_AssignProcess", dut)
     gs.print_colour_comparison("Colours after Phase1_AssignProcess", dut)
 
-    await data_brendan3_first_assignment.assert_dut(dut)
+    await data_first_assignment_brendan3.assert_dut(dut)
     cocotb.log.info("phase1 assign process brendan3 ✓")
 
 
@@ -83,8 +83,8 @@ def test_Phase1_AssignProcess1_Brendan3():
         ],
         hdl_toplevel="Phase1_AssignProcess",
         parameters={
-            "N":  data_brendan3_initial_grid.N,
-            "CC": data_brendan3_initial_grid.CC,
+            "N":  data_initial_grid_brendan3.N,
+            "CC": data_initial_grid_brendan3.CC,
         },
         build_args=["--public-flat-rw", "-Wno-WIDTHEXPAND", "-Wno-WIDTHTRUNC"],
     )

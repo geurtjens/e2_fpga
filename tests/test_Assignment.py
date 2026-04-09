@@ -5,13 +5,13 @@ import random
 
 from elements_state             import ElementsState
 from grid_state                 import GridState
-from data_brendan3_elements     import data_brendan3_elements
-from data_brendan3_initial_grid import data_brendan3_initial_grid
-from data_brendan3_first_assignment import data_brendan3_first_assignment
+from data_elements_brendan3     import data_elements_brendan3
+from data_initial_grid_brendan3 import data_initial_grid_brendan3
+from data_first_assignment_brendan3 import data_first_assignment_brendan3
 
-N       = data_brendan3_initial_grid.N
-CC      = data_brendan3_initial_grid.CC
-V       = data_brendan3_initial_grid.V
+N       = data_initial_grid_brendan3.N
+CC      = data_initial_grid_brendan3.CC
+V       = data_initial_grid_brendan3.V
 CC_MASK = (1 << CC) - 1
 ALL_DOM = (1 << V) - 1
 
@@ -169,16 +169,16 @@ def full_mask():    return ALL_DOM
 @cocotb.test()
 async def test_domain_locked_r0(dut):
     """Assigned variable's domain is locked to one tile in rotation 0."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 5, 3, 0, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
                 full_domains(), full_domains(),
                 full_domains(), full_domains())
-    act_r0 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r0.value.to_unsigned())
-    act_r1 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r1.value.to_unsigned())
-    act_r2 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r2.value.to_unsigned())
-    act_r3 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r3.value.to_unsigned())
+    act_r0 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r0.value.to_unsigned())
+    act_r1 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r1.value.to_unsigned())
+    act_r2 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r2.value.to_unsigned())
+    act_r3 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r3.value.to_unsigned())
     assert act_r0[5] == (1 << 3), "r0 should have only tile 3"
     assert act_r1[5] == 0,        "r1 should be zero"
     assert act_r2[5] == 0,        "r2 should be zero"
@@ -189,14 +189,14 @@ async def test_domain_locked_r0(dut):
 @cocotb.test()
 async def test_domain_locked_r1(dut):
     """Assigned variable's domain is locked to one tile in rotation 1."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 5, 3, 1, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
                 full_domains(), full_domains(),
                 full_domains(), full_domains())
-    act_r0 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r0.value.to_unsigned())
-    act_r1 = data_brendan3_initial_grid._unpack_domain(dut.out_domain_r1.value.to_unsigned())
+    act_r0 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r0.value.to_unsigned())
+    act_r1 = data_initial_grid_brendan3._unpack_domain(dut.out_domain_r1.value.to_unsigned())
     assert act_r0[5] == 0,        "r0 should be zero"
     assert act_r1[5] == (1 << 3), "r1 should have only tile 3"
     cocotb.log.info("domain locked rotation 1 ✓")
@@ -207,17 +207,17 @@ async def test_own_colours_set(dut):
     """Assigned variable's colours match piece pattern at chosen rotation."""
     tile_id  = 5
     rotation = 2
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 6, tile_id, rotation, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
                 full_domains(), full_domains(),
                 full_domains(), full_domains())
-    exp_t, exp_r, exp_b, exp_l = piece_colours(data_brendan3_elements, tile_id, rotation)
-    act_top    = data_brendan3_initial_grid._unpack_colour(dut.out_colours_top.value.to_unsigned())
-    act_right  = data_brendan3_initial_grid._unpack_colour(dut.out_colours_right.value.to_unsigned())
-    act_bottom = data_brendan3_initial_grid._unpack_colour(dut.out_colours_bottom.value.to_unsigned())
-    act_left   = data_brendan3_initial_grid._unpack_colour(dut.out_colours_left.value.to_unsigned())
+    exp_t, exp_r, exp_b, exp_l = piece_colours(data_elements_brendan3, tile_id, rotation)
+    act_top    = data_initial_grid_brendan3._unpack_colour(dut.out_colours_top.value.to_unsigned())
+    act_right  = data_initial_grid_brendan3._unpack_colour(dut.out_colours_right.value.to_unsigned())
+    act_bottom = data_initial_grid_brendan3._unpack_colour(dut.out_colours_bottom.value.to_unsigned())
+    act_left   = data_initial_grid_brendan3._unpack_colour(dut.out_colours_left.value.to_unsigned())
     assert act_top[6]    == exp_t, f"top mismatch got={act_top[6]:0{CC}b} exp={exp_t:0{CC}b}"
     assert act_right[6]  == exp_r, f"right mismatch"
     assert act_bottom[6] == exp_b, f"bottom mismatch"
@@ -228,7 +228,7 @@ async def test_own_colours_set(dut):
 @cocotb.test()
 async def test_neighbour_colours_updated(dut):
     """Inner variable — all four neighbours get colour constraints applied."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 4, 0, 0, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -240,7 +240,7 @@ async def test_neighbour_colours_updated(dut):
 @cocotb.test()
 async def test_top_left_corner_safe(dut):
     """Top-left corner (var 0) — no up or left neighbours, no out-of-bounds access."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 0, 0, 1, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -252,7 +252,7 @@ async def test_top_left_corner_safe(dut):
 @cocotb.test()
 async def test_bottom_right_corner_safe(dut):
     """Bottom-right corner (var V-1) — no right or down neighbours."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 V-1, 1, 3, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -264,7 +264,7 @@ async def test_bottom_right_corner_safe(dut):
 @cocotb.test()
 async def test_top_right_corner_safe(dut):
     """Top-right corner (var N-1) — no up or right neighbours."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 N-1, 2, 2, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -276,7 +276,7 @@ async def test_top_right_corner_safe(dut):
 @cocotb.test()
 async def test_bottom_left_corner_safe(dut):
     """Bottom-left corner (var N*(N-1)) — no left or down neighbours."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 N*(N-1), 3, 0, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -288,7 +288,7 @@ async def test_bottom_left_corner_safe(dut):
 @cocotb.test()
 async def test_unassigned_variable_bit_cleared(dut):
     """Assigned variable's bit is cleared in out_unassigned_variables."""
-    await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+    await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                 5, 3, 0, full_mask(), full_mask(),
                 full_colours(), full_colours(),
                 full_colours(), full_colours(),
@@ -315,7 +315,7 @@ async def test_random(dut):
         tid = random.randint(0, V-1)
         rot = random.randint(0, 3)
         c   = [random.randint(1, CC_MASK) for _ in range(V)]
-        await check(dut, data_brendan3_elements, data_brendan3_initial_grid,
+        await check(dut, data_elements_brendan3, data_initial_grid_brendan3,
                     vid, tid, rot, uv, ut, c, c, c, c, r, r, r, r)
     cocotb.log.info("30 random tests ✓")
 

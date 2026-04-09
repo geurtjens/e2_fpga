@@ -3,7 +3,7 @@ from cocotb.triggers import Timer
 from cocotb_tools.runner import get_runner
 
 from elements_state         import ElementsState
-from data_brendan3_elements import data_brendan3_elements
+from data_elements_brendan3 import data_elements_brendan3
 
 
 # ── Rotation helpers ──────────────────────────────────────────
@@ -59,15 +59,15 @@ async def check(dut, elements: ElementsState, tile_id: int, rotation: int):
 @cocotb.test()
 async def test_all_tiles_all_rotations(dut):
     """
-    Exhaustively verifies ColourLookup against data_brendan3_elements.
+    Exhaustively verifies ColourLookup against data_elements_brendan3.
 
-    data_brendan3_elements is the single source of truth for this test:
+    data_elements_brendan3 is the single source of truth for this test:
     - The element arrays (ELEMENTS_TOP, ELEMENTS_RIGHT, ELEMENTS_BOTTOM,
       ELEMENTS_LEFT) are packed and driven into the DUT inputs via pack_colour.
     - The expected colours are also derived from the same data via
       expected_colours() which applies the rotation logic in Python.
 
-    So if data_brendan3_elements is correct and ColourLookup.sv is correct
+    So if data_elements_brendan3 is correct and ColourLookup.sv is correct
     they will agree. If either is wrong the test will catch it.
 
     The test asks: does the hardware rotation logic match the Python rotation
@@ -75,7 +75,7 @@ async def test_all_tiles_all_rotations(dut):
 
     Checks all 9 tiles x 4 rotations = 36 combinations.
     """
-    elements = data_brendan3_elements
+    elements = data_elements_brendan3
     V = len(elements.ELEMENTS_TOP)
     for tile_id in range(V):
         for rotation in range(4):
@@ -90,8 +90,8 @@ def test_ColourLookup_Brendan3():
         sources=["rtl/ColourLookup.sv"],
         hdl_toplevel="ColourLookup",
         parameters={
-            "V":  len(data_brendan3_elements.ELEMENTS_TOP),
-            "CC": data_brendan3_elements.CC,
+            "V":  len(data_elements_brendan3.ELEMENTS_TOP),
+            "CC": data_elements_brendan3.CC,
         },
         build_args=["--public-flat-rw", "-Wno-WIDTHEXPAND", "-Wno-WIDTHTRUNC"],
     )
