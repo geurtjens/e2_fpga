@@ -32,11 +32,22 @@ async def _apply(dut, elements: ElementsState, grid: GridState):
 
 
 @cocotb.test()
-async def test_first_assignment_brendan3(dut):
+async def test_phase1_assign_process_brendan3(dut):
     """
-    Brendan3 scenario: create puzzle → load elements → assign variable 0,
-    tile 0, rotation 1.  Drive inputs from the initial GridState and
-    ElementsState; compare outputs against the post-assignment GridState.
+    Brendan3 scenario: create puzzle → load elements → Phase1_AssignProcess
+    for variable 0, tile 0, rotation 1.
+    Drives inputs from the initial GridState and ElementsState.
+    Compares outputs against the post-assignment GridState.
+
+    Phase1_AssignProcess runs:
+      Step 1 — Assignment: lock domain, set colours, propagate to neighbours.
+      Steps 2 & 3 — AllDifferentProcess: AllDifferent_Simple then
+                    SingletonDetection_WithoutDeadend, repeated DEPTH times.
+      Step 4 — DomainToColour: recompute colours from settled domains.
+
+    data_brendan3_elements and data_brendan3_initial_grid are the single
+    source of truth for inputs. data_brendan3_first_assignment is the
+    expected output after Phase1_AssignProcess completes.
     """
     await _apply(dut, data_brendan3_elements, data_brendan3_initial_grid)
 
@@ -48,35 +59,29 @@ async def test_first_assignment_brendan3(dut):
 
     # ── Dump DUT vs expected domain outputs before checking ───
     gs = data_brendan3_first_assignment
-    for rname, act_raw, exp in [
-        ("r0", dut.out_domain_r0.value.to_unsigned(), gs.R0),
-        ("r1", dut.out_domain_r1.value.to_unsigned(), gs.R1),
-        ("r2", dut.out_domain_r2.value.to_unsigned(), gs.R2),
-        ("r3", dut.out_domain_r3.value.to_unsigned(), gs.R3),
-    ]:
-        act = gs._unpack_domain(act_raw)
-        for v in range(gs.V):
-            match = "✓" if act[v] == exp[v] else "✗"
-            cocotb.log.info(
-                f"{match} domain_{rname}[{v}] "
-                f"DUT={act[v]:#018b} "
-                f"EXP={exp[v]:#018b}"
-            )
-    # Dump out values end
-
+    gs.print_domain_comparison("Domains after Phase1_AssignProcess", dut)
+    gs.print_colour_comparison("Colours after Phase1_AssignProcess", dut)
 
     await data_brendan3_first_assignment.assert_dut(dut)
-    cocotb.log.info("first assignment brendan3 ✓")
-    
+    cocotb.log.info("phase1 assign process brendan3 ✓")
 
-def test_Assignment_Brendan3_First():
+
+def test_Phase1_AssignProcess1_Brendan3():
     runner = get_runner("verilator")
     runner.build(
-        sources=["rtl/Assignment.sv",
-                "rtl/AllDifferent_Simple.sv",
-                "rtl/DomainToColour.sv",
-                "rtl/DomainToColour_Rotation.sv"],
-        hdl_toplevel="Assignment",
+        sources=[
+            "rtl/Phase1_AssignProcess.sv",
+            "rtl/Assignment.sv",
+            "rtl/ColourLookup.sv",
+            "rtl/ColourAssignment.sv",
+            "rtl/ColourAssignmentNeighbours.sv",
+            "rtl/AllDifferentProcess.sv",
+            "rtl/AllDifferent.sv",
+            "rtl/SingletonAssignment.sv",
+            "rtl/DomainToColour.sv",
+            "rtl/DomainToColour_Rotation.sv",
+        ],
+        hdl_toplevel="Phase1_AssignProcess",
         parameters={
             "N":  data_brendan3_initial_grid.N,
             "CC": data_brendan3_initial_grid.CC,
@@ -84,6 +89,6 @@ def test_Assignment_Brendan3_First():
         build_args=["--public-flat-rw", "-Wno-WIDTHEXPAND", "-Wno-WIDTHTRUNC"],
     )
     runner.test(
-        hdl_toplevel="Assignment",
-        test_module="test_Assignment_Brendan3_First",
+        hdl_toplevel="Phase1_AssignProcess",
+        test_module="test_Phase1_AssignProcess1_Brendan3",
     )
