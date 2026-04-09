@@ -1,1 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+ 
+# Verilator / cocotb build artefacts
 sim_build/
+results.xml
+dump.vcd
+dump.fst
+ 
+# Quartus build artefacts
+output_files/
+db/
+incremental_db/
+greybox_tmp/
+*.qws
+*.rpt
+*.summary
+*.smsg
+*.jdi
+*.pof
+*.sof
+*.rbf
+ 
+# VS Code
+.vscode/settings.json
+ 
+# OS
+.DS_Store
+Thumbs.db
