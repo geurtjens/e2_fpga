@@ -80,6 +80,8 @@ def test_Phase1_AssignProcess1_Brendan3():
             "rtl/SingletonAssignment.sv",
             "rtl/DomainToColour.sv",
             "rtl/DomainToColour_Rotation.sv",
+            "rtl/ColourToDomain.sv",
+            "rtl/ColourToDomain_Rotation.sv",
         ],
         hdl_toplevel="Phase1_AssignProcess",
         parameters={

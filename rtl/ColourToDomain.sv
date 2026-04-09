@@ -50,15 +50,8 @@ module ColourToDomain #(
     output logic [V-1:0][V-1:0] out_domain_r0,       //! updated rotation 0 domain bitmask for each variable.
     output logic [V-1:0][V-1:0] out_domain_r1,       //! updated rotation 1 domain bitmask for each variable.
     output logic [V-1:0][V-1:0] out_domain_r2,       //! updated rotation 2 domain bitmask for each variable.
-    output logic [V-1:0][V-1:0] out_domain_r3,       //! updated rotation 3 domain bitmask for each variable.
-
-    output logic                out_changed,          //! 1 if any domain changed.
-    output logic                out_deadend           //! 1 if any variable has an empty domain.
+    output logic [V-1:0][V-1:0] out_domain_r3       //! updated rotation 3 domain bitmask for each variable.
 );
-
-    // ── Per-variable changed and deadend wires ─────────────────
-    logic [V-1:0] v_changed; //! per-variable changed flag.
-    logic [V-1:0] v_deadend; //! per-variable deadend flag.
 
     // ── Rotation wiring ───────────────────────────────────────
     //! The four rotations are derived purely by rewiring the four
@@ -113,9 +106,7 @@ module ColourToDomain #(
                         .in_element_right  (el0_right),
                         .in_element_bottom (el0_bottom),
                         .in_element_left   (el0_left),
-                        .out_domain        (out_domain_r0[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r0[id])
                     );
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
@@ -133,9 +124,7 @@ module ColourToDomain #(
                         .in_element_right  (el1_right),
                         .in_element_bottom (el1_bottom),
                         .in_element_left   (el1_left),
-                        .out_domain        (out_domain_r1[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r1[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
@@ -153,9 +142,7 @@ module ColourToDomain #(
                         .in_element_right  (el2_right),
                         .in_element_bottom (el2_bottom),
                         .in_element_left   (el2_left),
-                        .out_domain        (out_domain_r2[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r2[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
@@ -173,9 +160,7 @@ module ColourToDomain #(
                         .in_element_right  (el3_right),
                         .in_element_bottom (el3_bottom),
                         .in_element_left   (el3_left),
-                        .out_domain        (out_domain_r3[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r3[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
@@ -193,9 +178,7 @@ module ColourToDomain #(
                         .in_element_right  (el0_right),
                         .in_element_bottom (el0_bottom),
                         .in_element_left   (el0_left),
-                        .out_domain        (out_domain_r0[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r0[id])
                     );
                     assign out_domain_r1[id] = in_domain_r1[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
@@ -213,9 +196,7 @@ module ColourToDomain #(
                         .in_element_right  (el1_right),
                         .in_element_bottom (el1_bottom),
                         .in_element_left   (el1_left),
-                        .out_domain        (out_domain_r1[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r1[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r2[id] = in_domain_r2[id];
@@ -233,9 +214,7 @@ module ColourToDomain #(
                         .in_element_right  (el2_right),
                         .in_element_bottom (el2_bottom),
                         .in_element_left   (el2_left),
-                        .out_domain        (out_domain_r2[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r2[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
@@ -253,9 +232,7 @@ module ColourToDomain #(
                         .in_element_right  (el3_right),
                         .in_element_bottom (el3_bottom),
                         .in_element_left   (el3_left),
-                        .out_domain        (out_domain_r3[id]),
-                        .out_changed       (v_changed[id]),
-                        .out_deadend       (v_deadend[id])
+                        .out_domain        (out_domain_r3[id])
                     );
                     assign out_domain_r0[id] = in_domain_r0[id];
                     assign out_domain_r1[id] = in_domain_r1[id];
@@ -267,10 +244,6 @@ module ColourToDomain #(
                 //! The variable is a deadend only if all four
                 //! rotation domains are empty simultaneously.
                 end else begin : inner
-                    logic rot0_changed, rot0_deadend;
-                    logic rot1_changed, rot1_deadend;
-                    logic rot2_changed, rot2_deadend;
-                    logic rot3_changed, rot3_deadend;
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot0 (
                         .in_domain         (in_domain_r0[id]),
@@ -282,9 +255,7 @@ module ColourToDomain #(
                         .in_element_right  (el0_right),
                         .in_element_bottom (el0_bottom),
                         .in_element_left   (el0_left),
-                        .out_domain        (out_domain_r0[id]),
-                        .out_changed       (rot0_changed),
-                        .out_deadend       (rot0_deadend)
+                        .out_domain        (out_domain_r0[id])
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot1 (
@@ -297,9 +268,7 @@ module ColourToDomain #(
                         .in_element_right  (el1_right),
                         .in_element_bottom (el1_bottom),
                         .in_element_left   (el1_left),
-                        .out_domain        (out_domain_r1[id]),
-                        .out_changed       (rot1_changed),
-                        .out_deadend       (rot1_deadend)
+                        .out_domain        (out_domain_r1[id])
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot2 (
@@ -312,9 +281,7 @@ module ColourToDomain #(
                         .in_element_right  (el2_right),
                         .in_element_bottom (el2_bottom),
                         .in_element_left   (el2_left),
-                        .out_domain        (out_domain_r2[id]),
-                        .out_changed       (rot2_changed),
-                        .out_deadend       (rot2_deadend)
+                        .out_domain        (out_domain_r2[id])
                     );
 
                     ColourToDomain_Rotation #(.V(V), .CC(CC)) rot3 (
@@ -327,22 +294,12 @@ module ColourToDomain #(
                         .in_element_right  (el3_right),
                         .in_element_bottom (el3_bottom),
                         .in_element_left   (el3_left),
-                        .out_domain        (out_domain_r3[id]),
-                        .out_changed       (rot3_changed),
-                        .out_deadend       (rot3_deadend)
+                        .out_domain        (out_domain_r3[id])
                     );
 
-                    assign v_changed[id] = rot0_changed | rot1_changed |
-                                           rot2_changed | rot3_changed;
-                    assign v_deadend[id] = rot0_deadend | rot1_deadend |
-                                           rot2_deadend | rot3_deadend;
                 end
-
             end
         end
     endgenerate
-
-    assign out_changed = |v_changed;
-    assign out_deadend = |v_deadend;
 
 endmodule

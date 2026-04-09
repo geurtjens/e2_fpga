@@ -9,26 +9,24 @@
 //!   update availability masks.
 //!
 //! Step 2 & 3 — AllDifferentProcess (DEPTH iterations):
-//!   Each iteration runs AllDifferent then
-//!   SingletonAssignment — removing placed tiles
+//!   Each iteration runs AllDifferent_Simple then
+//!   SingletonDetection_WithoutDeadend — removing placed tiles
 //!   from domains and locking any newly forced singletons.
 //!
 //! Step 4 — DomainToColour:
 //!   Recompute colour masks for every variable from the
 //!   settled domains.
 //!
-//! Step 5 — ColourToDomain:
-//!   Filter domains against the freshly derived colours.
-//!
 //! Parameters
-//!   N  — board side length (board is N x N)
-//!   CC — total colour bits per edge
-//!   V  — N * N
+//!   N     — board side length (board is N x N)
+//!   CC    — total colour bits per edge
+//!   V     — N * N
+//!   DEPTH — number of AllDifferent/Singleton iterations
 // ─────────────────────────────────────────────────────────────
 module Phase1_AssignProcess #(
-    parameter int N  = 4,
-    parameter int CC = 6,
-    parameter int V  = N * N
+    parameter int N     = 4,
+    parameter int CC    = 6,
+    parameter int V     = N * N
 )(
     // ── Assignment inputs ──────────────────────────────────────
     input  logic [$clog2(V)-1:0] in_variableId,
@@ -143,11 +141,6 @@ module Phase1_AssignProcess #(
     assign out_unassigned_tiles     = after_adp_ut;
 
     // ── Step 4 — DomainToColour ───────────────────────────────
-    logic [V-1:0][CC-1:0] after_d2c_colours_top;
-    logic [V-1:0][CC-1:0] after_d2c_colours_right;
-    logic [V-1:0][CC-1:0] after_d2c_colours_bottom;
-    logic [V-1:0][CC-1:0] after_d2c_colours_left;
-
     DomainToColour #(.N(N), .CC(CC), .V(V)) domain_to_colour (
         .in_domain_r0       (after_adp_r0),
         .in_domain_r1       (after_adp_r1),
@@ -161,35 +154,17 @@ module Phase1_AssignProcess #(
         .in_elements_right  (in_elements_right),
         .in_elements_bottom (in_elements_bottom),
         .in_elements_left   (in_elements_left),
-        .out_colours_top    (after_d2c_colours_top),
-        .out_colours_right  (after_d2c_colours_right),
-        .out_colours_bottom (after_d2c_colours_bottom),
-        .out_colours_left   (after_d2c_colours_left)
+        .out_colours_top    (out_colours_top),
+        .out_colours_right  (out_colours_right),
+        .out_colours_bottom (out_colours_bottom),
+        .out_colours_left   (out_colours_left)
     );
 
-    // ── Step 5 — ColourToDomain ───────────────────────────────
-    ColourToDomain #(.N(N), .CC(CC), .V(V)) colour_to_domain (
-        .in_domain_r0       (after_adp_r0),
-        .in_domain_r1       (after_adp_r1),
-        .in_domain_r2       (after_adp_r2),
-        .in_domain_r3       (after_adp_r3),
-        .in_colours_top     (after_d2c_colours_top),
-        .in_colours_right   (after_d2c_colours_right),
-        .in_colours_bottom  (after_d2c_colours_bottom),
-        .in_colours_left    (after_d2c_colours_left),
-        .in_elements_top    (in_elements_top),
-        .in_elements_right  (in_elements_right),
-        .in_elements_bottom (in_elements_bottom),
-        .in_elements_left   (in_elements_left),
-        .out_domain_r0      (out_domain_r0),
-        .out_domain_r1      (out_domain_r1),
-        .out_domain_r2      (out_domain_r2),
-        .out_domain_r3      (out_domain_r3)
-    );
+    // ── Domain outputs pass through from AllDifferentProcess ──
+    assign out_domain_r0 = after_adp_r0;
+    assign out_domain_r1 = after_adp_r1;
+    assign out_domain_r2 = after_adp_r2;
+    assign out_domain_r3 = after_adp_r3;
 
-    assign out_colours_top    = after_d2c_colours_top;
-    assign out_colours_right  = after_d2c_colours_right;
-    assign out_colours_bottom = after_d2c_colours_bottom;
-    assign out_colours_left   = after_d2c_colours_left;
 
 endmodule

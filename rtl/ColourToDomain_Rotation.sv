@@ -43,9 +43,8 @@ module ColourToDomain_Rotation #(
     input  logic [V-1:0][CC-1:0] in_element_bottom, //! bottom pattern for this rotation and position
     input  logic [V-1:0][CC-1:0] in_element_left,   //! left pattern for this rotation and position
 
-    output logic [V-1:0] out_domain,                //! domain that was updated due to colour to domain operation
-    output logic         out_changed,               //! have any changes occurred
-    output logic         out_deadend                //! did this operation result in an empty domain
+    output logic [V-1:0] out_domain                //! domain that was updated due to colour to domain operation
+    
 );
 
     //! Discover what bits are set in domain and add that to the colours for this given rotation
@@ -65,14 +64,6 @@ module ColourToDomain_Rotation #(
                 (in_colour_left   & in_element_left[p])   != '0)
                 out_domain[p] = 1'b1;
         end
-
-        // ── Step 3 — changed detection ─────────────────────────
-        // True if any bit was cleared — domain only ever shrinks
-        out_changed = (out_domain != in_domain);
-
-        // ── Step 4 — deadend detection ─────────────────────────
-        // True if domain was non-empty but is now completely empty
-        out_deadend = (in_domain != '0) && (out_domain == '0);
     end
 
 endmodule
